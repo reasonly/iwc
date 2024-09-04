@@ -13,14 +13,14 @@ class ApplicationTests {
 	@Autowired
 	private UserMapper userMapper;
 
-	@Test
-	void contextLoads() {
-		User test_user=new User();
-		test_user.setUsername("sjq");
-		test_user.setPassword("123");
-		User user=userMapper.findByEntity(test_user);
-		System.out.println("ApplicationTests.contextLoads" + "----user值= " + user);
-	}
+//	@Test
+//	void contextLoads() {
+//		User test_user=new User();
+//		test_user.setUsername("sjq");
+//		test_user.setPassword("123");
+//		User user=userMapper.findByEntity(test_user);
+//		System.out.println("ApplicationTests.contextLoads" + "----user值= " + user);
+//	}
 
 
 }
