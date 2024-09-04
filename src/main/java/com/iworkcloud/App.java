@@ -20,10 +20,11 @@ public class App
 {
     public static void main( String[] args )
     {
+		System.out.println("程序正在asd运行...");
 		SpringApplication.run(App.class, args);
 		System.out.println("程序正在运行...");
 		System.out.println("程序正在运行...");
-		System.out.println("程序正在运行...");
+		System.out.println("程");
 		System.out.println("程序正在运行...");
     }
 }
