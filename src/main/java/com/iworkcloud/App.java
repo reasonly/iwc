@@ -21,7 +21,7 @@ public class App
     public static void main( String[] args )
     {
 <<<<<<< HEAD
-		System.out.println("114");
+		System.out.println("11阿萨大大14");
 =======
 		System.out.println("lgq");
 >>>>>>> 29e7bfea6a218f353c1531a57d840db2e2ec964d
