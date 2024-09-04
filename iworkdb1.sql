@@ -20,16 +20,16 @@ CREATE TABLE `t_user` (
   `user_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `user_name` varchar(10) NOT NULL,
   `user_account` varchar(20) NOT NULL,
-  `user_password` varchar(20) NOT NULL,
+  `user_password` varchar(35) NOT NULL,
   `user_authority` varchar(6) NOT NULL,
   `user_salt` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '12345', '员工','123');
-INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', '123456', '员工','123');
-INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '123457', '员工','123');
+INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '109889f941630d269546335f728f3558', '员工','123');-- MD5加密 真实密码12345
+INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', '123456123', '员工','123');
+INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '123457123', '员工','123');
 
 -- ----------------------------
 -- Table structure for `t_administrator`
@@ -39,7 +39,7 @@ CREATE TABLE `t_administrator` (
   `administrator_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `administrator_name` varchar(10) NOT NULL,
   `administrator_account` varchar(20) NOT NULL,
-  `administrator_password` varchar(20) NOT NULL,
+  `administrator_password` varchar(35) NOT NULL,
   `administrator_authority` varchar(10) NOT NULL,
   `administrator_salt` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`administrator_id`),

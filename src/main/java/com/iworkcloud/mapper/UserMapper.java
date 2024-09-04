@@ -14,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper extends BaseMapper<User> {
 
     User findByUsernameAndPassword(User user);
-    User findByUsername(User username);
+
+    String findSaltByUserAccount(String useraccount);
 }

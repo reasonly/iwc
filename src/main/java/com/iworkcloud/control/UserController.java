@@ -20,10 +20,13 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login(User user) {
-        User user_result=userService.findByEntity(user);
-        if(user_result!=null)
-//            return "forword:/index";
-            return "redirect:/index";
+        System.out.println(user);
+
+        Boolean result=userService.userLogin(user);
+        System.out.println(result);
+        if(result)
+            return "/index";
+//            return "redirect:/index";
         else
             return "user/login";
     }

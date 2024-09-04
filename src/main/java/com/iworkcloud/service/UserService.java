@@ -14,6 +14,8 @@ import com.iworkcloud.pojo.entity.User;
 public interface UserService extends BaseService<User>{
 
     Boolean findByUsernameAndPassword(User user);
-    User findByUsername(User username);
+
+    Boolean userLogin(User user);
+
 
 }

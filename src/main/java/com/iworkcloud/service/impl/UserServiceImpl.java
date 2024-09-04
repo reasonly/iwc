@@ -6,6 +6,7 @@ import com.iworkcloud.pojo.entity.User;
 import com.iworkcloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.iworkcloud.util.MD5Util;
 
 /**
  * Title: UserServiceImpl
@@ -41,9 +42,27 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return false;
     }
 
+
     @Override
-    public User findByUsername(User username) {
-        return userMapper.findByUsername(username);
+    public Boolean userLogin(User user) {
+        System.out.println("UserServiceImpl.userLogin");
+        try {
+            // 获取用户的盐值
+            String salt=userMapper.findSaltByUserAccount(user.getUserAccount());
+            // 转为加密密码
+            String dbPass=MD5Util.inputPassToDBPass(user.getUserPassword(),salt);
+
+            // 填充加密的密码，在数据库中进行比对
+            user.setUserPassword(dbPass);
+            User user1 = userMapper.findByUsernameAndPassword(user);
+            System.out.println(user1);
+            return user1 != null;
+        } catch (Exception e) {
+            System.out.println("查询失败!");
+            e.printStackTrace();
+        }
+        return false;
     }
+
 
 }

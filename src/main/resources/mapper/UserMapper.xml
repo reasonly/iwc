@@ -15,11 +15,11 @@
 	<parameterMap id="User" type="com.iworkcloud.pojo.entity.User"/>
 
 	<sql id="Base_Column_List">
-		id, username, password, age
+		user_id, user_name, user_account,user_password,user_authority,user_salt
 	</sql>
 
 	<insert id="insert" parameterMap="User">
-		insert into user (username, password, age)
+		insert into t_user (username, password, age)
 		values (#{username},#{password},#{age})
 	</insert>
 
@@ -69,13 +69,18 @@
 	</select>
 
 
+
+
+	<!--	查询盐值信息-->
+	<select id="findSaltByUserAccount" parameterType="String" resultType="String">
+		select
+			user_salt
+		from t_user where user_account=#{userAccount}
+	</select>
+	<!--验证用户登录信息-->
 	<select id="findByUsernameAndPassword" parameterMap="User" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
-		from user where username=#{username} and password=#{password}
-	</select>
-
-	<select id="findByUsername" parameterMap="User" resultMap="BaseResultMap" >
-		SELECT * FROM user where username=#{username}
+		from t_user where user_account=#{userAccount} and user_password=#{userPassword}
 	</select>
 </mapper>
