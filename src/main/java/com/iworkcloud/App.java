@@ -20,11 +20,11 @@ public class App
 {
     public static void main( String[] args )
     {
-<<<<<<< HEAD
+
 		System.out.println("1919");
-=======
-		System.out.println("opo");
->>>>>>> 29e7bfea6a218f353c1531a57d840db2e2ec964d
+
+		System.out.println("lxplxp");
+
 		SpringApplication.run(App.class, args);
 		System.out.println("程序正在运行..程序正在运行...");
 		System.out.println("程序正在运行...");
