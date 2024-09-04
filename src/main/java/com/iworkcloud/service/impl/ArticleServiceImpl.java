@@ -13,14 +13,14 @@ import org.springframework.stereotype.Service;
 * Version:1.0.0  
 
  */
-@Service
-public class ArticleServiceImpl extends BaseServiceImpl<Article> implements BaseService<Article> {
-
-	@Autowired
-	private ArticleMapper articleMapper;
-
-	@Override
-	protected BaseMapper<Article> getMapper() {
-		return this.articleMapper;
-	}
-}
+//@Service
+//public class ArticleServiceImpl extends BaseServiceImpl<Article> implements BaseService<Article> {
+//
+//	@Autowired
+//	private ArticleMapper articleMapper;
+//
+//	@Override
+//	protected BaseMapper<Article> getMapper() {
+//		return this.articleMapper;
+//	}
+//}

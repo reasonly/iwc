@@ -1,7 +1,5 @@
 package com.iworkcloud.pojo.entity;
 
-import com.iworkcloud.TUser;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.Instant;
