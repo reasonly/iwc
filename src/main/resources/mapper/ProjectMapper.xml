@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iworkcloud.mapper.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Project">
+        <result column="project_id" property="projectId" />
+        <result column="project_name" property="projectName" />
+        <result column="project_content" property="projectContent" />
+        <result column="project_state" property="projectState" />
+        <result column="administrator_id" property="administratorId" />
+    </resultMap>
+
+    <parameterMap id="Project" type="com.iworkcloud.pojo.entity.Project"></parameterMap>
+    <sql id="Base_Column_List">
+		project_id, project_name, project_content, project_state, administrator_id
+	</sql>
+
+    <insert id="insert" parameterMap="Project">
+        insert into project (project_name, project_content, project_state, administrator_id)
+        values (#{projectName},#{projectContent},#{projectState},#{administratorId})
+    </insert>
+
+    <update id="update" parameterMap="Project">
+        update project
+        <if test="projectName != null and projectName != ''">
+            project_name = #{projectName},
+        </if>
+        <if test="projectContent != null and projectContent != ''">
+            project_content = #{projectContent},
+        </if>
+        <if test="projectState != null and projectState != ''">
+            project_state = #{projectState},
+        </if>
+        <if test="administratorId != null and administratorId != ''">
+            administrator_id = #{administratorId},
+        </if>
+        where project_id = #{projectId}
+    </update>
+
+    <delete id="delete" parameterMap="Project">
+        delete from project where project_id = #{projectId}
+    </delete>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include>
+        from project
+    </select>
+
+    <select id="findByEntity" parameterMap="Project" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from project
+    <where>
+        <if test="projectId != null and projectId != ''">
+            and project_id = #{projectId}
+        </if>
+        <if test="projectName != null and projectName != ''">
+            and project_name = #{projectName}
+        </if>
+        <if test="projectContent != null and projectContent != ''">
+            and project_content = #{projectContent}
+        </if>
+        <if test="projectState != null and projectState != ''">
+            and project_state = #{projectState}
+        </if>
+        <if test="administratorId != null and administratorId != ''">
+            and administrator_id = #{administratorId}
+        </if>
+    </where>
+    </select>
+</mapper>
