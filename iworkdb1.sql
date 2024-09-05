@@ -28,8 +28,8 @@ CREATE TABLE `t_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '109889f941630d269546335f728f3558', '员工','123');-- MD5加密 真实密码12345
-INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', '123456123', '员工','123');
-INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '123457123', '员工','123');
+INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', 'bfda7bb176421340cba445f8465de887', '员工','123');--  123456123
+INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54', '员工','123');-- 123457123
 
 -- ----------------------------
 -- Table structure for `t_administrator`

@@ -34,6 +34,7 @@ public class MD5Util {
     public static String inputPassToDBPass(String inputPass, String salt) {
         String str = inputPass +salt;
         System.out.println("MD5Util.inputPassToDBPass" + "----组合密码inputPass +salt= " + str);
+        System.out.println("MD5Util.inputPassToDBPass" + "----MD5加密后= " + DigestUtils.md5Hex(str));
         return DigestUtils.md5Hex(str);
     }
 

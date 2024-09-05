@@ -24,19 +24,22 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(User user) {
         System.out.println(user);
+        System.out.println("员工".equals(user.getUserAuthority()));
 
-        if(user.getUserAuthority()=="员工") {
+        if("员工".equals(user.getUserAuthority())) {
+            System.out.println("员工");
             Boolean result=userService.userLogin(user);
-
             if(result)
                 return "/index";
             else
                 return "user/login";
         }else {
-            Administrator admin=new Administrator();
+            System.out.println("管理员");
+            Administrator admin = null;
             admin.setAdministratorAccount(user.getUserAccount());
             admin.setAdministratorPassword(user.getUserPassword());
             admin.setAdministratorAuthority(user.getUserAuthority());
+            System.out.println(admin);
             Boolean result=administratorService.administratorLogin(admin);
 
             if(result)

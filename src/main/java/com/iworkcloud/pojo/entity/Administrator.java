@@ -6,6 +6,19 @@ public class Administrator {
     private String administratorAccount;
     private String administratorPassword;
     private String administratorAuthority;
+    private String administratorSalt;
+
+    @Override
+    public String toString() {
+        return "Administrator{" +
+                "administratorId=" + administratorId +
+                ", administratorName='" + administratorName + '\'' +
+                ", administratorAccount='" + administratorAccount + '\'' +
+                ", administratorPassword='" + administratorPassword + '\'' +
+                ", administratorAuthority='" + administratorAuthority + '\'' +
+                ", administratorSalt='" + administratorSalt + '\'' +
+                '}';
+    }
 
     public int getAdministratorId() {
         return administratorId;
@@ -47,14 +60,11 @@ public class Administrator {
         this.administratorAuthority = administratorAuthority;
     }
 
-    @Override
-    public String toString() {
-        return "Administrator{" +
-                "administratorId=" + administratorId +
-                ", administratorName='" + administratorName + '\'' +
-                ", administratorAccount='" + administratorAccount + '\'' +
-                ", administratorPassword='" + administratorPassword + '\'' +
-                ", administratorAuthority='" + administratorAuthority + '\'' +
-                '}';
+    public String getAdministratorSalt() {
+        return administratorSalt;
+    }
+
+    public void setAdministratorSalt(String administratorSalt) {
+        this.administratorSalt = administratorSalt;
     }
 }
