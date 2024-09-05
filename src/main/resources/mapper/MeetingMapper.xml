@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iworkcloud.mapper.MeetingMapper">
+
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.User">
+        <result column="meeting_id" property="meetingId" />
+        <result column="meeting_num" property="meetingNum" />
+        <result column="meeting_name" property="meetingName" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="meeting_state" property="meetingState" />
+        <result column="administrator_id" property="administratorId" />
+    </resultMap>
+
+    <parameterMap id="Meeting" type="com.iworkcloud.pojo.entity.Meeting"/>
+
+    <sql id="Base_Column_List">
+        meeting_id, meeting_num, meeting_name,start_time,end_time,meeting_state,administrator_id
+    </sql>
+
+    <insert id="insert" parameterMap="Meeting">
+        insert into t_meeting (meeting_num, meeting_name, start_time, end_time, meeting_state, administrator_id)
+        values (#{meetingNum},#{meetingName},#{startTime},#{endTime},#{meetingState},#{administratorId})
+    </insert>
+
+    <update id="update" parameterMap="Meeting">
+        update
+        t_meeting
+        <trim prefix="set" suffixOverrides=",">
+            <if test="meetingNum!=null and meetingNum!=''">
+                meeting_num = #{meetingNum},
+            </if>
+            <if test="meetingName!=null and meetingName!=''">
+                meeting_name = #{meetingName},
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                end_time = #{endTime},
+            </if>
+            <if test="meetingState!=null and meetingState!=''">
+                meeting_state = #{meetingState},
+            </if>
+        </trim>
+        where meeting_id= #{meetingId}
+    </update>
+
+    <delete id="delete" parameterType="Integer">
+        delete from t_meeting where meeting_id= #{meetingId}
+    </delete>
+
+    <select id="findAll" resultMap="BaseResultMap" >
+        select
+            *
+        from t_meeting
+    </select>
+
+    <select id="findByEntity" parameterMap="Meeting" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_meeting
+        <where>
+            <if test="meetingId!=null and meetingId!=''">
+                meeting_id = #{meetingId},
+            </if>
+            <if test="meetingNum!=null and meetingNum!=''">
+                meeting_num = #{meetingNum},
+            </if>
+            <if test="meetingName!=null and meetingName!=''">
+                meeting_name = #{meetingName},
+            </if>
+            <if test="startTime!=null and startTime!=''">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                end_time = #{endTime},
+            </if>
+            <if test="meetingState!=null and meetingState!=''">
+                meeting_state = #{meetingState},
+            </if>
+            <if test="administratorId!=null and administratorId!=''">
+                administrator_id = #{administratorId},
+            </if>
+        </where>
+    </select>
+
+    <select id="findByAdministratorId" parameterType="Integer" resultType="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_user where administrator_id = #{administratorId}
+    </select>
+</mapper>
