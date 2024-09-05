@@ -26,19 +26,6 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
      * @param administrator 用户实体
      * @return 查询结果
      */
-    @Override
-    public Boolean findByAdministratorAccountAndPassword(Administrator administrator) {
-        try {
-            System.out.println("findByAdministratornameAndPassword");
-            Administrator administrator1 = administratorMapper.findByAdministratorAccountAndPassword(administrator);
-            return administrator1 != null;
-        } catch (Exception e) {
-            System.out.println("查询失败!");
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 
     @Override
     public Boolean administratorLogin(Administrator administrator) {
@@ -51,6 +38,8 @@ public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> imp
 
             // 填充加密的密码，在数据库中进行比对
             administrator.setAdministratorPassword(dbPass);
+
+            System.out.println(administrator);
             Administrator administrator1 = administratorMapper.findByAdministratorAccountAndPassword(administrator);
             System.out.println(administrator1);
             return administrator1 != null;

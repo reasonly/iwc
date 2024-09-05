@@ -78,7 +78,7 @@
         from t_administrator where administrator_account=#{administratorAccount}
     </select>
     <!--验证用户登录信息-->
-    <select id="findByAdministratornameAndPassword" parameterMap="Administrator" resultMap="BaseResultMap">
+    <select id="findByAdministratorAccountAndPassword" parameterMap="Administrator" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
         from t_administrator where administrator_account=#{administratorAccount} and administrator_password=#{administratorPassword}

@@ -46,9 +46,9 @@ CREATE TABLE `t_administrator` (
   UNIQUE KEY (`administrator_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_administrator` VALUES ('00000001', '张三', 'administrator1', '1234567', '管理员','123');
-INSERT INTO `t_administrator` VALUES ('00000002', '王五', 'administrator2', '12345', '管理员','123');
-INSERT INTO `t_administrator` VALUES ('00000003', '赵六', 'administrator3', '123456', '管理员','123');
+INSERT INTO `t_administrator` VALUES ('00000001', '张三', 'administrator1', '8a3379ae294935afa4195fa27600fd43', '管理员','123');-- 1234567
+INSERT INTO `t_administrator` VALUES ('00000002', '王五', 'administrator2', '109889f941630d269546335f728f3558', '管理员','123');-- 12345
+INSERT INTO `t_administrator` VALUES ('00000003', '赵六', 'administrator3', '579d9ec9d0c3d687aaa91289ac2854e4', '管理员','123');-- 123456
 -- ----------------------------
 -- Table structure for `t_attendance`
 -- ----------------------------

@@ -19,8 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     @Autowired
     private UserService userService;
+    @Autowired
     private AdministratorService administratorService;
 
+    @RequestMapping("/tologin")
+    public String toLogin() {
+        return "user/login";
+    }
     @RequestMapping("/login")
     public String login(User user) {
         System.out.println(user);
@@ -32,10 +37,10 @@ public class LoginController {
             if(result)
                 return "/index";
             else
-                return "user/login";
+                return "/error";
         }else {
             System.out.println("管理员");
-            Administrator admin = null;
+            Administrator admin=new Administrator();
             admin.setAdministratorAccount(user.getUserAccount());
             admin.setAdministratorPassword(user.getUserPassword());
             admin.setAdministratorAuthority(user.getUserAuthority());
@@ -45,7 +50,7 @@ public class LoginController {
             if(result)
                 return "/index";
             else
-                return "user/login";
+                return "/error";
 
         }
 

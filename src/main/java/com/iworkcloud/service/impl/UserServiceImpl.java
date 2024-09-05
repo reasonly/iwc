@@ -29,18 +29,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
      * @param user 用户实体
      * @return 查询结果
      */
-    @Override
-    public Boolean findByUsernameAndPassword(User user) {
-        try {
-            System.out.println("findByUsernameAndPassword");
-            User user1 = userMapper.findByUsernameAndPassword(user);
-            return user1 != null;
-        } catch (Exception e) {
-            System.out.println("查询失败!");
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
 
     @Override
