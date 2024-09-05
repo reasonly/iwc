@@ -1,7 +1,10 @@
 package com.iworkcloud.service;
 
 import com.iworkcloud.pojo.entity.Project;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 public interface ProjectService extends BaseService<Project>{
-    boolean delete(Project project);
+    List<Project> projectList(Model model);
 }

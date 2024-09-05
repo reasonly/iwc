@@ -9,7 +9,7 @@
         <result column="administrator_id" property="administratorId" />
     </resultMap>
 
-    <parameterMap id="Project" type="com.iworkcloud.pojo.entity.Project"></parameterMap>
+    <parameterMap id="Project" type="com.iworkcloud.pojo.entity.Project" />
     <sql id="Base_Column_List">
 		project_id, project_name, project_content, project_state, administrator_id
 	</sql>
@@ -20,7 +20,7 @@
     </insert>
 
     <update id="update" parameterMap="Project">
-        update project
+        update t_project
         <if test="projectName != null and projectName != ''">
             project_name = #{projectName},
         </if>
@@ -37,17 +37,17 @@
     </update>
 
     <delete id="delete" parameterMap="Project">
-        delete from project where project_id = #{projectId}
+        delete from t_project where project_id = #{projectId}
     </delete>
 
     <select id="findAll" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"></include>
-        from project
+        select <include refid="Base_Column_List" />
+        from t_project
     </select>
 
     <select id="findByEntity" parameterMap="Project" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"></include>
-    from project
+    select <include refid="Base_Column_List" />
+    from t_project
     <where>
         <if test="projectId != null and projectId != ''">
             and project_id = #{projectId}
@@ -65,5 +65,20 @@
             and administrator_id = #{administratorId}
         </if>
     </where>
+    </select>
+
+<!--    通过关键字查询项目信息-->
+    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.entity.Project">
+        select <include refid="Base_Column_List" />
+        from t_project
+        <where>
+            <if test="projectName != null and projectName != ''">
+                and project_name like concat('%',#{projectName},'%')
+            </if>
+            <if test="projectContent != null and projectContent != ''">
+                and project_content like concat('%',#{projectContent},'%')
+            </if>
+        </where>
+
     </select>
 </mapper>
