@@ -11,18 +11,18 @@ import com.iworkcloud.pojo.Result;
 import java.util.List;
 
 @Controller
-@RequestMapping("/project")
+@RequestMapping("/projectc")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping("/projectList")
+    @RequestMapping("/projectListc")
     public String projectListPage(Model module) {
         System.out.println("projectList");
         List<Project> projectList= projectService.findAll();
         Result<List<Project>> result = new Result<>(ResultCode.SUCCESS, projectList);
-        module.addAttribute("projectList",result);
+        module.addAttribute("resultList",result);
 
-       return "/toProjectList";
+       return "project/projectList";
     }
 }

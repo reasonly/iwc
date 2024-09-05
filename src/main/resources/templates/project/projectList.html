@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -24,11 +24,12 @@
     <tbody>
     <!--resultList.data.content是核心列表数据，使用data时可以自动解析到内部的content数据？PageImpl.toString-->
     <!--<td th:text="${resultList.data}">resultList.data</td>-->
-    <tr  th:each="project : ${projectList.data.list}">
+    <tr  th:each="project : ${resultList.data}">
         <th scope="row" th:text="${project.projectId}">1</th>
         <td th:text="${project.projectName}">ruanko</td>
         <td th:text="${project.projectContent}">123456</td>
         <td th:text="${project.projectState}">18</td>
+        <td th:text="${project.administratorId}" th:hidden="true">18</td>
 <!--        <td><a th:href="@{/user/toEdit(id=${user.id},username=${user.username})}">编辑</a></td>-->
 <!--        <td><a th:href="@{/user/delete(id=${user.id})}">删除</a></td>-->
     </tr>

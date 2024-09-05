@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.iworkcloud.mapper.UserMapper">
+<mapper namespace="com.iworkcloud.mapper.NoteMapper">
 
-	<resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.User">
+	<resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Note">
 		<result column="note_id" property="noteId" />
 		<result column="note_name" property="noteName" />
-		<result column="note_body" property="userBody" />
+		<result column="note_body" property="noteBody" />
 		<result column="note_date" property="noteDate" />
-		<result column="remind_time" property="remindTime" />
+		<result column="remind_time" property="remindDate" />
 		<result column="user_id" property="userId" />
 		<result column="administrator_id" property="administratorId" />
 	</resultMap>
