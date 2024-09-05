@@ -1,4 +1,4 @@
-package com.ruanko.pojo.entity;
+package com.iworkcloud.pojo.entity;
 
 public class meetingAttendance {
     protected Integer meetingAttendanceId;

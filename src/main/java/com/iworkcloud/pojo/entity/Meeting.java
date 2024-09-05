@@ -1,16 +1,13 @@
-package com.ruanko.pojo.entity;
-
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+package com.iworkcloud.pojo.entity;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Meeting {
     protected Integer meetingId;
     private Integer meetingNum;
     private String meetingName;
-    private Timestamp startDate;
-    private Timestamp endDate;
+    private Timestamp startTime;
+    private Timestamp endTime;
     private String meetingState;
     private Integer administratorId;
 
@@ -38,20 +35,20 @@ public class Meeting {
         this.meetingName = meetingName;
     }
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public Timestamp getStartTime() {
+        return startTime;
     }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 
-    public Timestamp getEndDate() {
-        return endDate;
+    public Timestamp getEndTime() {
+        return endTime;
     }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
+    public void setEndTime(Timestamp endTime) {
+        this.endTime = endTime;
     }
 
     public String getMeetingState() {
@@ -76,8 +73,8 @@ public class Meeting {
                 "meetingId=" + meetingId +
                 ", meetingNum=" + meetingNum +
                 ", meetingName='" + meetingName + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
                 ", meetingState='" + meetingState + '\'' +
                 ", administratorId=" + administratorId +
                 '}';
