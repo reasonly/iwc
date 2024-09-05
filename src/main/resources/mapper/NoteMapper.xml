@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iworkcloud.mapper.UserMapper">
+
+	<resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.User">
+		<result column="note_id" property="noteId" />
+		<result column="note_name" property="noteName" />
+		<result column="note_body" property="userBody" />
+		<result column="note_date" property="noteDate" />
+		<result column="remind_time" property="remindTime" />
+		<result column="user_id" property="userId" />
+		<result column="administrator_id" property="administratorId" />
+	</resultMap>
+
+
+	<parameterMap id="Note" type="com.iworkcloud.pojo.entity.Note"/>
+
+	<sql id="Base_Column_List">
+		note_name, note_body,note_date,remind_time
+	</sql>
+
+	<insert id="insert" parameterMap="Note">
+		insert into t_note (noteName,noteBody,noteDate,remindTime)
+		values (#{noteName},#{noteBody},#{noteDate},#{remindTime})
+	</insert>
+
+
+	<update id="update" parameterMap="Note">
+		update
+		 	 t_note
+		<trim prefix="set" suffixOverrides=",">
+			<if test="noteName!=null and noteName!=''">
+				note_name = #{noteName},
+			</if>
+			<if test="noteBody!=null and noteBody!=''">
+				note_body = #{noteBody},
+			</if>
+			<if test="noteDate!=null and noteDate!=''">
+				remind_time = #{remindTime},
+			</if>
+		</trim>
+		  where note_id= #{noteId}
+	</update>
+
+	<delete id="delete" parameterType="Integer">
+		delete from t_note where note_id=#{noteId}
+	</delete>
+
+	<select id="findAll" resultMap="BaseResultMap" >
+		select
+		*
+		from note
+	</select>
+
+	<select id="findByEntity" parameterMap="Note" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from note
+		<where>
+			<if test="noteName!=null and noteName!=''">
+				and note_name = #{noteName}
+			</if>
+			<if test="noteBody!=null and noteBody!=''">
+				and note_body = #{noteBody}
+			</if>
+			<if test="noteDate!=null and noteDate!=''">
+				and note_date = #{noteDate}
+			</if>
+		</where>
+	</select>
+
+	<!--用户显示自身的记事本-->
+	<select id="findByUserId" parameterMap="Note" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_note where userId=#{userId}
+	</select>
+
+	<select id="findByAdministratorId" parameterMap="Note" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_note where administratorId=#{administratorId}
+	</select>
+</mapper>
