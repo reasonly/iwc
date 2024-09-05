@@ -40,7 +40,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             String salt=userMapper.findSaltByUserAccount(user.getUserAccount());
             // 转为加密密码
             String dbPass=MD5Util.inputPassToDBPass(user.getUserPassword(),salt);
-
             // 填充加密的密码，在数据库中进行比对
             user.setUserPassword(dbPass);
             User user1 = userMapper.findByUsernameAndPassword(user);

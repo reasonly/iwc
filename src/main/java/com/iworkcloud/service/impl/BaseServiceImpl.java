@@ -123,11 +123,22 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	public Object findByObject(Object obj) {
 		Object result = null;
 		try {
+			System.out.println(obj);
 			result = getMapper().findByObject(obj);
 		} catch (Exception e) {
 			logger.error("查询"+obj+"失败!原因是:",e);
 		}
 		return result;
+	}
+	@Override
+	public T findByAccount(String str) {
+		T user = null;
+		try {
+			user = getMapper().findByAccount(str);
+		} catch (Exception e) {
+			logger.error("id:"+str+"查询失败!原因是:",e);
+		}
+		return user;
 	}
 
 	private String getClassName(T t){

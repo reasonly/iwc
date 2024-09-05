@@ -11,7 +11,7 @@ public class IndexController {
 
     @GetMapping("/personalCenter")
     public String personalCenter() {
-        return "personalCenter";
+        return "personalcenter/personalCenter";
     }
 
     @GetMapping("/page2")

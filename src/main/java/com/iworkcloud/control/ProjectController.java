@@ -2,6 +2,7 @@ package com.iworkcloud.control;
 
 import com.iworkcloud.pojo.ResultCode;
 import com.iworkcloud.pojo.entity.Project;
+import com.iworkcloud.pojo.entity.User;
 import com.iworkcloud.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import com.iworkcloud.pojo.Result;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/projectc")
@@ -19,8 +21,12 @@ public class ProjectController {
     private ProjectService projectService;
 
     @RequestMapping("/projectListc")
-    public String projectListPage(Model module) {
+    public String projectListPage(Model module,HttpSession session) {
         System.out.println("projectList");
+        System.out.println(session.getAttribute("Authority"));
+        User currentUser = (User) session.getAttribute("currentUser");
+        System.out.println(currentUser);
+
         List<Project> projectList= projectService.findAll();
         Result<List<Project>> result = new Result<>(ResultCode.SUCCESS, projectList);
         module.addAttribute("resultList",result);
@@ -40,6 +46,7 @@ public class ProjectController {
     @RequestMapping("/toEdit")
     public String toEdit(Model module, @RequestParam() Integer id) {
         System.out.println("toEdit"+id+"??");
+
         module.addAttribute("project", projectService.findByPrimaryKey(id));
         return "project/editProject";
     }
