@@ -7,9 +7,10 @@ import com.iworkcloud.pojo.entity.Administrator;
 import com.iworkcloud.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.iworkcloud.util.MD5Util;
+import org.springframework.stereotype.Service;
 
 
-
+@Service
 public class AdministratorServiceImpl extends BaseServiceImpl<Administrator> implements AdministratorService {
 
     @Autowired
