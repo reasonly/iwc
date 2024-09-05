@@ -21,6 +21,7 @@
 
     <update id="update" parameterMap="Project">
         update t_project
+            set
         <if test="projectName != null and projectName != ''">
             project_name = #{projectName},
         </if>
@@ -31,7 +32,7 @@
             project_state = #{projectState},
         </if>
         <if test="administratorId != null and administratorId != ''">
-            administrator_id = #{administratorId},
+            administrator_id = #{administratorId}
         </if>
         where project_id = #{projectId}
     </update>
@@ -81,4 +82,14 @@
         </where>
 
     </select>
+
+    <select id="findByPrimaryKey" parameterType="integer" resultMap="BaseResultMap">
+            select <include refid="Base_Column_List" />
+            from t_project
+            where project_id = #{projectId}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="integer">
+        delete from t_project where project_id = #{projectId}
+    </delete>
 </mapper>

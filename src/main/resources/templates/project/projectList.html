@@ -16,24 +16,24 @@
         <th>项目名称</th>
         <th>项目内容</th>
         <th>项目状态</th>
-
-<!--        <th>编辑</th>-->
-<!--        <th>删除</th>-->
+        <th>编辑</th>
+        <th>删除</th>
     </tr>
     </thead>
     <tbody>
     <!--resultList.data.content是核心列表数据，使用data时可以自动解析到内部的content数据？PageImpl.toString-->
     <!--<td th:text="${resultList.data}">resultList.data</td>-->
     <tr  th:each="project : ${resultList.data}">
-        <th scope="row" th:text="${project.projectId}">1</th>
-        <td th:text="${project.projectName}">ruanko</td>
-        <td th:text="${project.projectContent}">123456</td>
-        <td th:text="${project.projectState}">18</td>
-        <td th:text="${project.administratorId}" th:hidden="true">18</td>
-<!--        <td><a th:href="@{/user/toEdit(id=${user.id},username=${user.username})}">编辑</a></td>-->
-<!--        <td><a th:href="@{/user/delete(id=${user.id})}">删除</a></td>-->
+        <th scope="row" th:text="${project.getProjectId()}">1</th>
+        <td th:text="${project.getProjectName()}">ruanko</td>
+        <td th:text="${project.getProjectContent()}">123456</td>
+        <td th:text="${project.getProjectState()}">18</td>
+        <td th:text="${project.getAdministratorId()}" th:hidden="true">18</td>
+        <td><a th:href="@{/projectc/toEdit(id=${project.getProjectId()},name=${project.getProjectName()})}">编辑</a></td>
+        <td><a th:href="@{/projectc/delete(id=${project.projectId})}">删除</a></td>
     </tr>
     </tbody>
+<!--    todo:列表分页 -->
 </table>
 </body>
 </html>

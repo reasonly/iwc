@@ -20,4 +20,5 @@ public class ProjectServiceImpl extends BaseServiceImpl<Project> implements Proj
     public List<Project> projectList(Model model) {
         return projectMapper.findAll();
     }
+
 }
