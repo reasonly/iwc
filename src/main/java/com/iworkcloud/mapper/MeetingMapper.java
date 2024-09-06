@@ -1,6 +1,6 @@
 package com.iworkcloud.mapper;
 
-import com.iworkcloud.pojo.entity.Meeting;
+import com.iworkcloud.pojo.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

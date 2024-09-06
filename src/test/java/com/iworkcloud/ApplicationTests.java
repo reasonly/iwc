@@ -1,8 +1,6 @@
 package com.iworkcloud;
 
-import com.iworkcloud.pojo.entity.User;
 import com.iworkcloud.mapper.UserMapper;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

@@ -1,6 +1,6 @@
 package com.iworkcloud.service;
 
-import com.iworkcloud.pojo.entity.Attendance;
+import com.iworkcloud.pojo.Attendance;
 
 import java.util.List;
 

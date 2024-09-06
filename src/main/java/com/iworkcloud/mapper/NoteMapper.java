@@ -1,6 +1,6 @@
 package com.iworkcloud.mapper;
 
-import com.iworkcloud.pojo.entity.Note;
+import com.iworkcloud.pojo.Note;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

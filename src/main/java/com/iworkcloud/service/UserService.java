@@ -1,6 +1,6 @@
 package com.iworkcloud.service;
 
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.User;
 
 
 /**

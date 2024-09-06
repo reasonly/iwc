@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iworkcloud.mapper.AttendanceMapper">
 
-    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Attendance">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Attendance">
         <result column="attendance_id" property="attendanceId" />
         <result column="user_id" property="userId" />
         <result column="attendance_state" property="attendanceState" />
@@ -11,7 +11,7 @@
     </resultMap>
 
 
-    <parameterMap id="Attendance" type="com.iworkcloud.pojo.entity.Attendance"/>
+    <parameterMap id="Attendance" type="com.iworkcloud.pojo.Attendance"/>
 
     <sql id="Base_Column_List">
         attendance_id, user_id, attendance_state,attendance_time,date

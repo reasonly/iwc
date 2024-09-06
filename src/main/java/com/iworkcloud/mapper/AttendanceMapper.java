@@ -1,7 +1,6 @@
 package com.iworkcloud.mapper;
 
-import com.iworkcloud.pojo.entity.Attendance;
-import org.apache.ibatis.annotations.Mapper;
+import com.iworkcloud.pojo.Attendance;
 
 import java.util.List;
 

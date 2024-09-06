@@ -1,6 +1,6 @@
 package com.iworkcloud.mapper;
 
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

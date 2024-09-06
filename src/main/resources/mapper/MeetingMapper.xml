@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iworkcloud.mapper.MeetingMapper">
 
-    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Meeting">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Meeting">
         <result column="meeting_id" property="meetingId" />
         <result column="meeting_num" property="meetingNum" />
         <result column="meeting_name" property="meetingName" />
@@ -12,7 +12,7 @@
         <result column="administrator_id" property="administratorId" />
     </resultMap>
 
-    <parameterMap id="Meeting" type="com.iworkcloud.pojo.entity.Meeting"/>
+    <parameterMap id="Meeting" type="com.iworkcloud.pojo.Meeting"/>
 
     <sql id="Base_Column_List">
         meeting_id, meeting_num, meeting_name,start_time,end_time,meeting_state,administrator_id

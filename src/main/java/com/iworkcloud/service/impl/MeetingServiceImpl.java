@@ -2,7 +2,7 @@ package com.iworkcloud.service.impl;
 
 import com.iworkcloud.mapper.BaseMapper;
 import com.iworkcloud.mapper.MeetingMapper;
-import com.iworkcloud.pojo.entity.Meeting;
+import com.iworkcloud.pojo.Meeting;
 import com.iworkcloud.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

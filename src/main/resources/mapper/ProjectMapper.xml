@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.iworkcloud.mapper.ProjectMapper">
-    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Project">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Project">
         <result column="project_id" property="projectId" />
         <result column="project_name" property="projectName" />
         <result column="project_content" property="projectContent" />
@@ -9,7 +9,7 @@
         <result column="administrator_id" property="administratorId" />
     </resultMap>
 
-    <parameterMap id="Project" type="com.iworkcloud.pojo.entity.Project" />
+    <parameterMap id="Project" type="com.iworkcloud.pojo.Project" />
     <sql id="Base_Column_List">
 		project_id, project_name, project_content, project_state, administrator_id
 	</sql>
@@ -69,7 +69,7 @@
     </select>
 
 <!--    通过关键字查询项目信息-->
-    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.entity.Project">
+    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.Project">
         select <include refid="Base_Column_List" />
         from t_project
         <where>

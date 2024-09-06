@@ -1,14 +1,9 @@
 package com.iworkcloud.control;
 
-import com.iworkcloud.pojo.Result;
-import com.iworkcloud.pojo.ResultCode;
-import com.iworkcloud.pojo.entity.Administrator;
-import com.iworkcloud.pojo.entity.Attendance;
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.AttendanceService;
 import com.iworkcloud.service.AdministratorService;
 import com.iworkcloud.service.UserService;
-import com.iworkcloud.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,27 +30,14 @@ public class AttendanceConteroller {
 
         int authority = (int) session.getAttribute("Authority");
         module.addAttribute("authority",authority);
-        if(0==authority){
+
             System.out.println("员工个人中心");
 
             User currentUser = (User) session.getAttribute("currentUser");
 
-            List<Attendance> AttendanceList=attendanceService.findByUserId(currentUser.getUserId());
-            Result<List<Attendance>> result = new Result<>(ResultCode.SUCCESS, AttendanceList);
-
-
-            module.addAttribute("resultList",result);
-            module.addAttribute("user",currentUser);
-
 
             return "personalcenter/personalCenter";
-        }else{
-            System.out.println("管理员个人中心");
-            Administrator currentAdmin = (Administrator) session.getAttribute("currentAdministrator");
-            module.addAttribute("admin",currentAdmin);
 
-            return "personalcenter/personalCenter";
-        }
 
 
 
@@ -70,7 +52,7 @@ public class AttendanceConteroller {
     public String toEditPassword(Model module,HttpSession session) {
         System.out.println("toEditPassword");
         int authority = (int) session.getAttribute("Authority");
-        if(0==authority){
+
             System.out.println("员工AttendanceList");
 
             User currentUser = (User) session.getAttribute("currentUser");
@@ -78,13 +60,7 @@ public class AttendanceConteroller {
 
 
             return "personalcenter/personalCenter";
-        }else{
-            System.out.println("管理员个人中心");
-            Administrator currentAdmin = (Administrator) session.getAttribute("currentAdministrator");
-            module.addAttribute("admin",currentAdmin);
 
-            return "personalcenter/personalCenter";
-        }
     }
 
     @RequestMapping("/editPassword")
@@ -103,13 +79,7 @@ public class AttendanceConteroller {
 
         }
 
-        else{
-            System.out.println("管理员个人中心");
-            Administrator currentAdmin = (Administrator) session.getAttribute("currentAdministrator");
-            //module.addAttribute("admin",currentAdmin);
 
-            return "personalcenter/personalCenter";
-        }
 
 
 

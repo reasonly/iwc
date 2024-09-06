@@ -1,7 +1,6 @@
 package com.iworkcloud.service;
 
-import com.iworkcloud.pojo.entity.Note;
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.Note;
 
 
 /**

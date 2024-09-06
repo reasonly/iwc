@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS `t_finance`;
 DROP TABLE IF EXISTS `t_project`;
 DROP TABLE IF EXISTS `t_meeting`;
 DROP TABLE IF EXISTS `t_user`;
-DROP TABLE IF EXISTS `t_administrator`;
 -- ----------------------------
 -- Table structure for `t_user`
 -- ----------------------------
@@ -21,34 +20,21 @@ CREATE TABLE `t_user` (
   `user_name` varchar(10) NOT NULL,
   `user_account` varchar(20) NOT NULL,
   `user_password` varchar(35) NOT NULL,
+  `user_email` varchar(20) NOT NULL,
   `user_authority` varchar(6) NOT NULL,
   `user_salt` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '109889f941630d269546335f728f3558', '员工','123');-- MD5加密 真实密码12345
-INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', 'bfda7bb176421340cba445f8465de887', '员工','123');--  123456123
-INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54', '员工','123');-- 123457123
+INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '109889f941630d269546335f728f3558', '123456789@qq.com','员工','123');-- MD5加密 真实密码12345
+INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', 'bfda7bb176421340cba445f8465de887','123456789@qq.com', '员工','123');--  123456123
+INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54','123456789@qq.com', '员工','123');-- 123457123
+INSERT INTO `t_user` VALUES ('00000004', '张三', 'admi1', '8a3379ae294935afa4195fa27600fd43', '123456789@qq.com','管理员','123');-- 1234567
+INSERT INTO `t_user` VALUES ('00000005', '王五', 'admi2', '109889f941630d269546335f728f3558','123456789@qq.com', '管理员','123');-- 12345
+INSERT INTO `t_user` VALUES ('00000006', '赵六', 'admi3', '579d9ec9d0c3d687aaa91289ac2854e4','123456789@qq.com', '管理员','123');-- 123456
 
--- ----------------------------
--- Table structure for `t_administrator`
--- ----------------------------
 
-CREATE TABLE `t_administrator` (
-  `administrator_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `administrator_name` varchar(10) NOT NULL,
-  `administrator_account` varchar(20) NOT NULL,
-  `administrator_password` varchar(35) NOT NULL,
-  `administrator_authority` varchar(10) NOT NULL,
-  `administrator_salt` varchar(11) DEFAULT NULL,
-  PRIMARY KEY (`administrator_id`),
-  UNIQUE KEY (`administrator_account`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `t_administrator` VALUES ('00000001', '张三', 'administrator1', '8a3379ae294935afa4195fa27600fd43', '管理员','123');-- 1234567
-INSERT INTO `t_administrator` VALUES ('00000002', '王五', 'administrator2', '109889f941630d269546335f728f3558', '管理员','123');-- 12345
-INSERT INTO `t_administrator` VALUES ('00000003', '赵六', 'administrator3', '579d9ec9d0c3d687aaa91289ac2854e4', '管理员','123');-- 123456
 -- ----------------------------
 -- Table structure for `t_attendance`
 -- ----------------------------
@@ -75,14 +61,14 @@ CREATE TABLE `t_project` (
   `project_name` varchar(30) NOT NULL,
   `project_content` varchar(200) NOT NULL,
   `project_state` varchar(10) NOT NULL,
-  `administrator_id` int(8) unsigned zerofill NOT NULL,
+  `user_id` int(8) unsigned zerofill NOT NULL,
   PRIMARY KEY (`project_id`),
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中', '00000001');
-INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始', '00000002');
-INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束', '00000003');
+INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中', '00000004');
+INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始', '00000005');
+INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束', '00000006');
 
 -- ----------------------------
 -- Table structure for `t_finance`
@@ -111,17 +97,17 @@ INSERT INTO `t_finance` VALUES ('00000003', '补贴', '2000.00', '住房补贴',
 CREATE TABLE `t_finance_manage` (
   `finance_manage_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `finance_id` int(8) unsigned zerofill NOT NULL,
-  `administrator_id` int(8) unsigned zerofill NOT NULL,
+  `user_id` int(8) unsigned zerofill NOT NULL,
   `finance_manage_time` datetime NOT NULL,
   `finance_manage_description` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`finance_manage_id`),
   FOREIGN KEY (`finance_id`) REFERENCES `t_finance` (`finance_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000002', '2024-09-03 10:30:15', '核实流水');
-INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000001', '2023-12-15 14:15:00', '登记奖金');
-INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000003', '2024-09-03 10:30:15', '该员工仍需补贴');
+INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000005', '2024-09-03 10:30:15', '核实流水');
+INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000004', '2023-12-15 14:15:00', '登记奖金');
+INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000006', '2024-09-03 10:30:15', '该员工仍需补贴');
 -- ----------------------------
 -- Table structure for `t_leave`
 -- ----------------------------
@@ -148,15 +134,15 @@ INSERT INTO `t_leave` VALUES ('00000003', '2024-09-06', '2024-09-11', '年假', 
 CREATE TABLE `t_leave_approval` (
   `approval_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `leave_id` int(8) unsigned zerofill NOT NULL,
-  `administrator_id` int(8) unsigned zerofill NOT NULL,
+  `user_id` int(8) unsigned zerofill NOT NULL,
   PRIMARY KEY (`approval_id`),
   FOREIGN KEY (`leave_id`) REFERENCES `t_leave` (`leave_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_leave_approval` VALUES ('00000001', '00000001', '00000003');
-INSERT INTO `t_leave_approval` VALUES ('00000002', '00000002', '00000002');
-INSERT INTO `t_leave_approval` VALUES ('00000003', '00000003', '00000001');
+INSERT INTO `t_leave_approval` VALUES ('00000001', '00000001', '00000006');
+INSERT INTO `t_leave_approval` VALUES ('00000002', '00000002', '00000005');
+INSERT INTO `t_leave_approval` VALUES ('00000003', '00000003', '00000004');
 
 -- ----------------------------
 -- Table structure for `t_meeting`
@@ -169,15 +155,15 @@ CREATE TABLE `t_meeting` (
   `start_time` datetime NOT NULL,
   `end_time` datetime NOT NULL,
   `meeting_state` varchar(10) NOT NULL,
-  `administrator_id` int(8) unsigned zerofill NOT NULL,
+  `user_id` int(8) unsigned zerofill NOT NULL,
   PRIMARY KEY (`meeting_id`),
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   UNIQUE KEY (`meeting_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_meeting` VALUES ('00000001', '001', '未来趋势与创新策略研讨会', '2024-06-05 08:30:00', '2024-06-05 11:30:00', '已结束', '00000002');
-INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '进行中', '00000001');
-INSERT INTO `t_meeting` VALUES ('00000003', '003', '可持续发展与企业社会责任峰会', '2024-10-15 13:00:00', '2024-10-15 15:00:54', '未开始', '00000002');
+INSERT INTO `t_meeting` VALUES ('00000001', '001', '未来趋势与创新策略研讨会', '2024-06-05 08:30:00', '2024-06-05 11:30:00', '已结束', '00000005');
+INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '进行中', '00000004');
+INSERT INTO `t_meeting` VALUES ('00000003', '003', '可持续发展与企业社会责任峰会', '2024-10-15 13:00:00', '2024-10-15 15:00:54', '未开始', '00000006');
 -- ----------------------------
 -- Table structure for `t_meeting_attendance`
 -- ----------------------------
@@ -208,16 +194,14 @@ CREATE TABLE `t_note` (
   `note_date` datetime NOT NULL,
   `remind_time` datetime DEFAULT NULL,
   `user_id` int(8) unsigned zerofill DEFAULT NULL,
-  `administrator_id` int(8) unsigned zerofill DEFAULT NULL,
   PRIMARY KEY (`note_id`),
-  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_note` VALUES ('00000001', '会议提醒', '记得带上资料', '2024-09-13 13:02:00', '2024-09-15 08:30:00', '00000001', null);
-INSERT INTO `t_note` VALUES ('00000002', '会议提醒', '提前半个小时到', '2024-09-20 11:03:32', '2024-09-24 11:03:39', '00000002', null);
-INSERT INTO `t_note` VALUES ('00000003', '提交提醒', '资料提交时间', '2024-09-26 11:04:33', '2024-10-23 11:04:39', '00000003', null);
-INSERT INTO `t_note` VALUES ('00000004', '面试', '面试应聘者', '2024-09-12 11:05:32', '2024-10-21 11:05:38', null, '1');
+INSERT INTO `t_note` VALUES ('00000001', '会议提醒', '记得带上资料', '2024-09-13 13:02:00', '2024-09-15 08:30:00', '00000001');
+INSERT INTO `t_note` VALUES ('00000002', '会议提醒', '提前半个小时到', '2024-09-20 11:03:32', '2024-09-24 11:03:39', '00000002');
+INSERT INTO `t_note` VALUES ('00000003', '提交提醒', '资料提交时间', '2024-09-26 11:04:33', '2024-10-23 11:04:39', '00000003');
+INSERT INTO `t_note` VALUES ('00000004', '面试', '面试应聘者', '2024-09-12 11:05:32', '2024-10-21 11:05:38', '00000004');
 
 -- ----------------------------
 -- Table structure for `t_project_attendance`
@@ -237,20 +221,3 @@ INSERT INTO `t_project_attendance` VALUES ('00000002', '00000001', '00000003');
 INSERT INTO `t_project_attendance` VALUES ('00000003', '00000002', '00000001');
 INSERT INTO `t_project_attendance` VALUES ('00000004', '00000003', '00000003');
 
--- ----------------------------
--- Table structure for `t_user_manage`
--- ----------------------------
-
-CREATE TABLE `t_user_manage` (
-  `user_manage_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `user_id` int(8) unsigned zerofill NOT NULL,
-  `administrator_id` int(8) unsigned zerofill NOT NULL,
-  `manage_description` varchar(100) NOT NULL,
-  `manage_time` datetime NOT NULL,
-  PRIMARY KEY (`user_manage_id`),
-  FOREIGN KEY (`administrator_id`) REFERENCES `t_administrator` (`administrator_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `t_user_manage` VALUES ('00000001', '00000001', '00000002', '修改信息', '2024-05-14 11:08:50');
-INSERT INTO `t_user_manage` VALUES ('00000002', '00000003', '00000001', '添加员工', '2024-05-16 11:09:16');

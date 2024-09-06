@@ -1,6 +1,6 @@
 package com.iworkcloud.service;
 
-import com.iworkcloud.pojo.entity.Meeting;
+import com.iworkcloud.pojo.Meeting;
 
 
 /**

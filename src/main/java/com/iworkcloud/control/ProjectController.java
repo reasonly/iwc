@@ -1,9 +1,8 @@
 package com.iworkcloud.control;
 
 import com.iworkcloud.pojo.ResultCode;
-import com.iworkcloud.pojo.entity.Administrator;
-import com.iworkcloud.pojo.entity.Project;
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.Project;
+import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

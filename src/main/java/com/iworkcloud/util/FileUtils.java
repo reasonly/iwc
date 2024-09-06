@@ -1,7 +1,6 @@
 package com.iworkcloud.util;
 
 import org.springframework.stereotype.Component;
-import com.iworkcloud.pojo.entity.Results;
 
 import java.io.File;
 import java.util.ArrayList;

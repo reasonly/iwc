@@ -1,6 +1,6 @@
 package com.iworkcloud.service;
 
-import com.iworkcloud.pojo.entity.Project;
+import com.iworkcloud.pojo.Project;
 import org.springframework.ui.Model;
 
 import java.util.List;

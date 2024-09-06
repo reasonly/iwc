@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iworkcloud.mapper.NoteMapper">
 
-	<resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Note">
+	<resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Note">
 		<result column="note_id" property="noteId" />
 		<result column="note_name" property="noteName" />
 		<result column="note_body" property="noteBody" />
@@ -13,7 +13,7 @@
 	</resultMap>
 
 
-	<parameterMap id="Note" type="com.iworkcloud.pojo.entity.Note"/>
+	<parameterMap id="Note" type="com.iworkcloud.pojo.Note"/>
 
 	<sql id="Base_Column_List">
 		note_name, note_body,note_date,remind_time

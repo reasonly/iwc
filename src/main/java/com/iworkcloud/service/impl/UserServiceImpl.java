@@ -2,7 +2,7 @@ package com.iworkcloud.service.impl;
 
 import com.iworkcloud.mapper.BaseMapper;
 import com.iworkcloud.mapper.UserMapper;
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

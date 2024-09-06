@@ -3,7 +3,6 @@ package com.iworkcloud.service.impl;
 
 import com.iworkcloud.mapper.BaseMapper;
 import com.iworkcloud.mapper.AdministratorMapper;
-import com.iworkcloud.pojo.entity.Administrator;
 import com.iworkcloud.service.AdministratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

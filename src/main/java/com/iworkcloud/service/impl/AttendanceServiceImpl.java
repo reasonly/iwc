@@ -2,7 +2,7 @@ package com.iworkcloud.service.impl;
 
 import com.iworkcloud.mapper.AttendanceMapper;
 import com.iworkcloud.mapper.BaseMapper;
-import com.iworkcloud.pojo.entity.Attendance;
+import com.iworkcloud.pojo.Attendance;
 import com.iworkcloud.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

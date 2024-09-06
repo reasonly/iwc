@@ -3,7 +3,7 @@ package com.iworkcloud.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.iworkcloud.mapper.BaseMapper;
-import com.iworkcloud.pojo.entity.User;
+import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.BaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
