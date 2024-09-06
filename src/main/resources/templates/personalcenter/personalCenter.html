@@ -12,8 +12,36 @@
 <table class="table table-hover">
     <thead>
     <tr>
+        <th>id</th>
+        <th>名字</th>
+        <th>账号</th>
+        <th>身份</th>
+    </tr>
+    </thead>
+    <tbody >
+
+    <tr th:object= "${user}">
+        <th scope="row" th:text="${user.getUserId()}"></th>
+        <td th:text="${user.getUserName()}"></td>
+        <td th:text="${user.getUserAccount()}"></td>
+        <td th:text="${user.getUserAuthority()}" ></td>
+    </tr>
+
+
+
+    </tbody>
+    <a th:href="@{/toEditPassword}">修改密码</a>
+</table>
+
+<div>
+    <a th:href="@{/attendance(id=${user.getUserId()})}" class="btn">签到</a>
+    <a th:href="@{/toLeave}" class="btn">请假</a>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <tr>
         <th>考勤id</th>
-        <th>用户id</th>
         <th>考勤状态</th>
         <th>签到时间</th>
         <th>日期</th>
@@ -25,7 +53,6 @@
         <td th:text="${attendance.getAttendanceState()}"></td>
         <td th:text="${attendance.getAttendanceTime()}"></td>
         <td th:text="${attendance.getDate()}" ></td>
-
     </tr>
     </tbody>
 

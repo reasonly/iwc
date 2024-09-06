@@ -26,19 +26,26 @@
 
 	<update id="update" parameterMap="User">
 		update
-		 	 user
+		 	 t_user
 		<trim prefix="set" suffixOverrides=",">
-			<if test="username!=null and username!=''">
-				username = #{username},
+			<if test="userName!=null and userName!=''">
+				user_name = #{userName},
 			</if>
-			<if test="password!=null and password!=''">
-				password = #{password},
+		    <if test="userAccount!=null and userAccount!=''">
+				user_account = #{userAccount},
 			</if>
-			<if test="age!=null and age!=''">
-				age = #{age},
+			<if test="userPassword!=null and userPassword!=''">
+				user_password = #{userPassword},
 			</if>
+			<if test="userAuthority!=null and userAuthority!=''">
+				user_authority = #{userAuthority},
+			</if>
+			<if test="userSalt!=null and userSalt!=''">
+				user_salt = #{userSalt},
+			</if>
+
 		</trim>
-		  where id= #{id}
+		  where user_id= #{userId}
 	</update>
 
 	<delete id="delete" parameterType="Integer">
