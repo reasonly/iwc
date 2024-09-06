@@ -2,35 +2,34 @@ package com.iworkcloud.control;
 
 import com.iworkcloud.pojo.ResultCode;
 import com.iworkcloud.pojo.Project;
+import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import com.iworkcloud.pojo.Result;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
 
-@Controller
-@RequestMapping("/projectc")
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/project")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
     @RequestMapping("/projectListc")
-    public String projectListPage(Model module,HttpSession session) {
+    public Results projectListPage(Model module,HttpSession session) {
         System.out.println("projectList");
         System.out.println(session.getAttribute("Authority"));
 
         Integer isAdmin = (Integer) session.getAttribute("Authority");
         List<Project> projectList=null;
         if(isAdmin==1){
-            Administrator currentAdministrator = (Administrator) session.getAttribute("currentAdministrator");
+            User currentAdministrator = (User) session.getAttribute("currentAdministrator");
             module.addAttribute("currentInfo",currentAdministrator);
             projectList= projectService.projectList();
 
@@ -42,11 +41,8 @@ public class ProjectController {
 
         }
 
-        Result<List<Project>> result = new Result<>(ResultCode.SUCCESS, projectList);
-        module.addAttribute("resultList",result);
-        module.addAttribute("idAdmin",isAdmin);
-        module.addAttribute("searchProject",new Project());
-       return "project/projectList";
+
+        return Results.Success(projectList);
     }
     /**
      * 跳转到编辑页面的请求处理方法
