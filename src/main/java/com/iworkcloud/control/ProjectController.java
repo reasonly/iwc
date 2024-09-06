@@ -1,6 +1,5 @@
 package com.iworkcloud.control;
 
-import com.iworkcloud.pojo.ResultCode;
 import com.iworkcloud.pojo.Project;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
@@ -9,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import com.iworkcloud.pojo.Result;
+import com.iworkcloud.pojo.Results;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -21,7 +20,7 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @RequestMapping("/projectListc")
+    @GetMapping("/List")
     public Results projectListPage(Model module,HttpSession session) {
         System.out.println("projectList");
         System.out.println(session.getAttribute("Authority"));
