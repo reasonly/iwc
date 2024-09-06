@@ -1,6 +1,7 @@
 package com.iworkcloud.control;
 
 import com.iworkcloud.pojo.ResultCode;
+import com.iworkcloud.pojo.entity.Administrator;
 import com.iworkcloud.pojo.entity.Project;
 import com.iworkcloud.pojo.entity.User;
 import com.iworkcloud.service.ProjectService;
@@ -24,13 +25,23 @@ public class ProjectController {
     public String projectListPage(Model module,HttpSession session) {
         System.out.println("projectList");
         System.out.println(session.getAttribute("Authority"));
-        User currentUser = (User) session.getAttribute("currentUser");
-        System.out.println(currentUser);
+
+        Integer isAdmin = (Integer) session.getAttribute("Authority");
+        if(isAdmin==1){
+            Administrator currentAdministrator = (Administrator) session.getAttribute("currentAdministrator");
+            module.addAttribute("currentInfo",currentAdministrator);
+
+        }
+        else {
+            User currentUser = (User) session.getAttribute("currentUser");
+            module.addAttribute("currentInfo",currentUser);
+
+        }
 
         List<Project> projectList= projectService.findAll();
         Result<List<Project>> result = new Result<>(ResultCode.SUCCESS, projectList);
         module.addAttribute("resultList",result);
-
+        module.addAttribute("idAdmin",isAdmin);
        return "project/projectList";
     }
     /**
