@@ -101,5 +101,4 @@ public interface BaseMapper<T> {
 	 * @throws
 	 */
 	 Object findByObject(Object obj);
-	 T findByAccount(String str);
 }

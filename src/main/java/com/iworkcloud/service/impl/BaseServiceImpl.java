@@ -130,16 +130,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		}
 		return result;
 	}
-	@Override
-	public T findByAccount(String str) {
-		T user = null;
-		try {
-			user = getMapper().findByAccount(str);
-		} catch (Exception e) {
-			logger.error("id:"+str+"查询失败!原因是:",e);
-		}
-		return user;
-	}
+
 
 	private String getClassName(T t){
 		String str="";

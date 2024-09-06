@@ -30,27 +30,39 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
      * @return 查询结果
      */
 
-
-
     @Override
-    public Boolean userLogin(User user) {
-        System.out.println("UserServiceImpl.userLogin");
+    public Boolean cheakUserPassword(User user,String password) {
+        System.out.println("开始检测用户密码!");
         try {
             // 获取用户的盐值
-            String salt=userMapper.findSaltByUserAccount(user.getUserAccount());
-            // 转为加密密码
-            String dbPass=MD5Util.inputPassToDBPass(user.getUserPassword(),salt);
-            // 填充加密的密码，在数据库中进行比对
-            user.setUserPassword(dbPass);
-            User user1 = userMapper.findByUsernameAndPassword(user);
-            System.out.println(user1);
-            return user1 != null;
+            String salt=user.getUserSalt();
+            // 将用户密码转为加密密码
+            String dbPass=MD5Util.inputPassToDBPass(password,salt);
+            // 加密的密码，与数据库中进行比对
+            if(dbPass.equals(user.getUserPassword())){
+                System.out.println("密码对比正确!");
+                return true;
+            }else {
+                System.out.println("密码对比不一致!");
+                return false;
+            }
         } catch (Exception e) {
-            System.out.println("查询失败!");
+            System.out.println("密码对比过程出错!");
             e.printStackTrace();
         }
         return false;
     }
 
+    @Override
+    public User findUserByAccount(String str) {
+        User user = null;
+        try {
+            user = userMapper.findUserByAccount(str);
+        } catch (Exception e) {
+            System.out.println("该用户名查询失败!");
+            e.printStackTrace();
+        }
+        return user;
+    }
 
 }

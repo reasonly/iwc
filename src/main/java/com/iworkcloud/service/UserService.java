@@ -13,7 +13,7 @@ import com.iworkcloud.pojo.User;
  */
 public interface UserService extends BaseService<User>{
 
-    Boolean userLogin(User user);
-
+    Boolean cheakUserPassword(User user,String password);
+    User findUserByAccount(String str);
 
 }
