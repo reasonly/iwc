@@ -1,5 +1,6 @@
 package com.iworkcloud.control;
 
+import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.UserService;
 import com.iworkcloud.service.AdministratorService;
 import com.iworkcloud.pojo.Results;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;

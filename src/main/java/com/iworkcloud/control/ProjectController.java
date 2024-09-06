@@ -6,6 +6,8 @@ import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
 import com.iworkcloud.pojo.Result;
@@ -26,21 +28,24 @@ public class ProjectController {
         System.out.println(session.getAttribute("Authority"));
 
         Integer isAdmin = (Integer) session.getAttribute("Authority");
+        List<Project> projectList=null;
         if(isAdmin==1){
             Administrator currentAdministrator = (Administrator) session.getAttribute("currentAdministrator");
             module.addAttribute("currentInfo",currentAdministrator);
+            projectList= projectService.projectList();
 
         }
         else {
             User currentUser = (User) session.getAttribute("currentUser");
             module.addAttribute("currentInfo",currentUser);
+            projectList= projectService.projectList(currentUser.getUserId());
 
         }
 
-        List<Project> projectList= projectService.findAll();
         Result<List<Project>> result = new Result<>(ResultCode.SUCCESS, projectList);
         module.addAttribute("resultList",result);
         module.addAttribute("idAdmin",isAdmin);
+        module.addAttribute("searchProject",new Project());
        return "project/projectList";
     }
     /**
@@ -71,5 +76,36 @@ public class ProjectController {
         System.out.println("delete"+id);
         projectService.deleteByPrimaryKey(id);
         return "redirect:/projectc/projectListc";
+    }
+
+    @RequestMapping("/toAdd")
+    public String toAdd(Model module,@RequestParam Integer id) {
+        System.out.println("toAdd");
+        Project project = new Project();
+        project.setAdministratorId(id);
+        project.setProjectState("未开始");
+        module.addAttribute("project", project);
+        return "project/addProject";
+    }
+
+    @RequestMapping("/add")
+    public String add(@ModelAttribute("project") Project project) {
+        System.out.println("add"+project);
+        projectService.insert(project);
+        return "redirect:/projectc/projectListc";
+    }
+    @PostMapping("/userSearch")
+    public String search(Model model,@RequestParam Project project,@RequestParam Integer userId){
+        System.out.println("search");
+
+        List<Project> projectList=projectService.projectList(project,userId);
+        model.addAttribute("resultList",projectList);
+
+        return "project/projectList";
+    }
+    @PostMapping("/adminSearch")
+    public String adminSearch(Model model){
+        System.out.println("adminSearch");
+        return "project/projectList";
     }
 }

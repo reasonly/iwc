@@ -17,8 +17,20 @@ public class ProjectServiceImpl extends BaseServiceImpl<Project> implements Proj
         return this.projectMapper;
     }
     @Override
-    public List<Project> projectList(Model model) {
+    public List<Project> projectList() {
         return projectMapper.findAll();
     }
 
+    @Override
+    public List<Project> projectList(Integer id){
+        return projectMapper.findByUserId(id);
+    }
+    @Override
+    public List<Project> projectList(Project project){
+        return projectMapper.findByListEntity(project);
+    }
+    @Override
+    public List<Project> projectList(Project project, Integer id){
+        return projectMapper.findByListEntityAndUserId(project,id);
+    }
 }

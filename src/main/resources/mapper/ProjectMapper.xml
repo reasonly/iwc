@@ -15,7 +15,7 @@
 	</sql>
 
     <insert id="insert" parameterMap="Project">
-        insert into project (project_name, project_content, project_state, administrator_id)
+        insert into t_project (project_name, project_content, project_state, administrator_id)
         values (#{projectName},#{projectContent},#{projectState},#{administratorId})
     </insert>
 
@@ -68,10 +68,38 @@
     </where>
     </select>
 
-<!--    通过关键字查询项目信息-->
-    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.Project">
-        select <include refid="Base_Column_List" />
-        from t_project
+<!--&lt;!&ndash;    通过关键字查询项目信息&ndash;&gt;-->
+<!--    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.entity.Project">-->
+<!--        select <include refid="Base_Column_List" />-->
+<!--        from t_project-->
+<!--        <where>-->
+<!--            <if test="projectName != null and projectName != ''">-->
+<!--                and project_name like concat('%',#{projectName},'%')-->
+<!--            </if>-->
+<!--            <if test="projectContent != null and projectContent != ''">-->
+<!--                and project_content like concat('%',#{projectContent},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+
+<!--    </select>-->
+<!--    通过用户id查询项目信息-->
+    <select id="findByUserId" parameterType="integer" resultMap="BaseResultMap">
+            select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.administrator_id
+            from t_project join t_project_attendance
+            on t_project.project_id = t_project_attendance.project_id
+            where t_project_attendance.user_id = #{Id}
+    </select>
+
+    <select id="findByPrimaryKey" parameterType="integer" resultMap="BaseResultMap">
+            select <include refid="Base_Column_List" />
+            from t_project
+            where project_id = #{projectId}
+    </select>
+
+    <select id="findByListEntityAndUserId" resultMap="BaseResultMap">
+        select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.administrator_id
+        from t_project join t_project_attendance
+        on t_project.project_id = t_project_attendance.project_id
         <where>
             <if test="projectName != null and projectName != ''">
                 and project_name like concat('%',#{projectName},'%')
@@ -79,14 +107,11 @@
             <if test="projectContent != null and projectContent != ''">
                 and project_content like concat('%',#{projectContent},'%')
             </if>
+            <if test="projectState != null and projectState != ''">
+                and project_state = #{projectState}
+            </if>
+                and user_id = #{id}
         </where>
-
-    </select>
-
-    <select id="findByPrimaryKey" parameterType="integer" resultMap="BaseResultMap">
-            select <include refid="Base_Column_List" />
-            from t_project
-            where project_id = #{projectId}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="integer">

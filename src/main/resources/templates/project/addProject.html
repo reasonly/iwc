@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>添加项目信息</h1>
+<form th:action="@{/projectc/add(project=${project})}" th:object="${project}" method="post">
+    <input type="hidden" th:field="*{projectId}" />
+    <label for="name">项目名称:</label>
+    <input type="text" id="name" th:field="*{projectName}" required/>
+    <label for="content">项目内容:</label>
+    <input type="text" id="content" th:field="*{projectContent}" required/><br/>
+    <input type="hidden" th:field="*{projectState}" th:value="*{projectState}" />
+
+    <input type="hidden" th:field="*{administratorId}" th:value="*{administratorId}"></input>
+    <button type="submit">保存更改</button>
+</form>
+</body>
+</html>
