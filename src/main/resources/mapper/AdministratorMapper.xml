@@ -83,4 +83,10 @@
         <include refid="Base_Column_List"></include>
         from t_administrator where administrator_account=#{administratorAccount} and administrator_password=#{administratorPassword}
     </select>
+
+    <select id="findByAccount" parameterType="String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_administrator where administrator_account=#{administratorAccount}
+    </select>
 </mapper>

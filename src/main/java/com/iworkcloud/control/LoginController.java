@@ -47,7 +47,7 @@ public class LoginController {
             System.out.println(admin);
 
             Boolean result=administratorService.administratorLogin(admin);
-            session.setAttribute("currentAdministrator", administratorService.findByAccount(user.getUserAccount()));
+            session.setAttribute("currentAdministrator", administratorService.findByAccount(admin.getAdministratorAccount()));
             session.setAttribute("Authority", 1);
             if(result)
                 return "/index";

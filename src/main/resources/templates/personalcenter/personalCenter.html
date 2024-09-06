@@ -5,8 +5,31 @@
     <title>个人中心</title>
 </head>
 <body>
-<h2>这里是个人中心</h2>
+<h1>这里是个人中心</h1>
+<br/>
+<h1>个人考勤列表</h1>
+<br/><br/>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>考勤id</th>
+        <th>用户id</th>
+        <th>考勤状态</th>
+        <th>签到时间</th>
+        <th>日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr  th:each="attendance : ${resultList.data}">
+        <th scope="row" th:text="${attendance.getAttendanceId()}"></th>
+        <td th:text="${attendance.getAttendanceState()}"></td>
+        <td th:text="${attendance.getAttendanceTime()}"></td>
+        <td th:text="${attendance.getDate()}" ></td>
 
+    </tr>
+    </tbody>
+
+</table>
 
 </body>
 </html>

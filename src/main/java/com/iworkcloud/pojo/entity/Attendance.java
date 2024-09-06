@@ -8,23 +8,34 @@ import java.time.LocalDate;
 
 public class Attendance {
 
-    private Integer attendcanceId;
+    private Integer attendanceId;
 
     private Integer userId;
 
-    private Integer attendanceState;
+    private String attendanceState;
 
     private Timestamp attendanceTime;
 
 
     private Date date;
 
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attendcanceId=" + attendanceId +
+                ", userId=" + userId +
+                ", attendanceState=" + attendanceState +
+                ", attendanceTime=" + attendanceTime +
+                ", date=" + date +
+                '}';
+    }
+
     public Integer getAttendcanceId() {
-        return attendcanceId;
+        return attendanceId;
     }
 
     public void setAttendcanceId(Integer attendcanceId) {
-        this.attendcanceId = attendcanceId;
+        this.attendanceId = attendcanceId;
     }
 
     public Integer getUserId() {
@@ -35,14 +46,6 @@ public class Attendance {
         this.userId = userId;
     }
 
-    public Integer getAttendanceState() {
-        return attendanceState;
-    }
-
-    public void setAttendanceState(Integer attendanceState) {
-        this.attendanceState = attendanceState;
-    }
-
     public Timestamp getAttendanceTime() {
         return attendanceTime;
     }
@@ -51,22 +54,27 @@ public class Attendance {
         this.attendanceTime = attendanceTime;
     }
 
+    public String getAttendanceState() {
+        return attendanceState;
+    }
+
+    public void setAttendanceState(String attendanceState) {
+        this.attendanceState = attendanceState;
+    }
+
+    public Integer getAttendanceId() {
+        return attendanceId;
+    }
+
+    public void setAttendanceId(Integer attendanceId) {
+        this.attendanceId = attendanceId;
+    }
+
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "Attendance{" +
-                "attendcanceId=" + attendcanceId +
-                ", userId=" + userId +
-                ", attendanceState=" + attendanceState +
-                ", attendanceTime=" + attendanceTime +
-                ", date=" + date +
-                '}';
     }
 }
