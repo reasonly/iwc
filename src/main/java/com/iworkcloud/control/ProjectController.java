@@ -4,6 +4,7 @@ import com.iworkcloud.pojo.Project;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import com.iworkcloud.pojo.Results;
 
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -43,64 +45,59 @@ public class ProjectController {
 
         return Results.Success(projectList);
     }
-    /**
-     * 跳转到编辑页面的请求处理方法
-     *
-     * 该方法处理/toEdit路径的GET请求，用于跳转到项目编辑页面
-     * 它接收一个Model对象和一个参数id，id是需要编辑的项目的标识
-     *
-     * @param module Model对象，用于向视图传递模型属性
-     * @param id 需要编辑的项目的标识
-     * @return 返回项目编辑页面的视图名称
-     */
-    @RequestMapping("/toEdit")/*----------------*/
-    public String toEdit(Model module, @RequestParam() Integer id) {
-        System.out.println("toEdit"+id+"??");
 
-        module.addAttribute("project", projectService.findByPrimaryKey(id));
-        return "project/editProject";
-    }
-    @RequestMapping("/edit")
-    public String edit(Project project) {
+//    @RequestMapping("/toEdit")/*----------------*/
+//    public String toEdit(Model module, @RequestParam() Integer id) {
+//        System.out.println("toEdit"+id+"??");
+//
+//        module.addAttribute("project", projectService.findByPrimaryKey(id));
+//        return "project/editProject";
+//    }
+    @Update("/edit")
+    public Results edit(@RequestBody Map<String, Object> request) {
+        Project project = (Project) request.get("project");
         System.out.println("edit"+project);
         projectService.update(project);
-        return "redirect:/projectc/projectListc";
+        return Results.Success("编辑成功");
     }
-    @RequestMapping("/delete")
-    public String delete(Model module, @RequestParam Integer id) {
+    @DeleteMapping("/delete")
+    public Results delete(Model module, @RequestParam Integer id) {
         System.out.println("delete"+id);
         projectService.deleteByPrimaryKey(id);
-        return "redirect:/projectc/projectListc";
+        return Results.Success("成功删除");
     }
 
-    @RequestMapping("/toAdd")
-    public String toAdd(Model module,@RequestParam Integer id) {
-        System.out.println("toAdd");
-        Project project = new Project();
-        project.setAdministratorId(id);
-        project.setProjectState("未开始");
-        module.addAttribute("project", project);
-        return "project/addProject";
-    }
+//    @RequestMapping("/toAdd")
+//    public String toAdd(Model module,@RequestParam Integer id) {
+//        System.out.println("toAdd");
+//        Project project = new Project();
+//        project.setAdministratorId(id);
+//        project.setProjectState("未开始");
+//        module.addAttribute("project", project);
+//        return "project/addProject";
+//    }
 
-    @RequestMapping("/add")
-    public String add(@ModelAttribute("project") Project project) {
+    @PutMapping("/add")
+    public Results add(@RequestBody Map<String, Object> request) {
+        Project project = (Project) request.get("project");
+
         System.out.println("add"+project);
         projectService.insert(project);
-        return "redirect:/projectc/projectListc";
+        return Results.Success("成功删除");
     }
-    @PostMapping("/userSearch")
-    public String search(Model model,@RequestParam Project project,@RequestParam Integer userId){
+    @GetMapping("/userSearch")
+    public Results search(@RequestBody Map<String, Object> request){
         System.out.println("search");
-
+        Project project = (Project) request.get("project");
+        Integer userId = (Integer) request.get("userId");
         List<Project> projectList=projectService.projectList(project,userId);
-        model.addAttribute("resultList",projectList);
-
-        return "project/projectList";
+        return Results.Success(projectList);
     }
-    @PostMapping("/adminSearch")
-    public String adminSearch(Model model){
+    @GetMapping("/adminSearch")
+    public Results adminSearch(@RequestBody Map<String, Object> request){
         System.out.println("adminSearch");
-        return "project/projectList";
+        Project project = (Project) request.get("project");
+        List<Project> projectList=projectService.projectList(project);
+        return Results.Success(projectList);
     }
 }

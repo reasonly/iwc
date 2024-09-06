@@ -2,7 +2,6 @@ package com.iworkcloud.control;
 
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.AttendanceService;
-import com.iworkcloud.service.AdministratorService;
 import com.iworkcloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-import java.util.List;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -20,8 +18,7 @@ public class AttendanceConteroller {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private AdministratorService administratorService;
+
     @Autowired
     private AttendanceService attendanceService;
 
