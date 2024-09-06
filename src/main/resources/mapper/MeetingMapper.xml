@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.iworkcloud.mapper.MeetingMapper">
 
-    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.User">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.entity.Meeting">
         <result column="meeting_id" property="meetingId" />
         <result column="meeting_num" property="meetingNum" />
         <result column="meeting_name" property="meetingName" />
@@ -84,9 +84,9 @@
         </where>
     </select>
 
-    <select id="findByAdministratorId" parameterType="Integer" resultType="BaseResultMap">
+    <select id="findByAdministratorId" parameterType="Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
-        from t_user where administrator_id = #{administratorId}
+        from t_meeting where administrator_id = #{administratorId}
     </select>
 </mapper>

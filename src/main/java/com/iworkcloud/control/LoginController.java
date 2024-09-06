@@ -12,13 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 
-/**
- * Title: UserController
- * Description:
- * 用户控制层
- * Version:1.0.0
- */
 @Controller
+@RequestMapping
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -30,18 +25,14 @@ public class LoginController {
         return "user/login";
     }
     @RequestMapping("/login")
-    public String login(User user, HttpSession session, Model model) {
+    public String login(User user, HttpSession session) {
         if("员工".equals(user.getUserAuthority())) {
             System.out.println("员工");
             System.out.println(user);
             Boolean result=userService.userLogin(user);
             if(result){
-
                 session.setAttribute("currentUser", userService.findByAccount(user.getUserAccount()));
                 session.setAttribute("Authority", 0);
-
-                User currentUser = (User) session.getAttribute("currentUser");
-                System.out.println(currentUser);
                 return "/index";
             }
             else
@@ -52,9 +43,12 @@ public class LoginController {
             admin.setAdministratorAccount(user.getUserAccount());
             admin.setAdministratorPassword(user.getUserPassword());
             admin.setAdministratorAuthority(user.getUserAuthority());
-            System.out.println(admin);
-            Boolean result=administratorService.administratorLogin(admin);
 
+            System.out.println(admin);
+
+            Boolean result=administratorService.administratorLogin(admin);
+            session.setAttribute("currentAdministrator", administratorService.findByAccount(user.getUserAccount()));
+            session.setAttribute("Authority", 1);
             if(result)
                 return "/index";
             else
