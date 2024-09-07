@@ -15,5 +15,6 @@ public interface UserService extends BaseService<User>{
 
     Boolean cheakUserPassword(User user,String password);
     User findUserByAccount(String str);
+    String encryptPasswords(String pwd,String salt);
 
 }
