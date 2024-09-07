@@ -9,7 +9,6 @@
 		<result column="note_date" property="noteDate" />
 		<result column="remind_time" property="remindDate" />
 		<result column="user_id" property="userId" />
-		<result column="administrator_id" property="administratorId" />
 	</resultMap>
 
 
@@ -46,16 +45,10 @@
 		delete from t_note where note_id=#{noteId}
 	</delete>
 
-	<select id="findAll" resultMap="BaseResultMap" >
-		select
-		*
-		from note
-	</select>
-
 	<select id="findByEntity" parameterMap="Note" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
-		from note
+		from t_note
 		<where>
 			<if test="noteName!=null and noteName!=''">
 				and note_name = #{noteName}
@@ -66,19 +59,17 @@
 			<if test="noteDate!=null and noteDate!=''">
 				and note_date = #{noteDate}
 			</if>
+			<if test="userId!=null and userId!=''">
+				and user_id = #{userId}
+			</if>
 		</where>
 	</select>
 
 	<!--用户显示自身的记事本-->
-	<select id="findByUserId" parameterMap="Note" resultMap="BaseResultMap">
+	<select id="findByUserId" parameterMap="Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
 		from t_note where userId=#{userId}
 	</select>
 
-	<select id="findByAdministratorId" parameterMap="Note" resultMap="BaseResultMap">
-		select
-		<include refid="Base_Column_List"></include>
-		from t_note where administratorId=#{administratorId}
-	</select>
 </mapper>

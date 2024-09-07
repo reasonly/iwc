@@ -20,8 +20,8 @@
 	</sql>
 
 	<insert id="insert" parameterMap="User">
-		insert into t_user (username, password, age)
-		values (#{username},#{password},#{age})
+		insert into t_user (user_name, user_account, user_password,user_email,user_authority)
+		values (#{userName},#{userAccount},#{userPassword},#{userEmail},#{userAuthority})
 	</insert>
 
 
@@ -50,13 +50,13 @@
 	</update>
 
 	<delete id="delete" parameterType="Integer">
-		delete from  user where id=#{id}
+		delete from  t_user where user_id=#{userId}
 	</delete>
 
 	<select id="findAll" resultMap="BaseResultMap" >
 		select
 		*
-		from user
+		from t_user
 	</select>
 
 	<select id="findByPrimaryKey" parameterType="Integer"   resultMap="BaseResultMap">

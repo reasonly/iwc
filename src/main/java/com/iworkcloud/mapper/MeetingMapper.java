@@ -3,6 +3,8 @@ package com.iworkcloud.mapper;
 import com.iworkcloud.pojo.Meeting;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 
 * Title: UserDao
@@ -13,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MeetingMapper extends BaseMapper<Meeting> {
 
-    Meeting findByAdministratorId(Meeting meeting);
+    List<Meeting> findByuserId(int userId);
 
 
 }

@@ -16,7 +16,6 @@ public class Note {
     private String noteBody;
     private Timestamp noteDate;
     private Timestamp remindDate;
-    private Integer administratorId;
     private Integer userId;
 
 

@@ -15,7 +15,7 @@ public class Meeting {
     private Timestamp startTime;
     private Timestamp endTime;
     private String meetingState;
-    private Integer administratorId;
+    private Integer userId;
 
 
 }
