@@ -33,4 +33,8 @@ public class ProjectServiceImpl extends BaseServiceImpl<Project> implements Proj
     public List<Project> projectList(Project project, Integer id){
         return projectMapper.findByListEntityAndUserId(project,id);
     }
+    @Override
+    public boolean addUser(Integer projectId,List<Integer> userIdList){
+        return projectMapper.addUser(projectId,userIdList);
+    }
 }

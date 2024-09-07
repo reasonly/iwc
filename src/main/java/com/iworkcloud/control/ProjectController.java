@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import com.iworkcloud.pojo.Results;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
@@ -25,20 +26,19 @@ public class ProjectController {
     @GetMapping("/List")
     public Results projectListPage(Model module,HttpSession session) {
         System.out.println("projectList");
-        System.out.println(session.getAttribute("Authority"));
 
-        Integer isAdmin = (Integer) session.getAttribute("Authority");
+        Integer isAdmin = 1;
         List<Project> projectList=null;
         if(isAdmin==1){
-            User currentAdministrator = (User) session.getAttribute("currentAdministrator");
-            module.addAttribute("currentInfo",currentAdministrator);
+//            User currentAdministrator = (User) session.getAttribute("currentAdministrator");
+//            module.addAttribute("currentInfo",currentAdministrator);
             projectList= projectService.projectList();
 
         }
         else {
-            User currentUser = (User) session.getAttribute("currentUser");
-            module.addAttribute("currentInfo",currentUser);
-            projectList= projectService.projectList(currentUser.getUserId());
+//            User currentUser = (User) session.getAttribute("currentUser");
+//            module.addAttribute("currentInfo",currentUser);
+//            projectList= projectService.projectList(currentUser.getUserId());
 
         }
 
@@ -53,15 +53,17 @@ public class ProjectController {
 //        module.addAttribute("project", projectService.findByPrimaryKey(id));
 //        return "project/editProject";
 //    }
-    @Update("/edit")
+    @PutMapping("/edit")
     public Results edit(@RequestBody Map<String, Object> request) {
-        Project project = (Project) request.get("project");
+
+        Project project = getProject(request);
         System.out.println("edit"+project);
         projectService.update(project);
         return Results.Success("编辑成功");
     }
     @DeleteMapping("/delete")
-    public Results delete(Model module, @RequestParam Integer id) {
+    public Results delete(@RequestBody Map<String, Object> request) {
+        Integer id = (Integer) request.get("id");
         System.out.println("delete"+id);
         projectService.deleteByPrimaryKey(id);
         return Results.Success("成功删除");
@@ -79,19 +81,50 @@ public class ProjectController {
 
     @PutMapping("/add")
     public Results add(@RequestBody Map<String, Object> request) {
-        Project project = (Project) request.get("project");
-
+//        LinkedHashMap<String, Object> requestMap = (LinkedHashMap<String, Object>) request.get("project");
+//        System.out.println(requestMap.get("projectName"));
+        Project project = new Project();
+        project.setProjectName((String) request.get("projectName"));
         System.out.println("add"+project);
         projectService.insert(project);
-        return Results.Success("成功删除");
+        return Results.Success("成功添加");
     }
+
+    /**
+     * 添加员工到项目中
+     * @param request projectId,List<> UserId
+     * @return
+     */
+    @PutMapping("/addUser")
+    public Results addUser(@RequestBody Map<String, Object> request) {
+        System.out.println("addUser");
+         Integer projectId = (Integer) request.get("projectId");
+         List<Integer> userIdList = (List<Integer>) request.get("userIdList");
+         projectService.addUser(projectId,userIdList);
+        return Results.Success("成功添加");
+    }
+    /**
+     * 用户身份的搜索
+     *
+     * @param request:{
+     *                 "project":项目
+     *                 "userId":  用户数据
+     * }
+     * @return Results
+     */
     @GetMapping("/userSearch")
     public Results search(@RequestBody Map<String, Object> request){
         System.out.println("search");
-        Project project = (Project) request.get("project");
+
+        Project project = this.getProject(request);
         Integer userId = (Integer) request.get("userId");
         List<Project> projectList=projectService.projectList(project,userId);
-        return Results.Success(projectList);
+        if (projectList.size()==0){
+            return Results.Error("未找到");
+        }else{
+            return Results.Success(projectList);
+        }
+
     }
     @GetMapping("/adminSearch")
     public Results adminSearch(@RequestBody Map<String, Object> request){
@@ -100,4 +133,15 @@ public class ProjectController {
         List<Project> projectList=projectService.projectList(project);
         return Results.Success(projectList);
     }
+    private Project getProject(Map<String, Object> request){
+        LinkedHashMap<String, Object> requestMap = (LinkedHashMap<String, Object>) request.get("project");
+        Project project = new Project();
+        project.setProjectId((Integer) requestMap.get("projectId"));
+        project.setProjectName((String) requestMap.get("projectName"));
+        project.setProjectContent((String) requestMap.get("projectContent"));
+        project.setProjectState((String) requestMap.get("projectState"));
+        project.setAdministratorId((Integer) requestMap.get("administratorId"));
+        return project;
+    }
 }
+

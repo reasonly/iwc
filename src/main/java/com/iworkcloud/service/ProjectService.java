@@ -10,4 +10,5 @@ public interface ProjectService extends BaseService<Project>{
     List<Project> projectList(Integer id);
     List<Project> projectList(Project project);
     List<Project> projectList(Project project,Integer id);
+    boolean addUser(Integer projectId,List<Integer> id);
 }
