@@ -37,6 +37,7 @@ public class LoginController {
                 Map<String, Object> claims = new HashMap<>();
 
                 claims.put("id", user.getUserId());
+                claims.put("name", user.getUserName());
                 claims.put("authority", user.getUserAuthority());
 
                 String jwt = JwtUtils.GetStringJwt(claims);
@@ -47,7 +48,7 @@ public class LoginController {
     }
 
     @RequestMapping("/userUpdate")
-    public boolean EditPassword(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
+    public Results EditPassword(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
         System.out.println("访问EditPassword！");
         String jwt = Request.getHeader("token");
         Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
@@ -64,15 +65,21 @@ public class LoginController {
             String email = (String)request.get("email");
             String newpassword = (String)request.get("newpassword");
 
+            Map<String, String> map = userService.encryptPasswords(newpassword);
+            String salt =map.get("salt");
+            String password =map.get("password");
+
             user.setUserName(name);
             user.setUserAccount(account);
             user.setUserEmail(email);
-            user.setUserPassword(userService.encryptPasswords(newpassword,user.getUserSalt()));
+            user.setUserPassword(password);
+            user.setUserSalt(salt);
+
+            System.out.println(user);
             userService.update(user);
-            return true;
-        }else return false;
+            System.out.println(userService.findByPrimaryKey(id));
+            return Results.Success("信息更改成功！");
+        }else return Results.Error("信息更改失败！");
     }
-
-
 
 }

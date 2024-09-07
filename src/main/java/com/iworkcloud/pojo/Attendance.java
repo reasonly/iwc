@@ -19,7 +19,6 @@ public class Attendance {
 
     private Timestamp attendanceTime;
 
-
     private Date date;
 
 

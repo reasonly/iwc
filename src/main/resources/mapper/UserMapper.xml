@@ -41,6 +41,9 @@
 		    <if test="userEmail!=null and userEmail!=''">
 				user_email = #{userEmail},
 			</if>
+			<if test="userSalt!=null and userSalt!=''">
+				user_salt = #{userSalt},
+			</if>
 
 		</trim>
 		  where user_id= #{userId}

@@ -7,6 +7,7 @@ import com.iworkcloud.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -20,7 +21,13 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
     protected BaseMapper<Attendance> getMapper() {return this.attendanceMapper;}
 
     @Override
-    public List<Attendance> findByUserId(Integer id) {
-        return attendanceMapper.findByUserId(id);
+    public List<Attendance> findAllByUserId(Integer id) {
+        return attendanceMapper.findAllByUserId(id);
+    }
+
+    @Override
+    public boolean attendanceByDateAndUserId(Attendance atd) {
+
+        return attendanceMapper.attendanceByDateAndUserId(atd);
     }
 }

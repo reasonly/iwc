@@ -8,6 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.iworkcloud.util.MD5Util;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
+
+
 /**
  * Title: UserServiceImpl
  * Description:
@@ -67,10 +73,14 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public String encryptPasswords(String pwd,String salt) {
-        Random()
-        String newsalt;
-        return MD5Util.inputPassToDBPass(pwd,salt);
+    public Map<String, String> encryptPasswords(String pwd) {
+        System.out.println("开始对密码进行加密!");
+        String newsalt=randomAscii(4);
+        System.out.println("newsalt:"+newsalt);
+        Map<String, String> retval = new HashMap<>();
+        retval.put("password",MD5Util.inputPassToDBPass(pwd,newsalt));
+        retval.put("salt",newsalt);
+        return retval;
     }
 
 }
