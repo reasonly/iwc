@@ -4,6 +4,7 @@ import com.iworkcloud.pojo.Project;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
+import com.iworkcloud.util.JwtUtils;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import com.iworkcloud.pojo.Results;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -23,22 +25,30 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
-    @GetMapping("/List")
-    public Results projectListPage(Model module,HttpSession session) {
+    @GetMapping("/list")
+    public Results projectListPage(HttpServletRequest Request) {
         System.out.println("projectList");
+        //
+        String jwt = Request.getHeader("token");
+        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
+        int id = (int) claim.get("id");
+        String authority = "员工";
+        if (claim.get("authority")!=null) {
+            authority = (String) claim.get("authority");
+        }
+        System.out.println("authority:"+authority);
 
-        Integer isAdmin = 1;
         List<Project> projectList=null;
-        if(isAdmin==1){
+        if("管理员".equals(authority)){
 //            User currentAdministrator = (User) session.getAttribute("currentAdministrator");
-//            module.addAttribute("currentInfo",currentAdministrator);
+
             projectList= projectService.projectList();
 
         }
         else {
 //            User currentUser = (User) session.getAttribute("currentUser");
 //            module.addAttribute("currentInfo",currentUser);
-//            projectList= projectService.projectList(currentUser.getUserId());
+               projectList= projectService.projectList(id);
 
         }
 
@@ -63,9 +73,9 @@ public class ProjectController {
     }
     @DeleteMapping("/delete")
     public Results delete(@RequestBody Map<String, Object> request) {
-        Integer id = (Integer) request.get("id");
-        System.out.println("delete"+id);
-        projectService.deleteByPrimaryKey(id);
+        Integer projectId = (Integer) request.get("projectId");
+        System.out.println("delete"+projectId);
+        projectService.deleteByPrimaryKey(projectId);
         return Results.Success("成功删除");
     }
 
@@ -83,8 +93,7 @@ public class ProjectController {
     public Results add(@RequestBody Map<String, Object> request) {
 //        LinkedHashMap<String, Object> requestMap = (LinkedHashMap<String, Object>) request.get("project");
 //        System.out.println(requestMap.get("projectName"));
-        Project project = new Project();
-        project.setProjectName((String) request.get("projectName"));
+        Project project =getProject(request);
         System.out.println("add"+project);
         projectService.insert(project);
         return Results.Success("成功添加");
@@ -113,12 +122,15 @@ public class ProjectController {
      * @return Results
      */
     @GetMapping("/userSearch")
-    public Results search(@RequestBody Map<String, Object> request){
+    public Results search(HttpServletRequest Request,@RequestBody Map<String, Object> request){
         System.out.println("search");
+        Project project = getProject(request);
 
-        Project project = this.getProject(request);
-        Integer userId = (Integer) request.get("userId");
-        List<Project> projectList=projectService.projectList(project,userId);
+        String jwt = Request.getHeader("token");
+        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
+        int id = (int) claim.get("id");
+
+        List<Project> projectList=projectService.projectList(project,id);
         if (projectList.size()==0){
             return Results.Error("未找到");
         }else{
@@ -129,19 +141,14 @@ public class ProjectController {
     @GetMapping("/adminSearch")
     public Results adminSearch(@RequestBody Map<String, Object> request){
         System.out.println("adminSearch");
-        Project project = (Project) request.get("project");
+        Project project = getProject(request);
         List<Project> projectList=projectService.projectList(project);
         return Results.Success(projectList);
     }
+
     private Project getProject(Map<String, Object> request){
-        LinkedHashMap<String, Object> requestMap = (LinkedHashMap<String, Object>) request.get("project");
-        Project project = new Project();
-        project.setProjectId((Integer) requestMap.get("projectId"));
-        project.setProjectName((String) requestMap.get("projectName"));
-        project.setProjectContent((String) requestMap.get("projectContent"));
-        project.setProjectState((String) requestMap.get("projectState"));
-        project.setAdministratorId((Integer) requestMap.get("administratorId"));
-        return project;
+
+        return new Project((Integer)request.get("projectId"), (String)request.get("projectName"), (String)request.get("projectContent"), (String)request.get("projectState"), (Integer)request.get("userId"), (Double) request.get("projectTotal"));
     }
 }
 

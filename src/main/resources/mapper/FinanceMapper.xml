@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iworkcloud.mapper.FinanceMapper">
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Finance">
+        <result column="finance_id" property="financeId" />
+        <result column="finance_type" property="financeType" />
+        <result column="amount" property="amount" />
+        <result column="finance_description" property="financeDescription" />
+        <result column="finance_record_time" property="financeRecordTime" />
+        <result column="user_id" property="userId" />
+        <result column="project_id" property="projectId" />
+    </resultMap>
+    <parameterMap id="Finance" type="com.iworkcloud.pojo.Finance" />
+    <update id="updateProjectTotal">
+            update t_project set project_total = project_total + #{amount} where project_id = #{projectId}
+    </update>
+
+    <resultMap id="FinanceManageResultMap" type="com.iworkcloud.pojo.FinanceManage">
+        <result column="finance_manage_id" property="financeManageId" />
+        <result column="finance_id" property="financeId" />
+        <result column="administrator_id" property="userId" />
+        <result column="finance_manage_time" property="financeManageTime" jdbcType="TIMESTAMP"/>
+        <result column="finance_manage_description" property="financeManageDescription" />
+    </resultMap>
+    <parameterMap id="FinanceManage" type="com.iworkcloud.pojo.FinanceManage" />
+
+    <sql id="Base_Column_List">
+        finance_id, finance_type, amount, finance_description, finance_record_time, user_id, project_id
+    </sql>
+    <sql id="Finance_Column_List">
+        finance_manage_id, finance_id, administrator_id, finance_manage_time, finance_manage_description
+    </sql>
+
+    <insert id="insertFinance" parameterMap="Finance">
+        insert into t_finance (finance_type, amount, finance_description, finance_record_time, user_id, project_id)
+        values (#{financeType},#{amount},#{financeDescription},#{financeRecordTime},#{userId},#{projectId})
+    </insert>
+    <insert id="insertFinanceManage">
+        insert into t_finance_manage (finance_id, user_id, finance_manage_time, finance_manage_description)
+        values (#{financeId},#{userId},#{financeManageTime},#{financeManageDescription})
+    </insert>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_finance
+    </select>
+    <select id="findByEntity" parameterMap="Finance" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_finance
+        <where>
+            <if test="amount!=null and amount!=''">
+                and amount = #{amount}
+            </if>
+            <if test="financeType!=null and financeType!=''">
+                and finance_type = #{financeType}
+            </if>
+            <if test="financeDescription!=null and financeDescription!=''">
+                and finance_description = #{financeDescription}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
+            </if>
+            <if test="projectId!=null and projectId!=''">
+                and project_id = #{projectId}
+            </if>
+                and finance_record_time = #{financeRecordTime}
+        </where>
+    </select>
+    <select id="findByListEntity" parameterMap="Finance" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from t_finance
+        <where>
+            <if test="financeId!=null and financeId!=''">
+                and finance_id = #{financeId}
+            </if>
+            <if test="amount!=null and amount!=''">
+                and amount = #{amount}
+            </if>
+            <if test="financeType!=null and financeType!=''">
+                and finance_type = #{financeType}
+            </if>
+            <if test="financeDescription!=null and financeDescription!=''">
+                and finance_description = #{financeDescription}
+            </if>
+            <if test="financeRecordTime!=null and financeRecordTime!=''">
+                and finance_record_time = #{financeRecordTime}
+            </if>
+        </where>
+    </select>
+    <select id="findFinanceByProjectId" resultType="java.lang.Boolean">
+        select count(*) from t_finance where project_id = #{projectId}
+    </select>
+    <select id="findFianceIdByFinance" resultType="java.lang.Integer">
+        select finance_id
+        from t_finance
+        <where>
+            <if test="amount!=null and amount!=''">
+                and amount = #{amount}
+            </if>
+            <if test="financeType!=null and financeType!=''">
+                and finance_type = #{financeType}
+            </if>
+            <if test="financeDescription!=null and financeDescription!=''">
+                and finance_description = #{financeDescription}
+            </if>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
+            </if>
+            <if test="projectId!=null and projectId!=''">
+                and project_id = #{projectId}
+            </if>
+            and finance_record_time = #{financeRecordTime}
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="integer">
+        delete from t_finance where finance_id = #{id}
+    </delete>
+</mapper>

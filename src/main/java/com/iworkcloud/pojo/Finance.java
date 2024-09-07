@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Finance {
     private Integer financeId;
     private String financeType;
-    private float amount;
+    private Double amount;
     private String financeDescription;
     private Timestamp financeRecordTime;
     private Integer userId;
