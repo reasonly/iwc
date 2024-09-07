@@ -2,6 +2,8 @@ package com.iworkcloud.service;
 
 import com.iworkcloud.pojo.Note;
 
+import java.util.List;
+
 
 /**
  * 
@@ -13,7 +15,5 @@ import com.iworkcloud.pojo.Note;
  */
 public interface NoteService extends BaseService<Note>{
 
-    Boolean findByUserId(Note note);
-    Boolean findByAdministratorId(Note note);
-
+    List<Note> noteList(Integer id);
 }

@@ -9,18 +9,18 @@
         <result column="start_time" property="startTime" />
         <result column="end_time" property="endTime" />
         <result column="meeting_state" property="meetingState" />
-        <result column="administrator_id" property="administratorId" />
+        <result column="user_id" property="userId" />
     </resultMap>
 
     <parameterMap id="Meeting" type="com.iworkcloud.pojo.Meeting"/>
 
     <sql id="Base_Column_List">
-        meeting_id, meeting_num, meeting_name,start_time,end_time,meeting_state,administrator_id
+        meeting_num, meeting_name,start_time,end_time,meeting_state,user_id
     </sql>
 
     <insert id="insert" parameterMap="Meeting">
-        insert into t_meeting (meeting_num, meeting_name, start_time, end_time, meeting_state, administrator_id)
-        values (#{meetingNum},#{meetingName},#{startTime},#{endTime},#{meetingState},#{administratorId})
+        insert into t_meeting (meeting_num, meeting_name, start_time, end_time, meeting_state, user_id)
+        values (#{meetingNum},#{meetingName},#{startTime},#{endTime},#{meetingState},#{userId})
     </insert>
 
     <update id="update" parameterMap="Meeting">
@@ -84,9 +84,9 @@
         </where>
     </select>
 
-    <select id="findByAdministratorId" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="findByuserId" parameterType="Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"></include>
-        from t_meeting where administrator_id = #{administratorId}
+        from t_meeting where user_id = #{userId}
     </select>
 </mapper>

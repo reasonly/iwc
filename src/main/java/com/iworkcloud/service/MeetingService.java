@@ -2,6 +2,8 @@ package com.iworkcloud.service;
 
 import com.iworkcloud.pojo.Meeting;
 
+import java.util.List;
+
 
 /**
  * 
@@ -13,7 +15,5 @@ import com.iworkcloud.pojo.Meeting;
  */
 public interface MeetingService extends BaseService<Meeting>{
 
-
-    Boolean findByAdministratorId(Meeting meeting);
-
+    List<Meeting> meetingList(Integer id);
 }

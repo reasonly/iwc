@@ -7,6 +7,8 @@ import com.iworkcloud.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MeetingServiceImpl extends BaseServiceImpl<Meeting> implements MeetingService {
     //mybatis
@@ -19,16 +21,8 @@ public class MeetingServiceImpl extends BaseServiceImpl<Meeting> implements Meet
     }
 
     @Override
-    public Boolean findByAdministratorId(Meeting meeting) {
-        try {
-            System.out.println("findByAdministratorId");
-            Meeting meeting1 = meetingMapper.findByAdministratorId(meeting);
-            return meeting1 != null;
-        } catch (Exception e) {
-            System.out.println("查询失败!");
-            e.printStackTrace();
-        }
-        return false;
+    public List<Meeting> meetingList(Integer id){
+        return meetingMapper.findByuserId(id);
     }
 
 }
