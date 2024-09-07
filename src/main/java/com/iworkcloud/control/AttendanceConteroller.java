@@ -1,19 +1,24 @@
 package com.iworkcloud.control;
 
+import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.AttendanceService;
 import com.iworkcloud.service.UserService;
+import com.iworkcloud.util.JwtUtils;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
-@Controller
-
+@RestController
+@CrossOrigin(origins = "*")
 public class AttendanceConteroller {
 
     @Autowired
@@ -22,19 +27,21 @@ public class AttendanceConteroller {
     @Autowired
     private AttendanceService attendanceService;
 
-    @RequestMapping("/homePersonalCenter")
-    public String topersonalCenter(Model module,HttpSession session) {
+    @RequestMapping("/attendanceList")
+    public Results topersonalCenter(HttpServletRequest Request) {
+        String jwt = Request.getHeader("token");
+        Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+        int id = (int) claim.get("id");
+        String authority =(String) claim.get("authority");
 
-        int authority = (int) session.getAttribute("Authority");
-        module.addAttribute("authority",authority);
+        System.out.println("解析令牌得id="+id+" authority="+authority);
+        if(authority.equals("管理员")){
+            User user=userService.findByPrimaryKey(id);
 
-            System.out.println("员工个人中心");
+            return Results.Success(user);
+        }return Results.Error();
 
-            User currentUser = (User) session.getAttribute("currentUser");
-
-
-            return "personalcenter/personalCenter";
-
+        //attendanceService.findAttendanceById();
 
 
 
@@ -67,12 +74,12 @@ public class AttendanceConteroller {
         if(0==authority) {
             User currentUser = (User) session.getAttribute("currentUser");
             currentUser.setUserPassword(oldpassword);
-            if(userService.userLogin(currentUser)){
-                System.out.println("旧密码正确");
-                currentUser.setUserPassword(newpassword);
-                userService.update(currentUser);
-
-            }
+//            if(userService.userLogin(currentUser)){
+//                System.out.println("旧密码正确");
+//                currentUser.setUserPassword(newpassword);
+//                userService.update(currentUser);
+//
+//            }
 
         }
 

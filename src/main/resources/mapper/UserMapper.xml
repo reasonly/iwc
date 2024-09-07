@@ -7,6 +7,7 @@
 		<result column="user_name" property="userName" />
 		<result column="user_account" property="userAccount" />
 		<result column="user_password" property="userPassword" />
+		<result column="user_email" property="userEmail" />
 		<result column="user_authority" property="userAuthority" />
 		<result column="user_salt" property="userSalt" />
 	</resultMap>
@@ -15,7 +16,7 @@
 	<parameterMap id="User" type="com.iworkcloud.pojo.User"/>
 
 	<sql id="Base_Column_List">
-		user_id, user_name, user_account,user_password,user_authority,user_salt
+		user_id, user_name, user_account,user_password,user_email,user_authority,user_salt
 	</sql>
 
 	<insert id="insert" parameterMap="User">
@@ -88,7 +89,7 @@
 		from t_user where user_account=#{userAccount} and user_password=#{userPassword}
 	</select>
 
-	<select id="findByAccount" parameterType="String" resultMap="BaseResultMap">
+	<select id="findUserByAccount" parameterType="String" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
 		from t_user where user_account=#{userAccount}
