@@ -41,6 +41,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             // 加密的密码，与数据库中进行比对
             if(dbPass.equals(user.getUserPassword())){
                 System.out.println("密码对比正确!");
+
                 return true;
             }else {
                 System.out.println("密码对比不一致!");
@@ -63,6 +64,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             e.printStackTrace();
         }
         return user;
+    }
+
+    @Override
+    public String encryptPasswords(String pwd,String salt) {
+        Random()
+        String newsalt;
+        return MD5Util.inputPassToDBPass(pwd,salt);
     }
 
 }
