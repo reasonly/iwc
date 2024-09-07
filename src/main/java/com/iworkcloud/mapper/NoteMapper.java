@@ -1,7 +1,6 @@
 package com.iworkcloud.mapper;
 
 import com.iworkcloud.pojo.Note;
-import com.iworkcloud.pojo.Project;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,5 +16,6 @@ import java.util.List;
 public interface NoteMapper extends BaseMapper<Note> {
 
     List<Note> findByUserId(int userId);
+    void insert(Note note);
 
 }

@@ -84,9 +84,9 @@
         </where>
     </select>
 
-    <select id="findByuserId" parameterType="Integer" resultMap="BaseResultMap">
+    <select id="findByuserId" parameterType="Integer" resultType="Integer">
         select
-        <include refid="Base_Column_List"></include>
-        from t_meeting where user_id = #{userId}
+        meeting_attendance_id
+        from t_meeting_attendance where user_id = #{userId}
     </select>
 </mapper>

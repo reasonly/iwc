@@ -15,5 +15,7 @@ import java.util.List;
  */
 public interface MeetingService extends BaseService<Meeting>{
 
+    List<Meeting> meetingList();
+
     List<Meeting> meetingList(Integer id);
 }

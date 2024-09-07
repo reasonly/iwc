@@ -16,4 +16,6 @@ import java.util.List;
 public interface NoteService extends BaseService<Note>{
 
     List<Note> noteList(Integer id);
+
+
 }

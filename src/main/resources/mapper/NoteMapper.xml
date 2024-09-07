@@ -41,7 +41,7 @@
 		  where note_id= #{noteId}
 	</update>
 
-	<delete id="delete" parameterType="Integer">
+	<delete id="deleteNote" parameterType="Integer">
 		delete from t_note where note_id=#{noteId}
 	</delete>
 
@@ -66,7 +66,7 @@
 	</select>
 
 	<!--用户显示自身的记事本-->
-	<select id="findByUserId" parameterMap="Integer" resultMap="BaseResultMap">
+	<select id="findByUserId" parameterType="Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
 		from t_note where userId=#{userId}

@@ -3,7 +3,6 @@ package com.iworkcloud.service.impl;
 import com.iworkcloud.mapper.BaseMapper;
 import com.iworkcloud.mapper.NoteMapper;
 import com.iworkcloud.pojo.Note;
-import com.iworkcloud.pojo.Project;
 import com.iworkcloud.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,8 @@ public class NoteServiceImpl extends BaseServiceImpl<Note> implements NoteServic
     public List<Note> noteList(Integer id){
         return noteMapper.findByUserId(id);
     }
+
+
 
 
 }
