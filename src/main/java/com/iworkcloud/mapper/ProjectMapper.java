@@ -13,4 +13,6 @@ public interface ProjectMapper extends BaseMapper<Project>{
     List<Project> findByUserId(int id);
     //根据条件和用户id查询
     List<Project> findByListEntityAndUserId(@Param("Project")Project project,@Param("id") Integer id);
+
+    boolean addUser(Integer projectId, List<Integer> userIdList);
 }

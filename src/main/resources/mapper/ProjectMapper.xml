@@ -19,6 +19,13 @@
         values (#{projectName},#{projectContent},#{projectState},#{administratorId})
     </insert>
 
+    <insert id="addUser">
+        INSERT INTO t_project_attendance (project_id, user_id) values
+        <foreach collection="userIdList" index="index" item="userid" open="(" close=")" separator=") , (">
+            #{projectId},#{userid}
+        </foreach>
+    </insert>
+
     <update id="update" parameterMap="Project">
         update t_project
             set
@@ -101,14 +108,14 @@
         from t_project join t_project_attendance
         on t_project.project_id = t_project_attendance.project_id
         <where>
-            <if test="projectName != null and projectName != ''">
-                and project_name like concat('%',#{projectName},'%')
+            <if test="Project.projectName != null and Project.projectName != ''">
+                and project_name like concat('%',#{Project.projectName},'%')
             </if>
-            <if test="projectContent != null and projectContent != ''">
-                and project_content like concat('%',#{projectContent},'%')
+            <if test="Project.projectContent != null and Project.projectContent != ''">
+                and project_content like concat('%',#{Project.projectContent},'%')
             </if>
-            <if test="projectState != null and projectState != ''">
-                and project_state = #{projectState}
+            <if test="Project.projectState != null and Project.projectState != ''">
+                and project_state = #{Project.projectState}
             </if>
                 and user_id = #{id}
         </where>
