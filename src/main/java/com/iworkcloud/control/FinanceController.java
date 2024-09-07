@@ -54,11 +54,12 @@ public class FinanceController {
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String datetime =LocalDateTime.now().format(formatter);
 //       Timestamp time = Timestamp.valueOf();
+
+        financeService.addFinance(finance);
         //判断是否是项目的财务信息
         if(finance.getProjectId()!=null){
-            financeService.updateProjectTotal(finance.getProjectId(),finance.getAmount());
+            financeService.updateProjectTotal(finance.getProjectId());
         }
-        financeService.addFinance(finance);
         Integer financeId = financeService.findFianceIdByFinance(finance);
         String jwt = Request.getHeader("token");
         Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
@@ -75,7 +76,6 @@ public class FinanceController {
     /**
      * 删除财务信息
      * @param request
-     * @return
      */
     @DeleteMapping("/delete")
     public Results delete(@RequestBody Map<String, Object> request){

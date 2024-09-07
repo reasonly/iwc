@@ -45,8 +45,8 @@ public class FiannceServiceImpl extends BaseServiceImpl<Finance> implements Fina
         return financeMapper.findFinanceByProjectId(projectId);
     }
     @Override
-    public boolean updateProjectTotal(Integer projectId, Double amount){
-        return financeMapper.updateProjectTotal(projectId,amount);
+    public boolean updateProjectTotal(Integer projectId){
+        return financeMapper.updateProjectTotal(projectId);
     }
     public Integer findFianceIdByFinance(Finance finance){
         return financeMapper.findFianceIdByFinance(finance);

@@ -2,6 +2,7 @@ package com.iworkcloud.mapper;
 
 import com.iworkcloud.pojo.Finance;
 import com.iworkcloud.pojo.FinanceManage;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface FinanceMapper extends BaseMapper<Finance>{
 
     boolean findFinanceByProjectId(Integer projectId);
 
-    boolean updateProjectTotal(Integer projectId, Double amount);
+    boolean updateProjectTotal(@Param("projectId") Integer projectId);
 
     Integer findFianceIdByFinance(Finance finance);
 }

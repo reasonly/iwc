@@ -12,7 +12,12 @@
     </resultMap>
     <parameterMap id="Finance" type="com.iworkcloud.pojo.Finance" />
     <update id="updateProjectTotal">
-            update t_project set project_total = project_total + #{amount} where project_id = #{projectId}
+            update t_project t
+            set project_total = (
+                select SUM(amount) from t_finance
+                where t_finance.project_id=#{projectId}
+                )
+            where project_id = #{projectId}
     </update>
 
     <resultMap id="FinanceManageResultMap" type="com.iworkcloud.pojo.FinanceManage">

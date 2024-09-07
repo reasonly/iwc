@@ -12,7 +12,7 @@
 
     <parameterMap id="Project" type="com.iworkcloud.pojo.Project" />
     <sql id="Base_Column_List">
-		project_id, project_name, project_content, project_state, userId, project_total
+        t_project.project_id , project_name, project_content, project_state, user_id, project_total
 	</sql>
     <sql id="Base_Column_List_Without_Id">
             project_name, project_content, project_state, user_id, project_total
@@ -52,13 +52,13 @@
     </delete>
 
     <select id="findAll" resultMap="BaseResultMap">
-        select t_project.project_id <include refid="Base_Column_List_Without_Id" />,sum_amount.total_amount
+        select <include refid="Base_Column_List" />,sum_amount.total_amount
         from (
         select project_id, sum(amount) total_amount
         from t_finance
         group by project_id
         ) as sum_amount
-        join t_project on t_project.project_id = sum_amount.project_id
+        right join t_project on t_project.project_id = sum_amount.project_id
     </select>
 
     <select id="findByEntity" parameterMap="Project" resultMap="BaseResultMap">

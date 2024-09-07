@@ -16,7 +16,7 @@ public interface FinanceService extends BaseService<Finance>{
 
     boolean findFinanceByProjectId(Integer projectId);
 
-    boolean updateProjectTotal(Integer projectId, Double amount);
+    boolean updateProjectTotal(Integer projectId);
 
     Integer findFianceIdByFinance(Finance finance);
 }
