@@ -6,16 +6,19 @@
         <result column="project_name" property="projectName" />
         <result column="project_content" property="projectContent" />
         <result column="project_state" property="projectState" />
-        <result column="administrator_id" property="administratorId" />
+        <result column="user_id" property="userId" />
+        <result column="project_total" property="projectTotal" />
     </resultMap>
 
     <parameterMap id="Project" type="com.iworkcloud.pojo.Project" />
     <sql id="Base_Column_List">
-		project_id, project_name, project_content, project_state, administrator_id
+        t_project.project_id , project_name, project_content, project_state, user_id, project_total
 	</sql>
-
+    <sql id="Base_Column_List_Without_Id">
+            project_name, project_content, project_state, user_id, project_total
+    </sql>
     <insert id="insert" parameterMap="Project">
-        insert into t_project (project_name, project_content, project_state, administrator_id)
+        insert into t_project (project_name, project_content, project_state, user_id)
         values (#{projectName},#{projectContent},#{projectState},#{administratorId})
     </insert>
 
@@ -38,8 +41,8 @@
         <if test="projectState != null and projectState != ''">
             project_state = #{projectState},
         </if>
-        <if test="administratorId != null and administratorId != ''">
-            administrator_id = #{administratorId}
+        <if test="userId != null and userId != ''">
+            user_id = #{userId}
         </if>
         where project_id = #{projectId}
     </update>
@@ -49,8 +52,13 @@
     </delete>
 
     <select id="findAll" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List" />
-        from t_project
+        select <include refid="Base_Column_List" />,sum_amount.total_amount
+        from (
+        select project_id, sum(amount) total_amount
+        from t_finance
+        group by project_id
+        ) as sum_amount
+        right join t_project on t_project.project_id = sum_amount.project_id
     </select>
 
     <select id="findByEntity" parameterMap="Project" resultMap="BaseResultMap">
@@ -91,7 +99,7 @@
 <!--    </select>-->
 <!--    通过用户id查询项目信息-->
     <select id="findByUserId" parameterType="integer" resultMap="BaseResultMap">
-            select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.administrator_id
+            select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.user_id
             from t_project join t_project_attendance
             on t_project.project_id = t_project_attendance.project_id
             where t_project_attendance.user_id = #{Id}
@@ -104,7 +112,7 @@
     </select>
 
     <select id="findByListEntityAndUserId" resultMap="BaseResultMap">
-        select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.administrator_id
+        select t_project.project_id, project_name, project_content, project_state, t_project_attendance.user_id, project_total
         from t_project join t_project_attendance
         on t_project.project_id = t_project_attendance.project_id
         <where>
@@ -117,7 +125,7 @@
             <if test="Project.projectState != null and Project.projectState != ''">
                 and project_state = #{Project.projectState}
             </if>
-                and user_id = #{id}
+                and t_project_attendance.user_id = #{id}
         </where>
     </select>
 

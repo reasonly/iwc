@@ -63,14 +63,15 @@ CREATE TABLE `t_project` (
   `project_name` varchar(30) NOT NULL,
   `project_content` varchar(200) NOT NULL,
   `project_state` varchar(10) NOT NULL,
+  `project_total` double(10,2) DEFAULT '0.00',
   `user_id` int(8) unsigned zerofill NOT NULL,
   PRIMARY KEY (`project_id`),
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中', '00000004');
-INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始', '00000005');
-INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束', '00000006');
+INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中','200000.00', '00000004');
+INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始','0.00', '00000005');
+INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束','0.00', '00000006');
 
 -- ----------------------------
 -- Table structure for `t_finance`
@@ -79,7 +80,7 @@ INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级�
 CREATE TABLE `t_finance` (
   `finance_id` int(8) unsigned zerofill NOT NULL AUTO_INCREMENT,
   `finance_type` varchar(10) NOT NULL,
-  `amount` float(10,2) NOT NULL,
+  `amount` double(10,2) DEFAULT '0.00',
   `finance_description` varchar(60) NOT NULL,
   `finance_record_time` datetime NOT NULL,
   `user_id` int(8) unsigned zerofill DEFAULT NULL,

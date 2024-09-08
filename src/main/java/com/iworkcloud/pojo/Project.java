@@ -12,7 +12,6 @@ public class Project {
     private String projectName;
     private String projectContent;
     private String projectState;
-    private Integer administratorId;
-
-
+    private Integer userId;
+    private Double projectTotal;//净收入
 }
