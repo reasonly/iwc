@@ -18,4 +18,6 @@ public interface FinanceMapper extends BaseMapper<Finance>{
     boolean updateProjectTotal(@Param("projectId") Integer projectId);
 
     Integer findFianceIdByFinance(Finance finance);
+
+    boolean updateFinance(Finance finance);
 }
