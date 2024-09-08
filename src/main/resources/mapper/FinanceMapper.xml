@@ -19,6 +19,27 @@
                 )
             where project_id = #{projectId}
     </update>
+    <update id="updateFinance">
+            update t_finance
+            set
+            <if test="financeType != null and financeType != ''">
+            finance_type = #{financeType},
+            </if>
+            <if test="amount != null and amount != ''">
+                amount = #{amount},
+            </if>
+            <if test="financeDescription != null and financeDescription != ''">
+                finance_description = #{financeDescription},
+            </if>
+                finance_record_time = #{financeRecordTime},
+            <if test="userId != null and userId != ''">
+                user_id = #{userId},
+            </if>
+            <if test="projectId != null and projectId != ''">
+                project_id = #{projectId}
+            </if>
+            where finance_id = #{financeId}
+    </update>
 
     <resultMap id="FinanceManageResultMap" type="com.iworkcloud.pojo.FinanceManage">
         <result column="finance_manage_id" property="financeManageId" />
@@ -86,9 +107,6 @@
             </if>
             <if test="financeDescription!=null and financeDescription!=''">
                 and finance_description = #{financeDescription}
-            </if>
-            <if test="financeRecordTime!=null and financeRecordTime!=''">
-                and finance_record_time = #{financeRecordTime}
             </if>
         </where>
     </select>
