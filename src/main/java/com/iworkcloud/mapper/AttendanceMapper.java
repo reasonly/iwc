@@ -9,5 +9,6 @@ public interface AttendanceMapper extends BaseMapper<Attendance>{
 
 
     List<Attendance> findAllByUserId(Integer id);
-    boolean attendanceByDateAndUserId(Attendance attendance);
+    boolean attendanceByattendanceId(Attendance attendance);
+    Attendance findAttendanceByDateAndUserId(Attendance atd);
 }

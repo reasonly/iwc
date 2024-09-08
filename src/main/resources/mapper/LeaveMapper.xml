@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iworkcloud.mapper.LeaveMapper">
+
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.Leave">
+        <id column="leave_id" property="leaveId" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="reason" property="reason" />
+        <result column="state" property="state" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+
+    <parameterMap id="Leave" type="com.iworkcloud.pojo.Leave"/>
+
+    <sql id="Base_Column_List">
+        leave_id, start_date, end_date, reason, state, user_id
+    </sql>
+
+    <insert id="insert" parameterMap="Leave">
+        insert into t_leave (start_date, end_date, reason, state, user_id)
+        values (#{startDate}, #{endDate}, #{reason}, #{state}, #{userId})
+    </insert>
+
+
+    <update id="update" parameterMap="Leave">
+        update
+        t_leave
+        <trim prefix="set" suffixOverrides=",">
+            <if test="startDate!=null and startDate!=''">
+                start_date=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                end_date=#{endDate}
+            </if>
+            <if test="reason!=null and reason!=''">
+                reason=#{reason}
+            </if>
+            <if test="state!=null and state!=''">
+                state=#{state}
+            </if>
+        </trim>
+        where leave_id= #{leaveId}
+    </update>
+
+<!--    <delete id="delete" parameterType="Integer">-->
+<!--        delete from  leave where id=#{id}-->
+<!--    </delete>-->
+
+    <select id="findAll" resultMap="BaseResultMap" >
+        select
+            *
+        from t_leave
+    </select>
+
+<!--    <select id="findByPrimaryKey" parameterType="Integer"   resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"></include>-->
+<!--        from t_leave  where  leave_id=#{leaveId}-->
+<!--    </select>-->
+
+    <select id="findAllByUserId" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_leave where user_id=#{userId}
+    </select>
+
+    <select id="findLeaveByStartDateAndEndDate" parameterMap="Leave" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_leave where start_date=#{startDate} And end_date=#{endDate}
+    </select>
+
+    <select id="findLeaveByLeaveId" parameterType="Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from t_leave where leave_id=#{leaveId}
+    </select>
+
+
+
+</mapper>
