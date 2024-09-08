@@ -16,7 +16,7 @@
     </sql>
 
     <insert id="insert" parameterMap="LeaveApproval">
-        insert into t_leave (leave_id, user_id)
+        insert into t_leave_approval (leave_id, user_id)
         values (#{leaveId}, #{userId})
     </insert>
     

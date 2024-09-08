@@ -63,6 +63,7 @@ public class LeaveController {
         String endDate = request.get("endDate").toString();
         leave.setStartDate(Date.valueOf(startDate));
         leave.setEndDate(Date.valueOf(endDate));
+
         leave.setReason((String) request.get("reason"));
         leave.setState("未审批");
         leave.setUserId(id);

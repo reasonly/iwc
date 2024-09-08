@@ -80,7 +80,7 @@
         from t_attendance where user_id = #{userId} And date = #{date}
     </select>
 
-    <update id="attendanceByattendanceId" parameterMap="Attendance">
+    <update id="attendanceByAttendanceId" parameterMap="Attendance">
         update
         t_attendance
         <trim prefix="set" suffixOverrides=",">

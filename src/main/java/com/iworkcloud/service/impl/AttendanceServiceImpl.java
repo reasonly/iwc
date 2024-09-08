@@ -26,9 +26,16 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
     }
 
     @Override
-    public boolean attendanceByattendanceId(Attendance atd) {
+    public boolean attendanceByAttendanceId(Attendance atd) {
+        boolean flag = false;
+        try{
+            attendanceMapper.attendanceByAttendanceId(atd);
+            flag=true;
+        }catch(Exception e){
+            System.out.println("attendance数据库修改失败");
+        }
 
-        return attendanceMapper.attendanceByattendanceId(atd);
+        return flag;
     }
 
     @Override

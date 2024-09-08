@@ -30,7 +30,7 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
     @RequestMapping("/attendanceList")
-    public Results personalCenter(HttpServletRequest Request) {
+    public Results attendanceList(HttpServletRequest Request) {
 
         System.out.println("访问localhost:9000/AttendanceController/attendanceList ！");
 
@@ -93,21 +93,24 @@ public class AttendanceController {
 
         Attendance atd = new Attendance();
         atd.setUserId(id);
-        atd.setAttendanceState("已签到");
-        atd.setAttendanceTime(datetime);
         atd.setDate(date);
-        Attendance atd1=attendanceService.findAttendanceByDateAndUserId(atd);
-        System.out.println(atd1);
-        if(atd1 != null){
-            if(atd1.getAttendanceState().equals("未签到"))
+        atd=attendanceService.findAttendanceByDateAndUserId(atd);
+        System.out.println("当天考勤："+atd);
+        if(atd != null){
+            if(atd.getAttendanceState().equals("未签到"))
             {
-                boolean isAttendance = attendanceService.attendanceByattendanceId(atd);
+                atd.setAttendanceTime(datetime);
+                atd.setAttendanceState("已签到");
+                System.out.println("修改考勤信息预览："+atd);
+                boolean isAttendance = attendanceService.attendanceByAttendanceId(atd);
+                System.out.println(isAttendance);
                 if(isAttendance)
                     return Results.Success("签到成功");
                 else return Results.Error("签到失败！");
             }else return Results.Error("今日签到已处理！不要重复签到！");
         }else return Results.Error("今天没有考勤要求！");
     }
+
 
 
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/f7a63a63-0cff-4a51-acb5-f2d17e7e355e/console_2.sql" dialect="MySQL" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/50e26cbb-0f0c-4831-a649-ee3330957c9c/console.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/iworkdb.sql" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

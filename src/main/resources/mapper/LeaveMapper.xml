@@ -23,23 +23,14 @@
         values (#{startDate}, #{endDate}, #{reason}, #{state}, #{userId})
     </insert>
 
-
     <update id="update" parameterMap="Leave">
         update
         t_leave
         <trim prefix="set" suffixOverrides=",">
-            <if test="startDate!=null and startDate!=''">
-                start_date=#{startDate}
-            </if>
-            <if test="endDate!=null and endDate!=''">
-                end_date=#{endDate}
-            </if>
-            <if test="reason!=null and reason!=''">
-                reason=#{reason}
-            </if>
-            <if test="state!=null and state!=''">
-                state=#{state}
-            </if>
+                start_date=#{startDate},
+                end_date=#{endDate},
+                reason=#{reason},
+                state=#{state},
         </trim>
         where leave_id= #{leaveId}
     </update>
@@ -74,7 +65,7 @@
 
     <select id="findLeaveByLeaveId" parameterType="Integer" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"></include>
+        *
         from t_leave where leave_id=#{leaveId}
     </select>
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface AttendanceService extends BaseService<Attendance> {
 
     List<Attendance> findAllByUserId(Integer id);
-    boolean attendanceByattendanceId(Attendance attendance);
+    boolean attendanceByAttendanceId(Attendance attendance);
     Attendance findAttendanceByDateAndUserId(Attendance atd);
 
 }

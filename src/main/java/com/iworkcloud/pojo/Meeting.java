@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Meeting {
-    protected Integer meetingId;
+    private Integer meetingId;
     private Integer meetingNum;
     private String meetingName;
     private Timestamp startTime;

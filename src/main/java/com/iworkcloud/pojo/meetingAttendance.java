@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class meetingAttendance {
-    protected Integer meetingAttendanceId;
+    private Integer meetingAttendanceId;
     private Integer meetingId;
     private Integer userId;
 

@@ -34,4 +34,6 @@ public class LeavaServiceImpl extends BaseServiceImpl<Leave> implements LeaveSer
     public Leave findLeaveByLeaveId(Integer id) {
         return leaveMapper.findLeaveByLeaveId(id);
     }
+
+
 }
