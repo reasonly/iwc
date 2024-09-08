@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Leave {
     protected Integer leaveId;
-    private Date startrDate;
+    private Date startDate;
     private Date endDate;
     private String reason;
-    private String status;
+    private String state;
     private Integer userId;
 
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class LeaveApproval {
     protected Integer approvalId;
     private Integer leaveId;
-    private Integer adminstratorId;
+    private Integer userId;
 
 
 }

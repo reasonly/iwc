@@ -26,8 +26,13 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
     }
 
     @Override
-    public boolean attendanceByDateAndUserId(Attendance atd) {
+    public boolean attendanceByattendanceId(Attendance atd) {
 
-        return attendanceMapper.attendanceByDateAndUserId(atd);
+        return attendanceMapper.attendanceByattendanceId(atd);
+    }
+
+    @Override
+    public Attendance findAttendanceByDateAndUserId(Attendance atd) {
+        return attendanceMapper.findAttendanceByDateAndUserId(atd);
     }
 }
