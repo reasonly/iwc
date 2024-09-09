@@ -78,10 +78,20 @@ public class ProjectController {
     public Results add(@RequestBody Map<String, Object> request, HttpServletRequest Request) {
         Project project =getProject(request);
 
-        Pair<Integer, String> pair= getUserIdAndAuthority(Request);
-        Integer userId = pair.getKey();
+        int id = 0;
+        String authority ="";
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
 
-        project.setUserId(userId);
+        project.setUserId(id);
 
         System.out.println("add"+project);
         if(projectService.insert(project)){
@@ -115,9 +125,19 @@ public class ProjectController {
         System.out.println("search");
         Project project = getProject(request);
 
-        Pair<Integer, String> pair= getUserIdAndAuthority(Request);
-        Integer id = pair.getKey();
-        String authority = pair.getValue();
+        int id = 0;
+        String authority ="";
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
+
         List<Project> projectList= null;
         if("管理员".equals(authority)){
             projectList=projectService.projectList(project);
