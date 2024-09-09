@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -41,5 +42,10 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
     @Override
     public Attendance findAttendanceByDateAndUserId(Attendance atd) {
         return attendanceMapper.findAttendanceByDateAndUserId(atd);
+    }
+
+    @Override
+    public List<Attendance> findAttendancesByAttendance(Attendance atd) {
+        return attendanceMapper.findAttendancesByAttendance(atd);
     }
 }

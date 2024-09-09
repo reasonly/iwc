@@ -97,31 +97,58 @@ public class AttendanceController {
         atd=attendanceService.findAttendanceByDateAndUserId(atd);
         System.out.println("当天考勤："+atd);
         if(atd != null){
-            if(atd.getAttendanceState().equals("未签到"))
-            {
-                atd.setAttendanceTime(datetime);
-                atd.setAttendanceState("已签到");
-                System.out.println("修改考勤信息预览："+atd);
-                boolean isAttendance = attendanceService.attendanceByAttendanceId(atd);
-                System.out.println(isAttendance);
-                if(isAttendance)
-                    return Results.Success("签到成功");
-                else return Results.Error("签到失败！");
-            }else return Results.Error("今日签到已处理！不要重复签到！");
+            if(atd.getDeadline().equals("是")){
+                if(atd.getAttendanceState().equals("未签到"))
+                {
+                    atd.setAttendanceTime(datetime);
+                    atd.setAttendanceState("已签到");
+                    System.out.println("修改考勤信息预览："+atd);
+                    boolean isAttendance = attendanceService.attendanceByAttendanceId(atd);
+                    System.out.println(isAttendance);
+                    if(isAttendance)
+                        return Results.Success("签到成功");
+                    else return Results.Error("签到失败！");
+                }else return Results.Error("今日签到已处理！不要重复签到！");
+            }else return Results.Error("签到截止，无法签到！");
         }else return Results.Error("今天没有考勤要求！");
     }
 
-    @Scheduled(cron = "0 47 14 * * ?") // s m h d m w
-    public void scheduleFixedRateTask() {
+
+
+//    @Scheduled(cron = "0 30 07 * * ?") // s m h d m w
+//    @Scheduled(cron = "0 30 16 * * ?")
+    @Scheduled(cron = "0 39 15 * * ?") // s m h d m w
+    @Scheduled(cron = "0 40 15 * * ?")
+    public void scheduleNewAttendance() {
         List<User> list= selectUser();
         Attendance attendance = new Attendance();
         // 日期
         Date date= new Date(System.currentTimeMillis());
         attendance.setDate(date);
+        attendance.setDeadline("是");
         for (User user : list) {
             attendance.setUserId(user.getUserId());
             attendance.setAttendanceState("未签到"); // 初始状态，根据实际业务逻辑设置
             attendanceService.insert(attendance);
+        }
+    }
+//    @Scheduled(cron = "0 30 08 * * ?") // s m h d m w
+//    @Scheduled(cron = "0 30 17 * * ?")
+    @Scheduled(cron = "0 41 15 * * ?") // s m h d m w
+    @Scheduled(cron = "0 42 15 * * ?")
+    public void scheduleUpdateAttendance() {
+
+        Attendance atd = new Attendance();
+        // 日期
+        Date date= new Date(System.currentTimeMillis());
+        atd.setDate(date);
+        atd.setDeadline("否");
+        List<Attendance> list= attendanceService.findAttendancesByAttendance(atd);
+        //Attendance attendance = new Attendance();
+
+        for (Attendance attendance : list) {
+            attendance.setDeadline("是");
+            attendanceService.update(attendance);
         }
     }
 

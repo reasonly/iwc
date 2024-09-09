@@ -45,14 +45,15 @@ CREATE TABLE `t_attendance` (
   `attendance_state` varchar(10) NOT NULL DEFAULT '未签到',
   `attendance_time` datetime DEFAULT NULL,
   `date` date NOT NULL,
+  `deadline` varchar(5) NOT NULL,
   PRIMARY KEY (`attendance_id`),
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_attendance` VALUES ('00000001', '00000001', '已签到', '2024-09-08 08:30:15', '2024-09-04');
-INSERT INTO `t_attendance` VALUES ('00000002', '00000002', '未签到', null, '2024-09-04');
-INSERT INTO `t_attendance` VALUES ('00000003', '00000003', '请假', null, '2024-09-04');
-INSERT INTO `t_attendance` VALUES ('00000004', '00000001', '未签到', null, '2024-09-09');
+INSERT INTO `t_attendance` VALUES ('00000001', '00000001', '已签到', '2024-09-08 08:30:15', '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000002', '00000002', '未签到', null, '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000003', '00000003', '请假', null, '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000004', '00000001', '未签到', null, '2024-09-09', '否');
 
 -- ----------------------------
 -- Table structure for `t_project`

@@ -21,5 +21,7 @@ public class Attendance {
 
     private Date date;
 
+    private String deadline;
+
 
 }

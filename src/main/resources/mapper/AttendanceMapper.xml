@@ -8,6 +8,7 @@
         <result column="attendance_state" property="attendanceState" />
         <result column="attendance_time" property="attendanceTime" />
         <result column="date" property="date" />
+        <result column="deadline" property="deadline" />
     </resultMap>
 
 
@@ -15,12 +16,12 @@
 
 
     <sql id="Base_Column_List">
-        attendance_id, user_id, attendance_state,attendance_time,date
+        attendance_id, user_id, attendance_state,attendance_time,date,deadline
     </sql>
 
     <insert id="insert" parameterMap="Attendance">
-        insert into t_attendance (user_id, attendance_state,date)
-        values (#{userId},#{attendanceState},#{date})
+        insert into t_attendance (user_id, attendance_state,date,deadline)
+        values (#{userId},#{attendanceState},#{date},#{deadline})
     </insert>
 
 
@@ -79,31 +80,50 @@
         from t_attendance where user_id = #{userId} And date = #{date}
     </select>
 
-    <select id="findAttendanceByListAttendance" parameterMap="Attendance" resultMap="BaseResultMap">
+    <update id="attendanceByAttendanceId" parameterMap="Attendance">
+        update
+        t_attendance
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userId!=null and userId!=''">
+                user_id = #{userId},
+            </if>
+            <if test="attendanceState!=null and attendanceState!=''">
+                attendance_state = #{attendanceState},
+            </if>
+            <if test="attendanceTime!=null and attendanceTime!=''">
+                attendance_time = #{attendanceTime},
+            </if>
+            <if test="date!=null and date!=''">
+                date = #{date},
+            </if>
+            <if test="deadline!=null and deadline!=''">
+                deadline = #{deadline},
+            </if>
+
+        </trim>
+        where attendance_id = #{attendanceId}
+    </update>
+
+    <select id="findAttendancesByAttendance" parameterMap="Attendance" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
         from t_attendance
         <where>
+            <if test="attendanceId!=null and attendanceId!=''">
+                and attendance_id = #{attendanceId}
+            </if>
             <if test="userId!=null and userId!=''">
                 and user_id = #{userId}
             </if>
             <if test="attendanceState!=null and attendanceState!=''">
                 and attendance_state = #{attendanceState}
             </if>
-            <if test="date!=null">
+            <if test="date!=null and date!=''">
                 and date = #{date}
+            </if>
+            <if test="deadline!=null and deadline!=''">
+                and deadline = #{deadline}
             </if>
         </where>
     </select>
-    <update id="attendanceByAttendanceId" parameterMap="Attendance">
-        update
-        t_attendance
-        <trim prefix="set" suffixOverrides=",">
-            <if test="attendanceState!=null and attendanceState!=''">
-                attendance_state = #{attendanceState},
-            </if>
-            attendance_time = #{attendanceTime},
-        </trim>
-        where attendance_id = #{attendanceId}
-    </update>
 
 </mapper>
