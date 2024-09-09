@@ -55,7 +55,7 @@ public class MeetingController {
     }
 
     @RequestMapping("/delete")
-    public void deleteMeeting(HttpServletRequest Request,@RequestBody Map<String, Object> request)
+    public Results deleteMeeting(HttpServletRequest Request,@RequestBody Map<String, Object> request)
     {
         int id = 0;
         try{
@@ -70,10 +70,11 @@ public class MeetingController {
         }
         meetingService.deleteByPrimaryKey((Integer) request.get("id"));
         System.out.println("删除成功");
+        return Results.Success();
     }
 
     @RequestMapping("/edit")
-    public void editMeeting(HttpServletRequest Request,@RequestBody Map<String, Object> request)
+    public Results editMeeting(HttpServletRequest Request,@RequestBody Map<String, Object> request)
     {
         int id = 0;
         try{
@@ -93,6 +94,7 @@ public class MeetingController {
         meeting.setMeetingState((String) request.get("meetingState"));
         meeting.setStartTime((Timestamp) request.get("startTime"));
         meetingService.update(meeting);
+        return Results.Success();
     }
     //员工看到的会议列表
     @RequestMapping("/meetinglistByUserId")
@@ -127,7 +129,7 @@ public class MeetingController {
         }catch (Exception e){
             return Results.Error("token过期，请重新登录！");
         }
-        
+
         return Results.Success(meetingService.meetingList() );
     }
 
