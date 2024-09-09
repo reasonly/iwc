@@ -68,6 +68,11 @@
         *
         from t_leave where leave_id=#{leaveId}
     </select>
+    <select id="findleaveUnapproved" parameterType="String" resultMap="BaseResultMap">
+        select
+            *
+        from t_leave where state=#{state}
+    </select>
 
 
 

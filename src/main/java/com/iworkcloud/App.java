@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 
 /**
@@ -15,6 +16,7 @@ import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 
  */
 //去掉自动注册了
+@EnableScheduling
 @SpringBootApplication(exclude = PageHelperAutoConfiguration.class)
 public class App 
 {

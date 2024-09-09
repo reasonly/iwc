@@ -3,7 +3,7 @@
 <mapper namespace="com.iworkcloud.mapper.LeaveApprovalMapper">
 
     <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.LeaveApproval">
-        <result column="approval_id" property="ApprovalId" />
+        <result column="approval_id" property="approvalId" />
         <result column="leave_id" property="leaveId" />
         <result column="user_id" property="userId" />
     </resultMap>
