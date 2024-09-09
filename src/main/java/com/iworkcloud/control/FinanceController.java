@@ -34,7 +34,20 @@ public class FinanceController {
     private FinanceService financeService;
 
     @GetMapping("/list")
-    public Results financeList(){
+    public Results financeList(HttpServletRequest Request){
+        int id = 0;
+
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
         List<Finance> financeList = financeService.financeList();
         if(financeList.size()==0){
             return Results.Error("没有财务记录");
@@ -42,7 +55,20 @@ public class FinanceController {
         return Results.Success(financeList);
     }
     @GetMapping("/search")
-    public Results adminSearch(@RequestBody Map<String, Object> request){
+    public Results adminSearch(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
         try {
             Finance finance= new Finance();
             finance.setFinanceType((String) request.get("financeType"));
@@ -72,6 +98,18 @@ public class FinanceController {
      */
     @PostMapping("/add")
     public Results add(HttpServletRequest Request, @RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
 
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 //        String datetime =LocalDateTime.now().format(formatter);
@@ -84,9 +122,6 @@ public class FinanceController {
                     financeService.updateProjectTotal(finance.getProjectId());
                 }
                 Integer financeId = financeService.findFianceIdByFinance(finance);
-                String jwt = Request.getHeader("token");
-                Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
-                int id = (int) claim.get("id");
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String datetime =LocalDateTime.now().format(formatter);
@@ -112,7 +147,20 @@ public class FinanceController {
      * @param request
      */
     @DeleteMapping("/delete")
-    public Results delete(@RequestBody Map<String, Object> request){
+    public Results delete(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
 
         try{
             Integer financeId = (Integer) request.get("financeId");
@@ -134,6 +182,19 @@ public class FinanceController {
      */
     @PutMapping("/update")
     public Results update(@RequestBody Map<String, Object> request,HttpServletRequest Request){
+        int id = 0;
+
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
 
 
         try{
@@ -145,7 +206,6 @@ public class FinanceController {
                 }
 
                 Integer financeId = finance.getProjectId();
-                int id = getUserId(Request);
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String datetime =LocalDateTime.now().format(formatter);
@@ -164,12 +224,14 @@ public class FinanceController {
         return Results.Error("修改失败");
     }
     private Finance getFinance(Map<String, Object> request){
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String datetime =LocalDateTime.now().format(formatter);
         Timestamp financeRecordTime = Timestamp.valueOf(datetime);
         return new Finance((Integer) request.get("financeId"), (String) request.get("financeType"), (Double) request.get("amount"), (String) request.get("financeDescription"), financeRecordTime, (Integer) request.get("userId"), (Integer) request.get("projectId"));
     }
     private Integer getUserId(HttpServletRequest Request){
+
         String jwt = Request.getHeader("token");
         Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
         return (Integer) claim.get("id");
