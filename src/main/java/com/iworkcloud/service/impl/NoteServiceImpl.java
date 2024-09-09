@@ -25,6 +25,11 @@ public class NoteServiceImpl extends BaseServiceImpl<Note> implements NoteServic
         return noteMapper.findByUserId(id);
     }
 
+    @Override
+    public List<Note> noteList(Note note){
+        return noteMapper.findByListEntity(note);
+    }
+
 
 
 

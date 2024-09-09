@@ -18,4 +18,5 @@ public interface NoteService extends BaseService<Note>{
     List<Note> noteList(Integer id);
 
 
+    List<Note> noteList(Note note);
 }
