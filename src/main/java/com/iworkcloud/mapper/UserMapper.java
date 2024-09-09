@@ -3,6 +3,8 @@ package com.iworkcloud.mapper;
 import com.iworkcloud.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 
 * Title: UserDao
@@ -13,5 +15,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     User findUserByAccount(String account);
+    List<User> findUsersByUser(User user);
 
 }

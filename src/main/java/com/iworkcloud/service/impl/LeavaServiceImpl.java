@@ -35,5 +35,10 @@ public class LeavaServiceImpl extends BaseServiceImpl<Leave> implements LeaveSer
         return leaveMapper.findLeaveByLeaveId(id);
     }
 
+    @Override
+    public List<Leave> findleaveUnapproved(String str) {
+        return leaveMapper.findleaveUnapproved(str);
+    }
+
 
 }

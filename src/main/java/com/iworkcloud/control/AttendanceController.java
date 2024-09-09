@@ -5,19 +5,19 @@ import com.iworkcloud.service.AttendanceService;
 import com.iworkcloud.service.LeaveService;
 import com.iworkcloud.service.UserService;
 import com.iworkcloud.util.JwtUtils;
+import net.sf.jsqlparser.statement.select.Select;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -111,6 +111,27 @@ public class AttendanceController {
         }else return Results.Error("今天没有考勤要求！");
     }
 
+    @Scheduled(cron = "0 47 14 * * ?") // s m h d m w
+    public void scheduleFixedRateTask() {
+        List<User> list= selectUser();
+        Attendance attendance = new Attendance();
+        // 日期
+        Date date= new Date(System.currentTimeMillis());
+        attendance.setDate(date);
+        for (User user : list) {
+            attendance.setUserId(user.getUserId());
+            attendance.setAttendanceState("未签到"); // 初始状态，根据实际业务逻辑设置
+            attendanceService.insert(attendance);
+        }
+    }
+
+    public List<User> selectUser() {
+        User user =new User();
+        user.setUserAuthority("员工");
+        System.out.println(user);
+        List<User> list = userService.findUsersByUser(user);
+        return list;
+    }
 
 
 }

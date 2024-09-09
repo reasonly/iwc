@@ -71,12 +71,11 @@ public class LeaveApprovalController {
         }catch (Exception e){
             return Results.Error("token过期，请重新登录！");
         }
-//        Map<String, Object> claims = new HashMap<>();
-//        List<Leave> leaveList=leaveService.findleaveUnapproved(id);
-//        System.out.println("List<leave>" + leaveList);
-//        claims.put("leaveList", leaveList);
-//        return Results.Success(claims);
-        return Results.Error();
+        Map<String, Object> claims = new HashMap<>();
+        List<Leave> leaveList=leaveService.findleaveUnapproved("未审批");
+        System.out.println("leaveList:" + leaveList);
+        claims.put("leaveList查找成功：", leaveList);
+        return Results.Success(claims);
     }
 
 

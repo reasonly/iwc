@@ -2,6 +2,7 @@ package com.iworkcloud.service;
 
 import com.iworkcloud.pojo.User;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,5 +19,6 @@ public interface UserService extends BaseService<User>{
     Boolean cheakUserPassword(User user,String password);
     User findUserByAccount(String str);
     Map<String, String> encryptPasswords(String pwd);
+    List<User> findUsersByUser(User user);
 
 }
