@@ -10,5 +10,6 @@ public interface LeaveMapper extends BaseMapper<Leave>{
     List<Leave> findAllByUserId(Integer id);
     Leave findLeaveByStartDateAndEndDate(Leave leave);
     Leave findLeaveByLeaveId(Integer id);
+    List<Leave> findleaveUnapproved(String str);
 
 }

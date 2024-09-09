@@ -18,11 +18,10 @@
         attendance_id, user_id, attendance_state,attendance_time,date
     </sql>
 
-<!--    <insert id="insert" parameterMap="Attendance">-->
-<!--        insert into t_attendance (user_id, attendance_state,attendance_time,date)-->
-<!--        values (#{userId},#{attendanceState},#{attendanceTime},#{date})-->
-
-<!--    </insert>-->
+    <insert id="insert" parameterMap="Attendance">
+        insert into t_attendance (user_id, attendance_state,date)
+        values (#{userId},#{attendanceState},#{date})
+    </insert>
 
 
 <!--    <update id="update" parameterMap="Attendance">-->

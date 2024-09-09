@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.iworkcloud.util.MD5Util;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAscii;
@@ -81,6 +83,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         retval.put("password",MD5Util.inputPassToDBPass(pwd,newsalt));
         retval.put("salt",newsalt);
         return retval;
+    }
+
+    @Override
+    public List<User> findUsersByUser(User user) {
+        return userMapper.findUsersByUser(user);
     }
 
 }
