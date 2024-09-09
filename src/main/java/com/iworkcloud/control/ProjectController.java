@@ -25,10 +25,18 @@ public class ProjectController {
     public Results projectListPage(HttpServletRequest Request) {
         System.out.println("projectList");
         //
-
-        Pair<Integer, String> pair= getUserIdAndAuthority(Request);
-        Integer id = pair.getKey();
-        String authority = pair.getValue();
+        int id = 0;
+        String authority ="";
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         System.out.println("authority:"+authority);
 
         List<Project> projectList=null;
