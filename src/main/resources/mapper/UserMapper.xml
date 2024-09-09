@@ -50,13 +50,13 @@
 	</update>
 
 	<delete id="delete" parameterType="Integer">
-		delete from  user where id=#{id}
+		delete from  t_user where id=#{id}
 	</delete>
 
 	<select id="findAll" resultMap="BaseResultMap" >
 		select
 		*
-		from user
+		from t_user
 	</select>
 
 	<select id="findByPrimaryKey" parameterType="Integer"   resultMap="BaseResultMap">

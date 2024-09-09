@@ -19,8 +19,8 @@
 	</sql>
 
 	<insert id="insert" parameterMap="Note">
-		insert into t_note (noteName,noteBody,noteDate,remindTime)
-		values (#{noteName},#{noteBody},#{noteDate},#{remindTime})
+		insert into t_note (note_name,note_body,note_date,remind_time,user_id)
+		values (#{noteName},#{noteBody},#{noteDate},#{remindDate},#{userId})
 	</insert>
 
 
@@ -34,8 +34,8 @@
 			<if test="noteBody!=null and noteBody!=''">
 				note_body = #{noteBody},
 			</if>
-			<if test="noteDate!=null and noteDate!=''">
-				remind_time = #{remindTime},
+			<if test="remindDate!=null">
+				remind_time = #{remindDate},
 			</if>
 		</trim>
 		  where note_id= #{noteId}
@@ -65,11 +65,31 @@
 		</where>
 	</select>
 
+	<select id="findByListEntity" parameterMap="Note" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_note
+		<where>
+			<if test="noteName!=null and noteName!=''">
+				and note_name = #{noteName}
+			</if>
+			<if test="noteBody!=null and noteBody!=''">
+				and note_body = #{noteBody}
+			</if>
+			<if test="noteDate!=null and noteDate!=''">
+				and note_date = #{noteDate}
+			</if>
+			<if test="userId!=null and userId!=''">
+				and user_id = #{userId}
+			</if>
+		</where>
+	</select>
+
 	<!--用户显示自身的记事本-->
 	<select id="findByUserId" parameterType="Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List"></include>
-		from t_note where userId=#{userId}
+		from t_note where user_id=#{userId}
 	</select>
 
 </mapper>

@@ -16,6 +16,8 @@ import java.util.List;
 public interface NoteMapper extends BaseMapper<Note> {
 
     List<Note> findByUserId(int userId);
+    List<Note> findByListEntity(Note note);
     void insert(Note note);
+    int deleteNote(int id);
 
 }
