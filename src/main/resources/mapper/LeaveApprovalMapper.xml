@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.iworkcloud.mapper.LeaveApprovalMapper">
+
+    <resultMap id="BaseResultMap" type="com.iworkcloud.pojo.LeaveApproval">
+        <result column="approval_id" property="ApprovalId" />
+        <result column="leave_id" property="leaveId" />
+        <result column="user_id" property="userId" />
+    </resultMap>
+
+    <parameterMap id="LeaveApproval" type="com.iworkcloud.pojo.LeaveApproval"/>
+
+
+    <sql id="Base_Column_List">
+        approval_id,leave_id, user_id
+    </sql>
+
+    <insert id="insert" parameterMap="LeaveApproval">
+        insert into t_leave_approval (leave_id, user_id)
+        values (#{leaveId}, #{userId})
+    </insert>
+    
+
+    <select id="findAll" resultMap="BaseResultMap" >
+        select
+        *
+        from t_leave_approval
+    </select>
+
+
+</mapper>

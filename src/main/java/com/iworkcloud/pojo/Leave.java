@@ -1,6 +1,6 @@
 package com.iworkcloud.pojo;
 
-import java.util.Date;
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Leave {
-    protected Integer leaveId;
-    private Date startrDate;
+    private Integer leaveId;
+    private Date startDate;
     private Date endDate;
     private String reason;
-    private String status;
+    private String state;
     private Integer userId;
 
 

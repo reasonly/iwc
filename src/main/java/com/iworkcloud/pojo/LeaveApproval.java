@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LeaveApproval {
-    protected Integer approvalId;
+    private Integer approvalId;
     private Integer leaveId;
-    private Integer adminstratorId;
+    private Integer userId;
 
 
 }

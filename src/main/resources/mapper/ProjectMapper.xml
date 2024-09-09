@@ -9,8 +9,13 @@
         <result column="user_id" property="userId" />
         <result column="project_total" property="projectTotal" />
     </resultMap>
-
     <parameterMap id="Project" type="com.iworkcloud.pojo.Project" />
+
+    <resultMap id="UserResultMap" type="com.iworkcloud.pojo.User">
+        <id property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+    </resultMap>
+    <parameterMap id="User" type="com.iworkcloud.pojo.User" />
     <sql id="Base_Column_List">
         t_project.project_id , project_name, project_content, project_state, user_id, project_total
 	</sql>
@@ -19,7 +24,7 @@
     </sql>
     <insert id="insert" parameterMap="Project">
         insert into t_project (project_name, project_content, project_state, user_id)
-        values (#{projectName},#{projectContent},#{projectState},#{administratorId})
+        values (#{projectName},#{projectContent},#{projectState},#{userId})
     </insert>
 
     <insert id="addUser">
@@ -77,8 +82,8 @@
         <if test="projectState != null and projectState != ''">
             and project_state = #{projectState}
         </if>
-        <if test="administratorId != null and administratorId != ''">
-            and administrator_id = #{administratorId}
+        <if test="userId != null and userId != ''">
+            and userId = #{userId}
         </if>
     </where>
     </select>
@@ -99,7 +104,7 @@
 <!--    </select>-->
 <!--    通过用户id查询项目信息-->
     <select id="findByUserId" parameterType="integer" resultMap="BaseResultMap">
-            select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.user_id
+            select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.user_id, t_project.project_total
             from t_project join t_project_attendance
             on t_project.project_id = t_project_attendance.project_id
             where t_project_attendance.user_id = #{Id}
@@ -126,6 +131,38 @@
                 and project_state = #{Project.projectState}
             </if>
                 and t_project_attendance.user_id = #{id}
+        </where>
+    </select>
+    <select id="findUsersNotInProject" resultMap="UserResultMap">
+        SELECT tu.user_id, tu.user_name
+        FROM t_user tu
+        WHERE tu.user_id NOT IN (
+            SELECT tu.user_id
+            FROM t_user tu
+                     LEFT JOIN t_project_attendance tpa ON tu.user_id = tpa.user_id
+            WHERE project_id = #{projectId}
+        )
+        AND tu.user_authority = #{authority}
+    </select>
+    <select id="findUsersInProject" resultMap="UserResultMap">
+        SELECT tu.user_id, tu.user_name
+        FROM t_user tu
+                 LEFT JOIN t_project_attendance tpa ON tu.user_id = tpa.user_id
+        WHERE project_id = #{projectId} AND tu.user_authority = #{authority}
+    </select>
+    <select id="findByListEntity" resultMap="BaseResultMap">
+        select project_id, project_name, project_content, project_state, user_id,project_total
+        from t_project
+        <where>
+            <if test="Project.projectName != null and Project.projectName != ''">
+                and project_name like concat('%',#{Project.projectName},'%')
+            </if>
+            <if test="Project.projectContent != null and Project.projectContent != ''">
+                and project_content like concat('%',#{Project.projectContent},'%')
+            </if>
+            <if test="Project.projectState != null and Project.projectState != ''">
+                and project_state = #{Project.projectState}
+            </if>
         </where>
     </select>
 

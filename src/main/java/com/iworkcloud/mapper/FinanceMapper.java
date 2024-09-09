@@ -2,10 +2,12 @@ package com.iworkcloud.mapper;
 
 import com.iworkcloud.pojo.Finance;
 import com.iworkcloud.pojo.FinanceManage;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface FinanceMapper extends BaseMapper<Finance>{
     boolean insertFinance(Finance finance);
 
@@ -16,4 +18,6 @@ public interface FinanceMapper extends BaseMapper<Finance>{
     boolean updateProjectTotal(@Param("projectId") Integer projectId);
 
     Integer findFianceIdByFinance(Finance finance);
+
+    boolean updateFinance(Finance finance);
 }
