@@ -5,6 +5,7 @@ import com.iworkcloud.pojo.Project;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.service.NoteService;
 import com.iworkcloud.service.ProjectService;
+import com.iworkcloud.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -28,14 +30,37 @@ public class NoteController {
     private NoteService noteService;
 
     @RequestMapping("/notelist")
-    public Results noteList(Model module, HttpSession session){
+    public Results noteList(HttpServletRequest Request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
+
         List<Note> noteList=null;
-        noteList = noteService.noteList((Integer) session.getAttribute("userId"));
+        noteList = noteService.noteList(id);
         return Results.Success(noteList);
     }
 
     @RequestMapping("/addnote")
-    public void addNote(@RequestBody Map<String, Object> request){
+    public Results addNote(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         Note note = new Note();
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
@@ -45,25 +70,60 @@ public class NoteController {
         note.setNoteDate(Timestamp.valueOf(formatter.format(date)));
         note.setRemindDate((Timestamp) request.get("remindDate"));
         noteService.insert(note);
+        return Results.Success();
     }
 
     @RequestMapping("/edit")
-    public void editNote(@RequestBody Map<String, Object> request){
+    public Results editNote(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         Note note = new Note();
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
         note.setRemindDate((Timestamp) request.get("remindDate"));
         noteService.update(note);
+        return Results.Success();
     }
 
     @RequestMapping("/delete")
-    public void deleteNote(@RequestBody Map<String, Object> request){
-        Integer id = (Integer) request.get("id");
+    public Results deleteNote(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         noteService.deleteByPrimaryKey(id);
+        return Results.Success();
     }
 
     @RequestMapping("/search")
-    public Results search(@RequestBody Map<String, Object> request){
+    public Results search(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         Note note = new Note();
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
@@ -73,7 +133,18 @@ public class NoteController {
     }
 
     @RequestMapping("/update")
-    public Results adminSearch(@RequestBody Map<String, Object> request){
+    public Results adminSearch(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+        int id = 0;
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            String authority =(String) claim.get("authority");
+            System.out.println("解析令牌得id="+id+" authority="+authority);
+        }catch (Exception e){
+            return Results.Error("token过期，请重新登录！");
+        }
         Note note = new Note();
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
