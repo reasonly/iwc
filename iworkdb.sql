@@ -52,7 +52,7 @@ CREATE TABLE `t_attendance` (
 INSERT INTO `t_attendance` VALUES ('00000001', '00000001', '已签到', '2024-09-08 08:30:15', '2024-09-04');
 INSERT INTO `t_attendance` VALUES ('00000002', '00000002', '未签到', null, '2024-09-04');
 INSERT INTO `t_attendance` VALUES ('00000003', '00000003', '请假', null, '2024-09-04');
-INSERT INTO `t_attendance` VALUES ('00000004', '00000001', '未签到', null, '2024-09-07');
+INSERT INTO `t_attendance` VALUES ('00000004', '00000001', '未签到', null, '2024-09-09');
 
 -- ----------------------------
 -- Table structure for `t_project`
@@ -104,7 +104,6 @@ CREATE TABLE `t_finance_manage` (
   `finance_manage_time` datetime NOT NULL,
   `finance_manage_description` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`finance_manage_id`),
-  FOREIGN KEY (`finance_id`) REFERENCES `t_finance` (`finance_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

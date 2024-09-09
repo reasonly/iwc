@@ -38,6 +38,7 @@ public class LoginController {
                 claims.put("id", user.getUserId());
                 claims.put("name", user.getUserName());
                 claims.put("authority", user.getUserAuthority());
+                claims.put("account", user.getUserAccount());
 
                 String jwt = JwtUtils.GetStringJwt(claims);
                 System.out.println("jwt令牌："+jwt);
