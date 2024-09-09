@@ -24,7 +24,10 @@ public class MeetingServiceImpl extends BaseServiceImpl<Meeting> implements Meet
     public List<Meeting> meetingList() { return meetingMapper.findAll(); }
     @Override
     public List<Meeting> meetingList(Integer id){
-        return meetingMapper.findByuserId(id);
+        int meetingid= meetingMapper.findByAttendanceUser(id);
+        Meeting meeting = new Meeting();
+        meeting.setMeetingId(meetingid);
+        return meetingMapper.selectMeetingList(meeting);
     }
 
 }

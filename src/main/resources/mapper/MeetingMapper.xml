@@ -11,8 +11,15 @@
         <result column="meeting_state" property="meetingState" />
         <result column="user_id" property="userId" />
     </resultMap>
-
     <parameterMap id="Meeting" type="com.iworkcloud.pojo.Meeting"/>
+
+    <resultMap id="UserResultMap" type="com.iworkcloud.pojo.meetingAttendance">
+        <id property="meetingAttendanceId" column="meeting_attendance_id"/>
+        <result property="meetingId" column="meeting_id"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+    <parameterMap id="meetingAttendance" type="com.iworkcloud.pojo.meetingAttendance"/>
+
 
     <sql id="Base_Column_List">
         meeting_num, meeting_name,start_time,end_time,meeting_state,user_id
@@ -33,10 +40,10 @@
             <if test="meetingName!=null and meetingName!=''">
                 meeting_name = #{meetingName},
             </if>
-            <if test="startTime!=null and startTime!=''">
+            <if test="startTime!=null">
                 start_time = #{startTime},
             </if>
-            <if test="endTime!=null and endTime!=''">
+            <if test="endTime!=null">
                 end_time = #{endTime},
             </if>
             <if test="meetingState!=null and meetingState!=''">
@@ -69,19 +76,24 @@
             <if test="meetingName!=null and meetingName!=''">
                 meeting_name = #{meetingName},
             </if>
-            <if test="startTime!=null and startTime!=''">
+            <if test="startTime!=null">
                 start_time = #{startTime},
             </if>
-            <if test="endTime!=null and endTime!=''">
+            <if test="endTime!=null">
                 end_time = #{endTime},
             </if>
             <if test="meetingState!=null and meetingState!=''">
                 meeting_state = #{meetingState},
             </if>
-            <if test="administratorId!=null and administratorId!=''">
-                administrator_id = #{administratorId},
+            <if test="userId!=null and userId!=''">
+                user_id = #{userId},
             </if>
         </where>
+    </select>
+
+    <select id="findByAttendanceUser" parameterType="Integer" resultType="Integer">
+        select meeting_id
+        from t_meeting_attendance where user_id = #{userId}
     </select>
 
     <select id="findByuserId" parameterType="Integer" resultType="Integer">

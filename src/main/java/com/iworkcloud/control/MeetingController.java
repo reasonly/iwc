@@ -1,5 +1,6 @@
 package com.iworkcloud.control;
 
+import com.iworkcloud.mapper.MeetingMapper;
 import com.iworkcloud.pojo.Meeting;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.service.MeetingService;
@@ -24,6 +25,8 @@ public class MeetingController {
 
     @Autowired
     private MeetingService meetingService;
+    @Autowired
+    private MeetingMapper meetingMapper;
 
     @RequestMapping("/add")
     public Results addMeeting(HttpServletRequest Request, @RequestBody Map<String, Object> request)
@@ -40,11 +43,11 @@ public class MeetingController {
             return Results.Error("token过期，请重新登录！");
         }
         Meeting meeting = new Meeting();
-        meeting.setMeetingNum((Integer) request.get("meetingNum"));
+        meeting.setMeetingNum(Integer.parseInt((String) request.get("meetingNum")));
         meeting.setMeetingName((String) request.get("meetingName"));
         meeting.setMeetingState((String) request.get("meetingState"));
-        meeting.setStartTime((Timestamp) request.get("startTime"));
-        meeting.setEndTime((Timestamp) request.get("endTime"));
+        meeting.setStartTime(Timestamp.valueOf((String) request.get("startTime")));
+        meeting.setEndTime(Timestamp.valueOf((String) request.get("endTime")));
 
         meeting.setUserId(id);
         meetingService.insert(meeting);
@@ -65,7 +68,7 @@ public class MeetingController {
         }catch (Exception e){
             return Results.Error("token过期，请重新登录！");
         }
-        meetingService.deleteByPrimaryKey((Integer) request.get("id"));
+        meetingMapper.delete(Integer.parseInt((String) request.get("meetingId")));
         System.out.println("删除成功");
         return Results.Success();
     }
@@ -85,17 +88,18 @@ public class MeetingController {
             return Results.Error("token过期，请重新登录！");
         }
         Meeting meeting = new Meeting();
-        meeting.setMeetingId((Integer) request.get("meetingId"));
+        meeting.setMeetingId(Integer.parseInt((String) request.get("meetingId")));
         meeting.setMeetingName((String) request.get("meetingName"));
-        meeting.setMeetingNum((Integer) request.get("meetingNum"));
+        meeting.setMeetingNum(Integer.parseInt((String) request.get("meetingNum")));
         meeting.setMeetingState((String) request.get("meetingState"));
-        meeting.setStartTime((Timestamp) request.get("startTime"));
+        meeting.setStartTime(Timestamp.valueOf((String) request.get("startTime")));
+        meeting.setEndTime(Timestamp.valueOf((String) request.get("endTime")));
         meetingService.update(meeting);
         return Results.Success();
     }
     //员工看到的会议列表
-    @RequestMapping("/meetinglistByUserId")
-    public Results meetingListByUserId(HttpServletRequest Request)
+    @RequestMapping("/meetinglistByAttendance")
+    public Results meetingListByUserId(HttpServletRequest Request,@RequestBody Map<String, Object> request)
     {
         int id = 0;
         try{
@@ -109,7 +113,7 @@ public class MeetingController {
             return Results.Error("token过期，请重新登录！");
         }
 
-        return Results.Success(meetingService.meetingList(id)) ;
+        return Results.Success(meetingService.meetingList(Integer.parseInt((String) request.get("userId"))));
     }
     //管理员的看到的会议列表
     @RequestMapping("/meetinglist")
@@ -127,7 +131,7 @@ public class MeetingController {
             return Results.Error("token过期，请重新登录！");
         }
 
-        return Results.Success(meetingService.meetingList() );
+        return Results.Success(meetingService.meetingList());
     }
 
 }

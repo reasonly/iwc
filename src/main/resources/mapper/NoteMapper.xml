@@ -71,10 +71,10 @@
 		from t_note
 		<where>
 			<if test="noteName!=null and noteName!=''">
-				and note_name = #{noteName}
+				and note_name like concat('%',#{noteName},'%')
 			</if>
 			<if test="noteBody!=null and noteBody!=''">
-				and note_body = #{noteBody}
+				and note_body like concat('%',#{noteBody},'%')
 			</if>
 			<if test="noteDate!=null and noteDate!=''">
 				and note_date = #{noteDate}
