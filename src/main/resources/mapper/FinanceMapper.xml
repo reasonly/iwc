@@ -74,6 +74,9 @@
         select <include refid="Base_Column_List"/>
         from t_finance
         <where>
+            <if test="financeId!=null and financeId!=''">
+                and finance_id = #{financeId}
+            </if>
             <if test="amount!=null and amount!=''">
                 and amount = #{amount}
             </if>
@@ -89,7 +92,9 @@
             <if test="projectId!=null and projectId!=''">
                 and project_id = #{projectId}
             </if>
+            <if test="financeRecordTime!=null" >
                 and finance_record_time = #{financeRecordTime}
+            </if>
         </where>
     </select>
     <select id="findByListEntity" parameterMap="Finance" resultMap="BaseResultMap">

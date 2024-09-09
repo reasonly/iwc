@@ -79,6 +79,21 @@
         from t_attendance where user_id = #{userId} And date = #{date}
     </select>
 
+    <select id="findAttendanceByListAttendance" parameterMap="Attendance" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_attendance
+        <where>
+            <if test="userId!=null and userId!=''">
+                and user_id = #{userId}
+            </if>
+            <if test="attendanceState!=null and attendanceState!=''">
+                and attendance_state = #{attendanceState}
+            </if>
+            <if test="date!=null">
+                and date = #{date}
+            </if>
+        </where>
+    </select>
     <update id="attendanceByAttendanceId" parameterMap="Attendance">
         update
         t_attendance
@@ -90,4 +105,5 @@
         </trim>
         where attendance_id = #{attendanceId}
     </update>
+
 </mapper>

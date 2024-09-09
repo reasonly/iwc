@@ -6,11 +6,10 @@ import com.iworkcloud.pojo.Results;
 import com.iworkcloud.service.FinanceService;
 import com.iworkcloud.service.ProjectService;
 import com.iworkcloud.util.JwtUtils;
-import jdk.nashorn.internal.runtime.Context;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +48,7 @@ public class FinanceController {
             return Results.Error("token过期，请重新登录！");
         }
         List<Finance> financeList = financeService.financeList();
-        if(financeList.size()==0){
+        if(financeList.isEmpty()){
             return Results.Error("没有财务记录");
         }
         return Results.Success(financeList);
@@ -77,7 +76,7 @@ public class FinanceController {
             finance.setProjectId((Integer) request.get("projectId"));
 
             List<Finance> financeList = financeService.financeList(finance);
-            if(financeList.size()==0){
+            if(financeList.isEmpty()){
                 return Results.Error("没有财务记录");
             }
             return Results.Success(financeList);
@@ -127,7 +126,7 @@ public class FinanceController {
                 String datetime =LocalDateTime.now().format(formatter);
                 Timestamp financeManageTime = Timestamp.valueOf(datetime);
 
-                FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "添加财务信息");
+                FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "添加财务信息:'"+finance.getFinanceDescription()+"'");
                 if(financeService.addFinanceManage(financeManage)) {
                     return Results.Success("添加成功");
                 }
@@ -164,7 +163,24 @@ public class FinanceController {
 
         try{
             Integer financeId = (Integer) request.get("financeId");
+            Finance finance = new Finance();
+            finance.setFinanceId(financeId);
+            finance =financeService.findByFinance(finance);
+//            finance = financeService.findByPrimaryKey(financeId);
+            Integer projectId = finance.getProjectId();
             if(financeService.deleteByPrimaryKey(financeId)) {
+                //判断是否是项目的财务信息,修改项目总金额
+                if(projectId!=null){
+                    financeService.updateProjectTotal(projectId);
+                }
+
+                //添加操作记录
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String datetime =LocalDateTime.now().format(formatter);
+                Timestamp financeManageTime = Timestamp.valueOf(datetime);
+
+                FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "删除财务信息:'"+finance.getFinanceDescription()+"'");
+                financeService.addFinanceManage(financeManage);
                 return Results.Success("删除成功");
             }
         }
@@ -192,36 +208,36 @@ public class FinanceController {
             System.out.println("id :"+id);
 
         }catch (Exception e){
-
             return Results.Error("token过期，请重新登录！");
         }
 
-
-        try{
-            Finance finance = getFinance(request);
-            if(financeService.updateFinance(finance)){
-                //判断是否是项目的财务信息
-                if(finance.getProjectId()!=null){
-                    financeService.updateProjectTotal(finance.getProjectId());
+        Finance finance = getFinance(request);
+        if(financeService.updateFinance(finance)){
+            //判断是否是项目的财务信息
+            if(finance.getProjectId()!=null){
+                System.out.println("添加的是项目流水信息");
+                if(financeService.updateProjectTotal(finance.getProjectId())){
+                    System.out.println("项目流水信息修改成功");
                 }
-
-                Integer financeId = finance.getProjectId();
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String datetime =LocalDateTime.now().format(formatter);
-                Timestamp financeManageTime = Timestamp.valueOf(datetime);
-
-                FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "修改财务信息");
-                if(financeService.addFinanceManage(financeManage)) {
-                    return Results.Success("修改成功");
+                else{
+                    return Results.Error("项目流水信息修改失败");
                 }
-                return Results.Error("添加财务操作记录失败");
             }
 
-        }  catch (Exception e){
-            log.error("修改失败",e);
-            }
-        return Results.Error("修改失败");
+            Integer financeId = finance.getProjectId();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String datetime =LocalDateTime.now().format(formatter);
+            Timestamp financeManageTime = Timestamp.valueOf(datetime);
+
+            FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "修改财务信息");
+
+            financeService.addFinanceManage(financeManage);
+            return Results.Success("添加财务操作成功");
+        }
+        else {
+            return Results.Error("修改失败");
+        }
     }
     private Finance getFinance(Map<String, Object> request){
 
@@ -230,10 +246,10 @@ public class FinanceController {
         Timestamp financeRecordTime = Timestamp.valueOf(datetime);
         return new Finance((Integer) request.get("financeId"), (String) request.get("financeType"), (Double) request.get("amount"), (String) request.get("financeDescription"), financeRecordTime, (Integer) request.get("userId"), (Integer) request.get("projectId"));
     }
-    private Integer getUserId(HttpServletRequest Request){
-
-        String jwt = Request.getHeader("token");
-        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
-        return (Integer) claim.get("id");
-    }
+//    private Integer getUserId(HttpServletRequest Request){
+//
+//        String jwt = Request.getHeader("token");
+//        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
+//        return (Integer) claim.get("id");
+//    }
 }
