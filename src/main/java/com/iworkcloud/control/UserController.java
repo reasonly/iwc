@@ -93,7 +93,6 @@ public class UserController {
             Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
             id = (int) claim.get("id");
             System.out.println("id :"+id);
-
         }catch (Exception e){
 
             return Results.Error("token过期，请重新登录！");
