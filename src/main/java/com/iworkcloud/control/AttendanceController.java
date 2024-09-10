@@ -148,54 +148,14 @@ public class AttendanceController {
     public static LocalTime endTime1=LocalTime.parse("08:00:00");
     public static LocalTime startTime2=LocalTime.parse("17:00:00");
     public static LocalTime endTime2=LocalTime.parse("18:00:00");
-    private final String WOIA_ID = "0 30 07 * * ?";
-    //@Scheduled(cron = WOIA_ID)
-//    @Scheduled(cron = "${startTime1}")
-//    @Scheduled(cron = "${startTime2}")
-    //@Scheduled(cron = "0 26 16 * * ?")
-    public void scheduleNewAttendance() {
-        System.out.println("生成考勤信息！");
-        User user =new User();
-        user.setUserAuthority("员工");
-        List<User> list = userService.findUsersByUser(user);
 
-        Attendance attendance = new Attendance();
-        // 日期
-        Date date= new Date(System.currentTimeMillis());
-        attendance.setDate(date);
-        attendance.setDeadline("否");
-        for (User a : list) {
-            attendance.setUserId(a.getUserId());
-            attendance.setAttendanceState("未签到"); // 初始状态，根据实际业务逻辑设置
-            attendanceService.insert(attendance);
-        }
-    }
+    /**
+     * @param Request
+     * 改变系统时间
+     *
+     *
+     */
 
-    //@Scheduled(cron = "#{endTime1}") // s m h d m w
-    //@Scheduled(cron = "#{endTime2}")
-    //@Scheduled(cron = "0 26 16 * * ?")
-    public void scheduleUpdateAttendance() {
-        System.out.println("考勤截止！");
-        Attendance atd = new Attendance();
-        // 日期
-        Date date= new Date(System.currentTimeMillis());
-        atd.setDate(date);
-        atd.setDeadline("否");
-        List<Attendance> list= attendanceService.findAttendancesByAttendance(atd);
-        //Attendance attendance = new Attendance();
-
-        for (Attendance attendance : list) {
-            attendance.setDeadline("是");
-            attendanceService.attendanceByAttendanceId(attendance);
-        }
-    }
-    @Scheduled(cron = "0 0 0 1 * ?") // 每月1号，清除三个月前考勤信息
-    //@Scheduled(cron = "0 41 19 * * ?")
-    public void scheduleDeleteAttendance() {
-        System.out.println("清除3月前的考勤信息！");
-        attendanceService.deleteThreeMonthsBefore();
-
-    }
     @RequestMapping("/TimeChange")
     public Results TimeChange(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
         int id = 0;
@@ -228,35 +188,7 @@ public class AttendanceController {
             AttendanceController.startTime2 = startTime2;
             AttendanceController.endTime2 = addTime(startTime2,duration);
         }
-
-        return Results.Success();
-    }
-
-    //将用户输入的时间（格式为 hh:MM:ss）转换为 @Scheduled 注解所需的 cron 表达式格式（例如 "0 30 07 * * ?"）
-    public static String convertToCronExpression(String userInput) {
-        // 定义时间格式
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        // 解析用户输入的时间
-        LocalTime userTime = LocalTime.parse(userInput, formatter);
-
-        // 构建cron表达式，这里假设每天的这个时间执行
-        String cronExpression = String.format("0 %d %d * * ?", userTime.getMinute(), userTime.getHour());
-
-        return cronExpression;
-    }
-
-    public static LocalTime addTime(LocalTime start, LocalTime durationTime) {
-
-        // 计算结束时间
-        LocalTime endTime = start.plusHours(durationTime.getHour()).plusMinutes(durationTime.getMinute()).plusSeconds(durationTime.getSecond());
-
-        // 如果结束时间超过24小时，则减去24小时
-        if (endTime.isAfter(start.plusHours(24))) {
-            endTime = endTime.minusHours(24);
-        }
-
-        // 返回结果时间
-        return endTime;
+        return Results.Success("修改成功！");
     }
 
 
@@ -312,5 +244,57 @@ public class AttendanceController {
 
         }
 
+    }
+    public void scheduleNewAttendance() {
+        System.out.println("生成考勤信息！");
+        User user =new User();
+        user.setUserAuthority("员工");
+        List<User> list = userService.findUsersByUser(user);
+
+        Attendance attendance = new Attendance();
+        // 日期
+        Date date= new Date(System.currentTimeMillis());
+        attendance.setDate(date);
+        attendance.setDeadline("否");
+        for (User a : list) {
+            attendance.setUserId(a.getUserId());
+            attendance.setAttendanceState("未签到"); // 初始状态，根据实际业务逻辑设置
+            attendanceService.insert(attendance);
+        }
+    }
+
+    public void scheduleUpdateAttendance() {
+        System.out.println("考勤截止！");
+        Attendance atd = new Attendance();
+        // 日期
+        Date date= new Date(System.currentTimeMillis());
+        atd.setDate(date);
+        atd.setDeadline("否");
+        List<Attendance> list= attendanceService.findAttendancesByAttendance(atd);
+
+        for (Attendance attendance : list) {
+            attendance.setDeadline("是");
+            attendanceService.attendanceByAttendanceId(attendance);
+        }
+    }
+    @Scheduled(cron = "0 0 0 1 * ?") // 每月1号，清除三个月前考勤信息
+    //@Scheduled(cron = "0 41 19 * * ?")
+    public void scheduleDeleteAttendance() {
+        System.out.println("清除3月前的考勤信息！");
+        attendanceService.deleteThreeMonthsBefore();
+    }
+
+    public static LocalTime addTime(LocalTime start, LocalTime durationTime) {
+
+        // 计算结束时间
+        LocalTime endTime = start.plusHours(durationTime.getHour()).plusMinutes(durationTime.getMinute()).plusSeconds(durationTime.getSecond());
+
+        // 如果结束时间超过24小时，则减去24小时
+        if (endTime.isAfter(start.plusHours(24))) {
+            endTime = endTime.minusHours(24);
+        }
+
+        // 返回结果时间
+        return endTime;
     }
 }

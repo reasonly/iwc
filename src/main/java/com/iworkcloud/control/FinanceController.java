@@ -44,41 +44,47 @@ public class FinanceController {
         }
         List<Finance> financeList = financeService.financeList();
         if(financeList.isEmpty()){
-            return Results.Error("没有财务记录");
+            return Results.Error(financeList);
         }
         return Results.Success(financeList);
     }
+
+    /**
+     * 搜索财务信息
+     * @param Request (token)，request()
+     * @return
+     */
     @PostMapping("/search")
-    public Results adminSearch(HttpServletRequest Request,@RequestBody Map<String, Object> request){
+    public Results adminSearch(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
         int id;
 
-        try{
+        try {
             String jwt = Request.getHeader("token");
-            System.out.println("解析jwt="+jwt);
-            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            System.out.println("解析jwt=" + jwt);
+            Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
             id = (int) claim.get("id");
-            System.out.println("id :"+id);
+            System.out.println("id :" + id);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             return Results.Error("token过期，请重新登录！");
         }
+        List<Finance> financeList = null;
         try {
-            Finance finance= new Finance();
+            Finance finance = new Finance();
             finance.setFinanceType((String) request.get("financeType"));
             finance.setAmount((Double) request.get("amount"));
             finance.setFinanceDescription((String) request.get("financeDescription"));
             finance.setProjectId((Integer) request.get("projectId"));
 
-            List<Finance> financeList = financeService.financeList(finance);
-            if(financeList.isEmpty()){
+            financeList = financeService.financeList(finance);
+            if (financeList.isEmpty()) {
                 return Results.Error("没有财务记录");
             }
             return Results.Success(financeList);
-        }
-        catch (Exception e){
-            log.error("搜索失败",e);
-            return Results.Error("搜索失败");
+        } catch (Exception e) {
+            log.error("搜索失败", e);
+            return Results.Error(financeList);
         }
 
     }
@@ -104,9 +110,6 @@ public class FinanceController {
             return Results.Error("token过期，请重新登录！");
         }
 
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        String datetime =LocalDateTime.now().format(formatter);
-//       Timestamp time = Timestamp.valueOf();
         try {
             Finance finance = getFinance(request);
             if(financeService.addFinance(finance)){
@@ -160,7 +163,6 @@ public class FinanceController {
             Finance finance = new Finance();
             finance.setFinanceId(financeId);
             finance =financeService.findByFinance(finance);
-//            finance = financeService.findByPrimaryKey(financeId);
             Integer projectId = finance.getProjectId();
             if(financeService.deleteByPrimaryKey(financeId)) {
                 //判断是否是项目的财务信息,修改项目总金额
@@ -187,7 +189,6 @@ public class FinanceController {
     /**
      * 修改财务信息
      * @param request
-     * @param Request
      * @return
      */
     @PutMapping("/update")
@@ -233,6 +234,9 @@ public class FinanceController {
             return Results.Error("修改失败");
         }
     }
+    /*
+    * 获取财务信息
+     */
     private Finance getFinance(Map<String, Object> request){
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -240,10 +244,4 @@ public class FinanceController {
         Timestamp financeRecordTime = Timestamp.valueOf(datetime);
         return new Finance((Integer) request.get("financeId"), (String) request.get("financeType"), (Double) request.get("amount"), (String) request.get("financeDescription"), financeRecordTime, (Integer) request.get("userId"), (Integer) request.get("projectId"));
     }
-//    private Integer getUserId(HttpServletRequest Request){
-//
-//        String jwt = Request.getHeader("token");
-//        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
-//        return (Integer) claim.get("id");
-//    }
 }

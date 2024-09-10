@@ -21,6 +21,11 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    /**
+     * 项目列表
+     * @param Request
+     * @return
+     */
     @GetMapping("/list")
     public Results projectListPage(HttpServletRequest Request) {
         System.out.println("projectList");
@@ -54,7 +59,11 @@ public class ProjectController {
         }
         return Results.Success(projectList);
     }
-
+    /**
+     * 编辑项目
+     * @param request
+     * @return
+     */
     @PutMapping("/edit")
     public Results edit(@RequestBody Map<String, Object> request) {
         Project project = getProject(request);
@@ -72,7 +81,11 @@ public class ProjectController {
         }
         return Results.Error("删除失败");
     }
-
+    /**
+     * 添加项目
+     * @param request
+     * @return
+     */
     @PutMapping("/add")
     public Results add(@RequestBody Map<String, Object> request, HttpServletRequest Request) {
         Project project =getProject(request);
@@ -114,7 +127,7 @@ public class ProjectController {
          return Results.Error("添加失败");
     }
     /**
-     * 用户身份的搜索
+     * 搜索项目
      *
      * @param request
      */
@@ -143,24 +156,18 @@ public class ProjectController {
             projectList=projectService.projectList(project,id);
         }
         if (projectList.size()==0){
-            return Results.Error("未找到");
+            return Results.Error(projectList);
         }else{
             return Results.Success(projectList);
         }
 
     }
-    @PostMapping("/adminSearch")
-    public Results adminSearch(@RequestBody Map<String, Object> request){
-        System.out.println("adminSearch");
-        Project project = getProject(request);
-        List<Project> projectList=projectService.projectList(project);
-        if (projectList.size()==0){
-            return Results.Error("未找到");
-        }else{
-            return Results.Success(projectList);
-        }
-    }
 
+    /**
+     * 项目中员工列表
+     * @param request
+     * @return
+     */
     @GetMapping("/userInProject")
     public Results userInProject(@RequestBody Map<String, Object> request){
         System.out.println("userInProject");
@@ -171,6 +178,13 @@ public class ProjectController {
         }
         return Results.Error("没有参加该项目的员工");
     }
+
+    /**
+     * 项目中未参加的员工列表
+     *
+     * @param request
+     * @return
+     */
     @GetMapping("/userNotInProject")
     public Results userNotInProject(@RequestBody Map<String, Object> request){
         System.out.println("userNotInProject");
@@ -181,14 +195,14 @@ public class ProjectController {
         }
         return Results.Error("所有员工都参加了");
     }
+
+    /**
+     * 从Request中获取Project
+     * @param request
+     * @return
+     */
     private Project getProject(Map<String, Object> request){
         return new Project((Integer)request.get("projectId"), (String)request.get("projectName"), (String)request.get("projectContent"), (String)request.get("projectState"), (Integer)request.get("userId"), (Double) request.get("projectTotal"));
-    }
-    private Pair<Integer, String> getUserIdAndAuthority(HttpServletRequest Request){
-        String jwt = Request.getHeader("token");
-        Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
-        Pair<Integer, String> pair = new Pair<>((Integer) claim.get("id"), (String)claim.get("authority"));
-        return pair;
     }
 
 }
