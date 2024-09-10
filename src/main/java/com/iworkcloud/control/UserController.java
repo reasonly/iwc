@@ -26,32 +26,32 @@ public class UserController {
     @RequestMapping("/userUpdate")
     public Results UserUpdate(HttpServletRequest Request, @RequestBody Map<String, Object> request) {
         System.out.println("访问localhost:9000/UserController/userUpdate！");
-        int id=0;
-        try{
+        int id = 0;
+        try {
             String jwt = Request.getHeader("token");
-            System.out.println("解析jwt="+jwt);
-            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            System.out.println("解析jwt=" + jwt);
+            Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
             id = (int) claim.get("id");
-            System.out.println("id :"+id);
+            System.out.println("id :" + id);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             return Results.Error("token过期，请重新登录！");
         }
-        String oldpassword = (String)request.get("oldpassword");
+        String oldpassword = (String) request.get("oldpassword");
 
-        User user=userService.findByPrimaryKey(id);
-        boolean result = userService.cheakUserPassword(user,oldpassword);
-        System.out.println("原密码验证结果："+result);
-        if(result){
-            String name = (String)request.get("name");
-            String account = (String)request.get("account");
-            String email = (String)request.get("email");
-            String newpassword = (String)request.get("newpassword");
+        User user = userService.findByPrimaryKey(id);
+        boolean result = userService.cheakUserPassword(user, oldpassword);
+        System.out.println("原密码验证结果：" + result);
+        if (result) {
+            String name = (String) request.get("name");
+            String account = (String) request.get("account");
+            String email = (String) request.get("email");
+            String newpassword = (String) request.get("newpassword");
 
             Map<String, String> map = userService.encryptPasswords(newpassword);
-            String salt =map.get("salt");
-            String password =map.get("password");
+            String salt = map.get("salt");
+            String password = map.get("password");
 
             user.setUserName(name);
             user.setUserAccount(account);
@@ -63,27 +63,28 @@ public class UserController {
             userService.update(user);
             System.out.println(userService.findByPrimaryKey(id));
             return Results.Success("信息更改成功！");
-        }else return Results.Error("原密码错误！");
+        } else return Results.Error("原密码错误！");
     }
+
     //@RequestMapping("/selectStaff")
     public Results selectUser(HttpServletRequest Request) {
         System.out.println("访问localhost:9000/UserController/selectStaff！");
         int id = 0;
-        try{
+        try {
             String jwt = Request.getHeader("token");
-            System.out.println("解析jwt="+jwt);
-            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            System.out.println("解析jwt=" + jwt);
+            Map<String, Object> claim = JwtUtils.ParseJwt(jwt);
             id = (int) claim.get("id");
-            System.out.println("id :"+id);
+            System.out.println("id :" + id);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             return Results.Error("token过期，请重新登录！");
         }
-        User user =new User();
+        User user = new User();
         user.setUserAuthority("员工");
         System.out.println(user);
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         List<User> list = userService.findUsersByUser(user);
         map.put("staffList", list);
@@ -91,24 +92,5 @@ public class UserController {
         return Results.Success(map);
 
     }
-
-    @RequestMapping("/add")
-    public Results addUser(HttpServletRequest Request, @RequestBody Map<String, Object> request) {
-        System.out.println("访问localhost:9000/UserController/add！");
-        int id = 0;
-        try{
-            String jwt = Request.getHeader("token");
-            System.out.println("解析jwt="+jwt);
-            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
-            id = (int) claim.get("id");
-            System.out.println("id :"+id);
-
-        }catch (Exception e){
-
-            return Results.Error("token过期，请重新登录！");
-        }
-        
-    }
-
-
 }
+

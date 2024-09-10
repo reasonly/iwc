@@ -4,7 +4,6 @@ import com.iworkcloud.pojo.Finance;
 import com.iworkcloud.pojo.FinanceManage;
 import com.iworkcloud.pojo.Results;
 import com.iworkcloud.service.FinanceService;
-import com.iworkcloud.service.ProjectService;
 import com.iworkcloud.util.JwtUtils;
 
 import org.slf4j.Logger;
@@ -13,16 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.soap.MimeHeaders;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -34,7 +29,7 @@ public class FinanceController {
 
     @GetMapping("/list")
     public Results financeList(HttpServletRequest Request){
-        int id = 0;
+        int id;
 
         try{
             String jwt = Request.getHeader("token");
@@ -53,9 +48,9 @@ public class FinanceController {
         }
         return Results.Success(financeList);
     }
-    @GetMapping("/search")
+    @PostMapping("/search")
     public Results adminSearch(HttpServletRequest Request,@RequestBody Map<String, Object> request){
-        int id = 0;
+        int id;
 
         try{
             String jwt = Request.getHeader("token");
@@ -93,11 +88,10 @@ public class FinanceController {
      * 会产生一个操作财务记录，同时将操作记录在t_finance_mamange表中
      *
      * @param request
-     * @return
      */
     @PostMapping("/add")
     public Results add(HttpServletRequest Request, @RequestBody Map<String, Object> request){
-        int id = 0;
+        int id;
         try{
             String jwt = Request.getHeader("token");
             System.out.println("解析jwt="+jwt);
@@ -147,7 +141,7 @@ public class FinanceController {
      */
     @DeleteMapping("/delete")
     public Results delete(HttpServletRequest Request,@RequestBody Map<String, Object> request){
-        int id = 0;
+        int id;
 
         try{
             String jwt = Request.getHeader("token");
@@ -198,7 +192,7 @@ public class FinanceController {
      */
     @PutMapping("/update")
     public Results update(@RequestBody Map<String, Object> request,HttpServletRequest Request){
-        int id = 0;
+        int id;
 
         try{
             String jwt = Request.getHeader("token");
