@@ -26,13 +26,6 @@
 
 
 
-<!--    <delete id="deleteThreeMonthsBefore">-->
-<!--        delete from t_attendance-->
-<!--        where-->
-<!--            date < now() - interval 3 month;-->
-
-<!--    </delete>-->
-
     <select id="findAll" resultMap="BaseResultMap" >
         select
             *
