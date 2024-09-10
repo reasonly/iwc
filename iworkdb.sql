@@ -27,13 +27,12 @@ CREATE TABLE `t_user` (
   UNIQUE KEY (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_user` VALUES ('00000001', '赵一', 'user1', '109889f941630d269546335f728f3558', '123456789@qq.com','员工','123');-- MD5加密 真实密码12345
-INSERT INTO `t_user` VALUES ('00000002', '李二', 'user2', 'bfda7bb176421340cba445f8465de887','123456789@qq.com', '员工','123');--  123456123
-INSERT INTO `t_user` VALUES ('00000003', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54','123456789@qq.com', '员工','123');-- 123457123
-INSERT INTO `t_user` VALUES ('00000004', '张三', 'admi1', '8a3379ae294935afa4195fa27600fd43', '123456789@qq.com','管理员','123');-- 1234567
-INSERT INTO `t_user` VALUES ('00000005', '王五', 'admi2', '109889f941630d269546335f728f3558','123456789@qq.com', '管理员','123');-- 12345
-INSERT INTO `t_user` VALUES ('00000006', '赵六', 'admi3', '579d9ec9d0c3d687aaa91289ac2854e4','123456789@qq.com', '管理员','123');-- 123456
-
+INSERT INTO `t_user` VALUES ('00000001', '1号管理员', 'admi1', '8a3379ae294935afa4195fa27600fd43', '123456789@qq.com','管理员','qwe1');-- 111
+INSERT INTO `t_user` VALUES ('00000002', '2号管理员', 'admi2', '109889f941630d269546335f728f3558','123456789@qq.com', '管理员','asdw');-- 222
+INSERT INTO `t_user` VALUES ('00000003', '3号管理员', 'admi3', '579d9ec9d0c3d687aaa91289ac2854e4','123456789@qq.com', '管理员','13qw');-- 333
+INSERT INTO `t_user` VALUES ('00000004', '赵一', 'user1', '109889f941630d269546335f728f3558', '123456789@qq.com','员工','123');-- MD5加密 真实密码12345
+INSERT INTO `t_user` VALUES ('00000005', '李二', 'user2', 'bfda7bb176421340cba445f8465de887','123456789@qq.com', '员工','123');--  123456123
+INSERT INTO `t_user` VALUES ('00000006', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54','123456789@qq.com', '员工','123');-- 123457123
 
 -- ----------------------------
 -- Table structure for `t_attendance`
