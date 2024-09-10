@@ -17,6 +17,7 @@ public interface NoteMapper extends BaseMapper<Note> {
 
     List<Note> findByUserId(int userId);
     List<Note> findByListEntity(Note note);
+    List<Note> findByNoteId(int noteId);
     void insert(Note note);
     int deleteNote(int id);
 

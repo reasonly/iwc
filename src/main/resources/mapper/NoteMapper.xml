@@ -95,4 +95,10 @@
 		from t_note where user_id=#{userId}
 	</select>
 
+	<select id="findByNoteId" parameterType="Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from t_note where note_id=#{noteId}
+	</select>
+
 </mapper>

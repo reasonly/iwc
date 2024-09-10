@@ -131,8 +131,16 @@ public class NoteController {
         }catch (Exception e){
             return Results.Error("token过期，请重新登录！");
         }
-        noteMapper.deleteNote(Integer.parseInt((String) request.get("noteId")));
-        return Results.Success();
+        System.out.println(request.get("noteId"));
+        List<Note> noteList=noteMapper.findByNoteId(Integer.parseInt((String) request.get("noteId")));
+        System.out.println(noteMapper.findByNoteId(Integer.parseInt((String) request.get("noteId"))));
+        if(noteList.size() == 0){
+            return Results.Error("该记事本不存在！");
+        }else{
+            noteMapper.deleteNote(Integer.parseInt((String) request.get("noteId")));
+            return Results.Success();
+        }
+
     }
 
     @RequestMapping("/search")
@@ -154,9 +162,14 @@ public class NoteController {
         note.setRemindDate((Timestamp) request.get("remindDate"));
         note.setUserId(id);
         List<Note> noteList = noteService.findByListEntity(note);
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("noteList", noteList);
-        return Results.Success(noteList);
+        if(noteList.size() == 0){
+            return Results.Error("没有找到相关记事本！");
+        }else {
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("noteList", noteList);
+            return Results.Success(noteList);
+        }
+
     }
 
 }
