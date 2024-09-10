@@ -34,6 +34,9 @@
 			<if test="noteBody!=null and noteBody!=''">
 				note_body = #{noteBody},
 			</if>
+			<if test="noteDate!=null">
+				note_date = #{noteDate},
+			</if>
 			<if test="remindDate!=null">
 				remind_time = #{remindDate},
 			</if>

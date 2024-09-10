@@ -73,12 +73,16 @@ public class NoteController {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.format(date));
-        note.setNoteDate(Timestamp.valueOf(formatter.format(date)));
+        Timestamp noteDate = Timestamp.valueOf(formatter.format(date));
+        note.setNoteDate(noteDate);
         System.out.println(request.get("remindDate"));
-        note.setRemindDate(Timestamp.valueOf((String) request.get("remindDate")));
+        Timestamp remindDate =Timestamp.valueOf((String) request.get("remindDate"));
+        note.setRemindDate(remindDate);
         note.setUserId(id);
-        noteService.insert(note);
-        return Results.Success();
+        if(noteDate.compareTo(remindDate) < 0){
+            noteService.insert(note);
+            return Results.Success();
+        }else return Results.Error("提醒时间不能小于当前时间！");
     }
 
     @RequestMapping("/edit")
@@ -99,12 +103,19 @@ public class NoteController {
         note.setNoteId(Integer.parseInt((String) request.get("noteId")));
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
-        System.out.println(request.get("remindDate"));
-        note.setRemindDate(Timestamp.valueOf((String) request.get("remindDate")));
-        noteService.update(note);
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("remindDate", note.getRemindDate());
-        return Results.Success();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        Timestamp noteDate = Timestamp.valueOf(formatter.format(date));
+        note.setNoteDate(noteDate);
+        Timestamp remindDate =Timestamp.valueOf((String) request.get("remindDate"));
+        note.setRemindDate(remindDate);
+        System.out.println(noteDate.compareTo(remindDate));
+        if(noteDate.compareTo(remindDate) < 0){
+            noteService.update(note);
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("remindDate", note.getRemindDate());
+            return Results.Success();
+        }else return Results.Error("提醒时间不能小于当前时间！");
     }
 
     @RequestMapping("/delete")

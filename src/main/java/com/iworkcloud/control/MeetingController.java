@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -45,10 +46,13 @@ public class MeetingController {
         Meeting meeting = new Meeting();
         meeting.setMeetingNum(Integer.parseInt((String) request.get("meetingNum")));
         meeting.setMeetingName((String) request.get("meetingName"));
-        meeting.setMeetingState((String) request.get("meetingState"));
-        meeting.setStartTime(Timestamp.valueOf((String) request.get("startTime")));
-        meeting.setEndTime(Timestamp.valueOf((String) request.get("endTime")));
-
+        Date date = new Date();
+        Timestamp localDate = Timestamp.valueOf(formatter.format(date));
+        Timestamp startTime = Timestamp.valueOf((String) request.get("startTime"));
+        Timestamp endTime = Timestamp.valueOf((String) request.get("endTime"));
+        meeting.setStartTime(startTime);
+        meeting.setEndTime(endTime);
+        //meeting.setMeetingState();
         meeting.setUserId(id);
         meetingService.insert(meeting);
         return Results.Success();
@@ -113,7 +117,7 @@ public class MeetingController {
             return Results.Error("token过期，请重新登录！");
         }
 
-        return Results.Success(meetingService.meetingList(Integer.parseInt((String) request.get("userId"))));
+        return Results.Success(meetingService.meetingListByUserId(Integer.parseInt((String) request.get("userId"))));
     }
     //管理员的看到的会议列表
     @RequestMapping("/meetinglist")

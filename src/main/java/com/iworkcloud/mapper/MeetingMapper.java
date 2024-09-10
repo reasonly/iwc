@@ -16,9 +16,8 @@ import java.util.List;
 @Mapper
 public interface MeetingMapper extends BaseMapper<Meeting> {
 
-    List<Meeting> findByuserId(int userId);
-    List<Meeting> selectMeetingList(Meeting meeting);
-    int findByAttendanceUser(int userId);
+    List<Meeting> findByMeetingId(int meetingId);
+    List<Meeting> findByAttendanceUser(int userId);
     void delete(int meetingId);
 
 

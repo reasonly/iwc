@@ -13,13 +13,6 @@
     </resultMap>
     <parameterMap id="Meeting" type="com.iworkcloud.pojo.Meeting"/>
 
-    <resultMap id="UserResultMap" type="com.iworkcloud.pojo.meetingAttendance">
-        <id property="meetingAttendanceId" column="meeting_attendance_id"/>
-        <result property="meetingId" column="meeting_id"/>
-        <result property="userId" column="user_id"/>
-    </resultMap>
-    <parameterMap id="meetingAttendance" type="com.iworkcloud.pojo.meetingAttendance"/>
-
 
     <sql id="Base_Column_List">
         meeting_num, meeting_name,start_time,end_time,meeting_state,user_id
@@ -91,14 +84,15 @@
         </where>
     </select>
 
-    <select id="findByAttendanceUser" parameterType="Integer" resultType="Integer">
-        select meeting_id
-        from t_meeting_attendance where user_id = #{userId}
+    <select id="findByAttendanceUser" parameterType="Integer" resultMap="BaseResultMap">
+        select t_meeting.meeting_num,t_meeting.meeting_name,t_meeting.start_time,t_meeting.end_time,t_meeting.meeting_state
+        from t_meeting join t_meeting_attendance
+        on t_meeting.meeting_id = t_meeting_attendance.meeting_id
+        where  t_meeting_attendance.user_id = #{userId}
     </select>
 
-    <select id="findByuserId" parameterType="Integer" resultType="Integer">
-        select
-        meeting_attendance_id
-        from t_meeting_attendance where user_id = #{userId}
+    <select id="findByMeetingId" parameterType="Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_meeting where meeting_id = #{meetingId}
     </select>
 </mapper>
