@@ -5,7 +5,6 @@ import com.iworkcloud.service.AttendanceService;
 import com.iworkcloud.service.UserService;
 import com.iworkcloud.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.iworkcloud.pojo.woia.WOIA_ID;
 
 
 @RestController
@@ -141,17 +139,15 @@ public class AttendanceController {
 
 /*---------------------------------------------------自动化考勤管理----------------------------------------------*/
 
-    public static String startTime1="0 30 07 * * ?";// s m h d m w
-    public static String endTime1 = "0 30 08 * * ?";
-    public static String startTime2="0 30 16 * * ?";
-    public static String endTime2 = "0 30 17 * * ?";
-    public static String duration ="01:00:00";
-
-
+    public static LocalTime duration =LocalTime.parse("01:00:00");
+    public static LocalTime startTime1=LocalTime.parse("07:00:00");
+    public static LocalTime endTime1=LocalTime.parse("08:00:00");
+    public static LocalTime startTime2=LocalTime.parse("17:00:00");
+    public static LocalTime endTime2=LocalTime.parse("18:00:00");
+    private final String WOIA_ID = "0 30 07 * * ?";
     //@Scheduled(cron = WOIA_ID)
-
-    @Scheduled(cron = "#{startTime1}")
-    @Scheduled(cron = "#{startTime2}")
+//    @Scheduled(cron = "${startTime1}")
+//    @Scheduled(cron = "${startTime2}")
     //@Scheduled(cron = "0 26 16 * * ?")
     public void scheduleNewAttendance() {
         System.out.println("生成考勤信息！");
@@ -196,57 +192,41 @@ public class AttendanceController {
         attendanceService.deleteThreeMonthsBefore();
 
     }
-//    @RequestMapping("/TimeChange")
-//    public Results TimeChange(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
-//        int id = 0;
-//        System.out.println("访问localhost:9000/AttendanceController/TimeChange !");
-//        try{
-//            String jwt = Request.getHeader("token");
-//            System.out.println("解析jwt="+jwt);
-//            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
-//            id = (int) claim.get("id");
-//            System.out.println("id :"+id);
-//        }catch (Exception e){
-//
-//            return Results.Error("token过期，请重新登录！");
-//        }
-//
-//        String startTime1 = (String)request.get("startTime1");
-//        String startTime2 = (String)request.get("startTime2");
-//        String endTime1=null;
-//        String endTime2=null;
-//
-//        String duration=(String)request.get("duration");
-//        if(duration==null){
-//            duration=this.duration;
-//        }
-//
-//        if(startTime1 !=null){
-//            endTime1 = addTime(startTime1,duration);
-//        }
-//        if(startTime2 != null){
-//            endTime2 = addTime(startTime2,duration);
-//        }
-//
-//        try{
-//            if(startTime1 != null){
-//                this.startTime1 =convertToCronExpression(startTime1);
-//            }
-//            if (startTime2!=null){
-//                this.startTime2=convertToCronExpression(startTime2);
-//            }
-//            if (endTime1 !=null){
-//                this.endTime1 =convertToCronExpression(endTime1);
-//            }
-//            if (endTime2 !=null){
-//                this.endTime2=convertToCronExpression(endTime2);
-//            }
-//        }catch(Exception e){
-//            System.out.println(e);
-//            return Results.Error();
-//        }
-//        return Results.Success();
-//    }
+    @RequestMapping("/TimeChange")
+    public Results TimeChange(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
+        int id = 0;
+        System.out.println("访问localhost:9000/AttendanceController/TimeChange !");
+        try{
+            String jwt = Request.getHeader("token");
+            System.out.println("解析jwt="+jwt);
+            Map<String, Object> claim =JwtUtils.ParseJwt(jwt);
+            id = (int) claim.get("id");
+            System.out.println("id :"+id);
+        }catch (Exception e){
+
+            return Results.Error("token过期，请重新登录！");
+        }
+
+        LocalTime startTime1 = LocalTime.parse((String)request.get("startTime1"));
+        LocalTime startTime2 = LocalTime.parse((String)request.get("startTime2"));
+        LocalTime endTime1=null;
+        LocalTime endTime2=null;
+        LocalTime duration=LocalTime.parse((String)request.get("duration"));
+        if(duration!=null){
+            AttendanceController.duration =duration;
+        }
+
+        if(startTime1 !=null){
+            AttendanceController.startTime1 = startTime1;
+            AttendanceController.endTime1 = addTime(startTime1,duration);
+        }
+        if(startTime2 != null){
+            AttendanceController.startTime2 = startTime2;
+            AttendanceController.endTime2 = addTime(startTime2,duration);
+        }
+
+        return Results.Success();
+    }
 
     //将用户输入的时间（格式为 hh:MM:ss）转换为 @Scheduled 注解所需的 cron 表达式格式（例如 "0 30 07 * * ?"）
     public static String convertToCronExpression(String userInput) {
@@ -261,18 +241,10 @@ public class AttendanceController {
         return cronExpression;
     }
 
-    public static String addTime(String startTime1, String duration) {
-        // 定义时间格式
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-        // 解析开始时间和持续时间
-        LocalTime start = LocalTime.parse(startTime1, formatter);
-        LocalTime durationTime = LocalTime.parse(duration, formatter);
+    public static LocalTime addTime(LocalTime start, LocalTime durationTime) {
 
         // 计算结束时间
-        LocalTime endTime = start.plus(durationTime.getHour(), ChronoUnit.HOURS)
-                .plus(durationTime.getMinute(), ChronoUnit.MINUTES)
-                .plus(durationTime.getSecond(), ChronoUnit.SECONDS);
+        LocalTime endTime = start.plusHours(durationTime.getHour()).plusMinutes(durationTime.getMinute()).plusSeconds(durationTime.getSecond());
 
         // 如果结束时间超过24小时，则减去24小时
         if (endTime.isAfter(start.plusHours(24))) {
@@ -280,7 +252,32 @@ public class AttendanceController {
         }
 
         // 返回结果时间
-        return endTime.format(formatter);
+        return endTime;
     }
 
+
+    @Scheduled(cron = "0 0/1 * * * ?")
+    public void scheduleMonitor() {
+        System.out.println("------------");
+        LocalTime now = LocalTime.now();
+
+        if((now.isAfter(startTime1) && now.isBefore(startTime1.plus(1, ChronoUnit.MINUTES)) ||
+                (now.isAfter(startTime2) && now.isBefore(startTime2.plus(1, ChronoUnit.MINUTES)))
+        )){
+            System.out.println("现在时间：" + now);
+            System.out.println("执行添加");
+            scheduleNewAttendance();
+
+        }
+
+        if((now.isAfter(endTime1) && now.isBefore(endTime1.plus(1, ChronoUnit.MINUTES))) ||
+                (now.isAfter(endTime2) && now.isBefore(endTime2.plus(1, ChronoUnit.MINUTES)))
+        ){
+            System.out.println("现在时间：" + now);
+            System.out.println("执行修改");
+            scheduleUpdateAttendance();
+        }
+
+        
+    }
 }

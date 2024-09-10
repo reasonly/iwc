@@ -2,7 +2,6 @@ DROP TABLE IF EXISTS `t_finance_manage`;
 DROP TABLE IF EXISTS `t_leave_approval`;
 DROP TABLE IF EXISTS `t_meeting_attendance`;
 DROP TABLE IF EXISTS `t_project_attendance`;
-DROP TABLE IF EXISTS `t_user_manage`;
 
 DROP TABLE IF EXISTS `t_note`;
 DROP TABLE IF EXISTS `t_leave`;

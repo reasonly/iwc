@@ -52,7 +52,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
                 return true;
             }else {
+
                 System.out.println("密码对比不一致!");
+
                 return false;
             }
         } catch (Exception e) {
@@ -60,6 +62,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             e.printStackTrace();
         }
         return false;
+
     }
 
     @Override
