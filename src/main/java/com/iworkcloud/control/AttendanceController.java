@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.iworkcloud.pojo.woia.WOIA_ID;
 
 
 @RestController
@@ -150,8 +149,8 @@ public class AttendanceController {
 
     //@Scheduled(cron = WOIA_ID)
 
-    @Scheduled(cron = "#{startTime1}")
-    @Scheduled(cron = "#{startTime2}")
+//    @Scheduled(cron = "#{startTime1}")
+//    @Scheduled(cron = "#{startTime2}")
     //@Scheduled(cron = "0 26 16 * * ?")
     public void scheduleNewAttendance() {
         System.out.println("生成考勤信息！");
