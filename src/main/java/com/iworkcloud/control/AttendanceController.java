@@ -1,7 +1,9 @@
 package com.iworkcloud.control;
 
+import com.iworkcloud.mapper.MeetingMapper;
 import com.iworkcloud.pojo.*;
 import com.iworkcloud.service.AttendanceService;
+import com.iworkcloud.service.MeetingService;
 import com.iworkcloud.service.UserService;
 import com.iworkcloud.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.iworkcloud.control.MeetingController;
 
 
 @RestController
@@ -28,6 +30,8 @@ public class AttendanceController {
     private UserService userService;
     @Autowired
     private AttendanceService attendanceService;
+    @Autowired
+    private MeetingService meetingService;
 
     @RequestMapping("/attendanceList")
     public Results attendanceList(HttpServletRequest Request) {
@@ -269,6 +273,7 @@ public class AttendanceController {
             scheduleNewAttendance();
 
         }
+        updateMeetingState();
 
         if((now.isAfter(endTime1) && now.isBefore(endTime1.plus(1, ChronoUnit.MINUTES))) ||
                 (now.isAfter(endTime2) && now.isBefore(endTime2.plus(1, ChronoUnit.MINUTES)))
@@ -278,6 +283,34 @@ public class AttendanceController {
             scheduleUpdateAttendance();
         }
 
-        
+
+
+
+
+
+    }
+
+    public  void updateMeetingState(){
+        LocalTime now = LocalTime.now();
+        List<Meeting> list=meetingService.meetingList();
+
+        for(Meeting meeting:list){
+            if(!meeting.getMeetingState().equals("已结束")){
+                LocalDateTime localDateTime = meeting.getStartTime().toLocalDateTime();
+                LocalTime startTime = localDateTime.toLocalTime();
+                localDateTime = meeting.getEndTime().toLocalDateTime();
+                LocalTime endTime = localDateTime.toLocalTime();
+                if(now.isAfter(startTime)&& now.isBefore(endTime)){
+                    meeting.setMeetingState("进行中");
+                    meetingService.update(meeting);
+                }else if (now.isAfter(endTime)){
+                    meeting.setMeetingState("已结束");
+                    meetingService.update(meeting);
+                }
+
+            }
+
+        }
+
     }
 }

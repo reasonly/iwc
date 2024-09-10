@@ -46,6 +46,17 @@
         where meeting_id= #{meetingId}
     </update>
 
+    <update id="updateState" parameterType="Meeting">
+        update
+        t_meeting
+        <trim prefix="set" suffixOverrides=",">
+            <if test="meetingState!=null and meetingState!=''">
+                meeting_state = #{meetingState},
+            </if>
+        </trim>
+        where meeting_id= #{meetingId}
+    </update>
+
     <delete id="delete" parameterType="Integer">
         delete from t_meeting where meeting_id= #{meetingId}
     </delete>

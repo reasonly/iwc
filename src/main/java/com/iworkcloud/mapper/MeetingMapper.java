@@ -18,6 +18,7 @@ public interface MeetingMapper extends BaseMapper<Meeting> {
 
     List<Meeting> findByMeetingId(int meetingId);
     List<Meeting> findByAttendanceUser(int userId);
+    Meeting updateState(Meeting meeting);
     void delete(int meetingId);
 
 

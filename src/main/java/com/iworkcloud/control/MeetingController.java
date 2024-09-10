@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 
@@ -47,15 +52,22 @@ public class MeetingController {
         meeting.setMeetingNum(Integer.parseInt((String) request.get("meetingNum")));
         meeting.setMeetingName((String) request.get("meetingName"));
         Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Timestamp localDate = Timestamp.valueOf(formatter.format(date));
-        Timestamp startTime = Timestamp.valueOf((String) request.get("startTime"));
-        Timestamp endTime = Timestamp.valueOf((String) request.get("endTime"));
-        meeting.setStartTime(startTime);
-        meeting.setEndTime(endTime);
-        //meeting.setMeetingState();
-        meeting.setUserId(id);
-        meetingService.insert(meeting);
-        return Results.Success();
+        Timestamp startTime3 = Timestamp.valueOf((String) request.get("startTime"));
+        Timestamp endTime3 = Timestamp.valueOf((String) request.get("endTime"));
+        if (startTime3.compareTo(localDate) < 0){
+            return Results.Error("会议开始时间不能小于当前时间！");
+        }else if (endTime3.compareTo(startTime3) < 0){
+            return Results.Error("会议结束时间不能小于开始时间！");
+        }else {
+            meeting.setStartTime(startTime3);
+            meeting.setEndTime(endTime3);
+            meeting.setMeetingState("未开始");
+            meeting.setUserId(id);
+            meetingService.insert(meeting);
+            return Results.Success();
+        }
     }
 
     @RequestMapping("/delete")
@@ -77,6 +89,8 @@ public class MeetingController {
         return Results.Success();
     }
 
+
+
     @RequestMapping("/edit")
     public Results editMeeting(HttpServletRequest Request,@RequestBody Map<String, Object> request)
     {
@@ -95,11 +109,22 @@ public class MeetingController {
         meeting.setMeetingId(Integer.parseInt((String) request.get("meetingId")));
         meeting.setMeetingName((String) request.get("meetingName"));
         meeting.setMeetingNum(Integer.parseInt((String) request.get("meetingNum")));
-        meeting.setMeetingState((String) request.get("meetingState"));
-        meeting.setStartTime(Timestamp.valueOf((String) request.get("startTime")));
-        meeting.setEndTime(Timestamp.valueOf((String) request.get("endTime")));
-        meetingService.update(meeting);
-        return Results.Success();
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Timestamp localDate = Timestamp.valueOf(formatter.format(date));
+        Timestamp startTime3 = Timestamp.valueOf((String) request.get("startTime"));
+        Timestamp endTime3 = Timestamp.valueOf((String) request.get("endTime"));
+        if (startTime3.compareTo(localDate) < 0){
+            return Results.Error("会议开始时间不能小于当前时间！");
+        }else if (endTime3.compareTo(startTime3) < 0){
+            return Results.Error("会议结束时间不能小于开始时间！");
+        }else {
+            meeting.setStartTime(startTime3);
+            meeting.setEndTime(endTime3);
+            meeting.setMeetingState("未开始");
+            meetingService.update(meeting);
+            return Results.Success();
+        }
     }
     //员工看到的会议列表
     @RequestMapping("/meetinglistByAttendance")
@@ -137,5 +162,6 @@ public class MeetingController {
 
         return Results.Success(meetingService.meetingList());
     }
+
 
 }
