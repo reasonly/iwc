@@ -33,19 +33,24 @@ public class AttendanceServiceImpl extends BaseServiceImpl<Attendance> implement
             attendanceMapper.attendanceByAttendanceId(atd);
             flag=true;
         }catch(Exception e){
-            System.out.println("attendance数据库修改失败");
+            System.out.println("attendance数据库修改失败"+e);
         }
 
         return flag;
     }
 
     @Override
-    public Attendance findAttendanceByDateAndUserId(Attendance atd) {
-        return attendanceMapper.findAttendanceByDateAndUserId(atd);
+    public Attendance findAttendanceByDateAndUserIdAndDeadline(Attendance atd) {
+        return attendanceMapper.findAttendanceByDateAndUserIdAndDeadline(atd);
     }
 
     @Override
     public List<Attendance> findAttendancesByAttendance(Attendance atd) {
         return attendanceMapper.findAttendancesByAttendance(atd);
+    }
+
+    @Override
+    public void deleteThreeMonthsBefore() {
+        attendanceMapper.deleteThreeMonthsBefore();
     }
 }

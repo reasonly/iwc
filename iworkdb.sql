@@ -53,7 +53,6 @@ CREATE TABLE `t_attendance` (
 INSERT INTO `t_attendance` VALUES ('00000001', '00000001', '已签到', '2024-09-08 08:30:15', '2024-09-04', '否');
 INSERT INTO `t_attendance` VALUES ('00000002', '00000002', '未签到', null, '2024-09-04', '否');
 INSERT INTO `t_attendance` VALUES ('00000003', '00000003', '请假', null, '2024-09-04', '否');
-INSERT INTO `t_attendance` VALUES ('00000004', '00000001', '未签到', null, '2024-09-09', '否');
 
 -- ----------------------------
 -- Table structure for `t_project`

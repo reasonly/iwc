@@ -1,13 +1,11 @@
 package com.iworkcloud.pojo;
 
 
-import java.util.ArrayList;
 
 public class Results {
     private Integer code;
     private String msg;
     private Object data;
-    //public Results(ArrayList<CompetitionHeader> competitionHeaders){}
 
     public Results(Integer code, String msg, Object data){
         this.code = code;

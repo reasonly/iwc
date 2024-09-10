@@ -133,7 +133,7 @@ public class LeaveApprovalController {
                 a.setUserId(lea.getUserId());
                 System.out.println("a："+a);
 
-                Attendance atd=attendanceService.findAttendanceByDateAndUserId(a);
+                Attendance atd=attendanceService.findAttendanceByDateAndUserIdAndDeadline(a);
                 if(atd != null){
                     atd.setAttendanceState("请假");
                     System.out.println("考勤修改预览："+atd);

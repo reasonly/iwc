@@ -25,49 +25,19 @@
     </insert>
 
 
-<!--    <update id="update" parameterMap="Attendance">-->
-<!--        update-->
-<!--        attendance-->
-<!--        <trim prefix="set" suffixOverrides=",">-->
-<!--            <if test="attendancename!=null and attendancename!=''">-->
-<!--                attendancename = #{attendancename},-->
-<!--            </if>-->
-<!--            <if test="password!=null and password!=''">-->
-<!--                password = #{password},-->
-<!--            </if>-->
-<!--            <if test="age!=null and age!=''">-->
-<!--                age = #{age},-->
-<!--            </if>-->
-<!--        </trim>-->
-<!--        where id= #{id}-->
-<!--    </update>-->
 
-<!--    <delete id="delete" parameterType="Integer">-->
-<!--        delete from  attendance where id=#{id}-->
+<!--    <delete id="deleteThreeMonthsBefore">-->
+<!--        delete from t_attendance-->
+<!--        where-->
+<!--            date < now() - interval 3 month;-->
+
 <!--    </delete>-->
 
-<!--    <select id="findAll" resultMap="BaseResultMap" >-->
-<!--        select-->
-<!--            *-->
-<!--        from attendance-->
-<!--    </select>-->
-
-<!--    <select id="findByEntity" parameterMap="Attendance" resultMap="BaseResultMap">-->
-<!--        select-->
-<!--        <include refid="Base_Column_List"></include>-->
-<!--        from attendance-->
-<!--        <where>-->
-<!--            <if test="attendancename!=null and attendancename!=''">-->
-<!--                and attendancename = #{attendancename}-->
-<!--            </if>-->
-<!--            <if test="password!=null and password!=''">-->
-<!--                and password = #{password}-->
-<!--            </if>-->
-<!--            <if test="age!=null and age!=''">-->
-<!--                and age = #{age}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
+    <select id="findAll" resultMap="BaseResultMap" >
+        select
+            *
+        from t_attendance
+    </select>
 
 
     <select id="findAllByUserId" parameterType="Integer" resultMap="BaseResultMap">
@@ -75,9 +45,15 @@
         from t_attendance where user_id = #{userId}
     </select>
 
-    <select id="findAttendanceByDateAndUserId" parameterMap="Attendance" resultMap="BaseResultMap">
+    <select id="findAttendanceByDateAndUserIdAndDeadline" parameterMap="Attendance" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
-        from t_attendance where user_id = #{userId} And date = #{date}
+        from t_attendance
+        <where>
+        user_id = #{userId} And date = #{date}
+        <if test="deadline!=null and deadline!=''">
+        And deadline = #{deadline}
+        </if>
+        </where>
     </select>
 
     <update id="attendanceByAttendanceId" parameterMap="Attendance">
@@ -90,10 +66,10 @@
             <if test="attendanceState!=null and attendanceState!=''">
                 attendance_state = #{attendanceState},
             </if>
-            <if test="attendanceTime!=null and attendanceTime!=''">
+            <if test="attendanceTime!=null">
                 attendance_time = #{attendanceTime},
             </if>
-            <if test="date!=null and date!=''">
+            <if test="date!=null ">
                 date = #{date},
             </if>
             <if test="deadline!=null and deadline!=''">
@@ -117,7 +93,7 @@
             <if test="attendanceState!=null and attendanceState!=''">
                 and attendance_state = #{attendanceState}
             </if>
-            <if test="date!=null and date!=''">
+            <if test="date!=null">
                 and date = #{date}
             </if>
             <if test="deadline!=null and deadline!=''">
