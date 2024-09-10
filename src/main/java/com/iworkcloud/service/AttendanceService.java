@@ -8,7 +8,8 @@ public interface AttendanceService extends BaseService<Attendance> {
 
     List<Attendance> findAllByUserId(Integer id);
     boolean attendanceByAttendanceId(Attendance attendance);
-    Attendance findAttendanceByDateAndUserId(Attendance atd);
+    Attendance findAttendanceByDateAndUserIdAndDeadline(Attendance atd);
     List<Attendance> findAttendancesByAttendance(Attendance atd);
+    void deleteThreeMonthsBefore();
 
 }
