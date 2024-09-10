@@ -45,11 +45,6 @@
         from t_leave
     </select>
 
-<!--    <select id="findByPrimaryKey" parameterType="Integer"   resultMap="BaseResultMap">-->
-<!--        select-->
-<!--        <include refid="Base_Column_List"></include>-->
-<!--        from t_leave  where  leave_id=#{leaveId}-->
-<!--    </select>-->
 
     <select id="findAllByUserId" parameterType="Integer" resultMap="BaseResultMap">
         select
