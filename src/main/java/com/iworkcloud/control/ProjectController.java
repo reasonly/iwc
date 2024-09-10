@@ -50,7 +50,7 @@ public class ProjectController {
         }
 
         if(projectList.size()==0) {
-            return Results.Error("暂无项目");
+            return Results.Error(projectList);
         }
         return Results.Success(projectList);
     }
@@ -58,7 +58,6 @@ public class ProjectController {
     @PutMapping("/edit")
     public Results edit(@RequestBody Map<String, Object> request) {
         Project project = getProject(request);
-        System.out.println("edit"+project);
         if(projectService.update(project)){
             return Results.Success("编辑成功");
         }
@@ -77,7 +76,6 @@ public class ProjectController {
     @PutMapping("/add")
     public Results add(@RequestBody Map<String, Object> request, HttpServletRequest Request) {
         Project project =getProject(request);
-
         int id = 0;
         String authority ="";
         try{
@@ -120,7 +118,7 @@ public class ProjectController {
      *
      * @param request
      */
-    @GetMapping("/search")
+    @PostMapping("/search")
     public Results search(HttpServletRequest Request,@RequestBody Map<String, Object> request){
         System.out.println("search");
         Project project = getProject(request);
@@ -151,7 +149,7 @@ public class ProjectController {
         }
 
     }
-    @GetMapping("/adminSearch")
+    @PostMapping("/adminSearch")
     public Results adminSearch(@RequestBody Map<String, Object> request){
         System.out.println("adminSearch");
         Project project = getProject(request);
