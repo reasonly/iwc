@@ -28,4 +28,12 @@ public class MeetingServiceImpl extends BaseServiceImpl<Meeting> implements Meet
         return meetingMapper.findByAttendanceUser(userid);
     }
 
+    @Override
+    public List<Meeting> findByMeetingNum(int Num){
+        List<Meeting> meeting = meetingMapper.findByMeetingNum(Num);
+        return meeting;
+    }
+
+
+
 }
