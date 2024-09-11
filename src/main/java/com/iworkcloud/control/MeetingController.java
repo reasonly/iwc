@@ -173,7 +173,7 @@ public class MeetingController {
         meeting.setMeetingName((String) request.get("meetingName"));
         meeting.setMeetingState((String) request.get("meetingState"));
         //验证用户身份
-        if(authority == "员工"){
+        if(authority == "user"){
             meeting.setUserId(id);
         }
         //若不存在对应数据则返回错误
