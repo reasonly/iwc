@@ -26,9 +26,9 @@ CREATE TABLE `t_user` (
   UNIQUE KEY (`user_account`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_user` VALUES ('00000001', '1号管理员', 'admi1', '5d80bd52e3c1bcf897045785da24b522', '123456789@qq.com','管理员','Km`s');-- 111
-INSERT INTO `t_user` VALUES ('00000002', '2号管理员', 'admi2', '463289bd6838c1ed0afcfa5439a8664e','123456789@qq.com', '管理员','}02d');-- 222
-INSERT INTO `t_user` VALUES ('00000003', '3号管理员', 'admi3', '8b78791caa3837b1bedef3126bb3be36','123456789@qq.com', '管理员','_Tjd');-- 333
+INSERT INTO `t_user` VALUES ('00000001', '1号管理员', 'admin1', '5d80bd52e3c1bcf897045785da24b522', '123456789@qq.com','管理员','Km`s');-- 111
+INSERT INTO `t_user` VALUES ('00000002', '2号管理员', 'admin2', '463289bd6838c1ed0afcfa5439a8664e','123456789@qq.com', '管理员','}02d');-- 222
+INSERT INTO `t_user` VALUES ('00000003', '3号管理员', 'admin3', '8b78791caa3837b1bedef3126bb3be36','123456789@qq.com', '管理员','_Tjd');-- 333
 INSERT INTO `t_user` VALUES ('00000004', '赵一', 'user1', '109889f941630d269546335f728f3558', '123456789@qq.com','员工','123');-- MD5加密 真实密码12345
 INSERT INTO `t_user` VALUES ('00000005', '李二', 'user2', 'bfda7bb176421340cba445f8465de887','123456789@qq.com', '员工','123');--  123456123
 INSERT INTO `t_user` VALUES ('00000006', '安三', 'user3', '3ef0160214bc057fea68b3635beaac54','123456789@qq.com', '员工','123');-- 123457123
@@ -162,7 +162,7 @@ CREATE TABLE `t_meeting` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `t_meeting` VALUES ('00000001', '001', '未来趋势与创新策略研讨会', '2024-06-05 08:30:00', '2024-06-05 11:30:00', '已结束', '00000005');
-INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '进行中', '00000004');
+INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '已结束', '00000004');
 INSERT INTO `t_meeting` VALUES ('00000003', '003', '可持续发展与企业社会责任峰会', '2024-10-15 13:00:00', '2024-10-15 15:00:54', '未开始', '00000006');
 -- ----------------------------
 -- Table structure for `t_meeting_attendance`

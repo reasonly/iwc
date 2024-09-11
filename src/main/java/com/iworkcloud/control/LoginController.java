@@ -37,7 +37,12 @@ public class LoginController {
 
                 claims.put("id", user.getUserId());
                 claims.put("name", user.getUserName());
-                claims.put("authority", user.getUserAuthority());
+                if(user.getUserAuthority().equals("user"))
+                {
+                    claims.put("authority","user" );
+                }else{
+                    claims.put("authority","admin" );
+                }
                 claims.put("account", user.getUserAccount());
 
                 String jwt = JwtUtils.GetStringJwt(claims);

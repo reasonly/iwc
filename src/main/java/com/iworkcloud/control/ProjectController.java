@@ -45,7 +45,7 @@ public class ProjectController {
         System.out.println("authority:"+authority);
 
         List<Project> projectList=null;
-        if("管理员".equals(authority)){
+        if("admin".equals(authority)){
             projectList= projectService.projectList();
 
         }
@@ -72,7 +72,7 @@ public class ProjectController {
         }
         return Results.Error("编辑失败");
     }
-    @DeleteMapping("/delete")
+    @RequestMapping("/delete")
     public Results delete(@RequestBody Map<String, Object> request) {
         Integer projectId = (Integer) request.get("projectId");
         System.out.println("delete"+projectId);
@@ -150,7 +150,7 @@ public class ProjectController {
         }
 
         List<Project> projectList= null;
-        if("管理员".equals(authority)){
+        if("admin".equals(authority)){
             projectList=projectService.projectList(project);
         }else {
             projectList=projectService.projectList(project,id);

@@ -1,6 +1,5 @@
 package com.iworkcloud.control;
 
-import com.iworkcloud.mapper.MeetingMapper;
 import com.iworkcloud.pojo.*;
 import com.iworkcloud.service.AttendanceService;
 import com.iworkcloud.service.MeetingService;
@@ -18,7 +17,13 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.iworkcloud.control.MeetingController;
+
+/**
+ * @author
+ * @version 1.0
+ * @Description
+ * @DateTime 2024.9.11
+ */
 
 
 @RestController
@@ -33,6 +38,12 @@ public class AttendanceController {
     @Autowired
     private MeetingService meetingService;
 
+    /**
+     *  考勤列表
+     * @return  List<Attendance>
+     * @author  GQL
+     * @create   2024.9.11
+     **/
     @RequestMapping("/attendanceList")
     public Results attendanceList(HttpServletRequest Request) {
 
@@ -60,6 +71,13 @@ public class AttendanceController {
 
     }
 
+    /**
+     *
+     *
+     * @return
+     * @author xinggang
+     * @create
+     **/
     @RequestMapping("/attendanceSelect")
     public Results attendanceSelect(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
 
@@ -149,12 +167,6 @@ public class AttendanceController {
     public static LocalTime startTime2=LocalTime.parse("17:00:00");
     public static LocalTime endTime2=LocalTime.parse("18:00:00");
 
-    /**
-     * @param Request
-     * 改变系统时间
-     *
-     *
-     */
 
     @RequestMapping("/TimeChange")
     public Results TimeChange(HttpServletRequest Request,@RequestBody Map<String, Object> request) {
