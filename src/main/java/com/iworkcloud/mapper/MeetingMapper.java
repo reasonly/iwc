@@ -25,6 +25,4 @@ public interface MeetingMapper extends BaseMapper<Meeting> {
     Meeting updateState(Meeting meeting);
     void delete(int meetingId);
 
-
-
 }
