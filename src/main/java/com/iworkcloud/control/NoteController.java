@@ -100,7 +100,7 @@ public class NoteController {
         }
         Note note = new Note();
         System.out.println(request.get("noteId"));
-        note.setNoteId(Integer.parseInt((String) request.get("noteId")));
+        note.setNoteId((Integer) request.get("noteId"));
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -132,12 +132,12 @@ public class NoteController {
             return Results.Error("token过期，请重新登录！");
         }
         System.out.println(request.get("noteId"));
-        List<Note> noteList=noteMapper.findByNoteId(Integer.parseInt((String) request.get("noteId")));
-        System.out.println(noteMapper.findByNoteId(Integer.parseInt((String) request.get("noteId"))));
+        List<Note> noteList=noteMapper.findByNoteId((Integer) request.get("noteId"));
+        System.out.println(noteMapper.findByNoteId((Integer) request.get("noteId")));
         if(noteList.size() == 0){
             return Results.Error("该记事本不存在！");
         }else{
-            noteMapper.deleteNote(Integer.parseInt((String) request.get("noteId")));
+            noteMapper.deleteNote((Integer) request.get("noteId"));
             return Results.Success();
         }
 
@@ -159,7 +159,6 @@ public class NoteController {
         Note note = new Note();
         note.setNoteName((String) request.get("noteName"));
         note.setNoteBody((String) request.get("noteBody"));
-        note.setRemindDate((Timestamp) request.get("remindDate"));
         note.setUserId(id);
         List<Note> noteList = noteService.findByListEntity(note);
         if(noteList.size() == 0){

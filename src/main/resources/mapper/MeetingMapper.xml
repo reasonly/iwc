@@ -74,6 +74,12 @@
         from t_meeting
     </select>
 
+    <select id="finduserId" resultType="Integer" >
+        select
+            user_id
+        from t_meeting_attendance where meeting_id = #{meetingId}
+    </select>
+
     <select id="findNum" parameterType="Integer" resultType="Integer" >
         select
         meeting_num
@@ -86,19 +92,19 @@
         from t_meeting
         <where>
             <if test="meetingId!=null and meetingId!=''">
-                meeting_id = #{meetingId},
+            and    meeting_id = #{meetingId}
             </if>
             <if test="meetingNum!=null and meetingNum!=''">
-                meeting_num = #{meetingNum},
+            and    meeting_num = #{meetingNum}
             </if>
             <if test="meetingName!=null and meetingName!=''">
-                meeting_name = #{meetingName},
+            and    meeting_name like concat('%',#{meetingName},'%')
             </if>
             <if test="meetingState!=null and meetingState!=''">
-                meeting_state = #{meetingState},
+            and    meeting_state = #{meetingState}
             </if>
             <if test="userId!=null and userId!=''">
-                user_id = #{userId},
+            and    user_id = #{userId}
             </if>
         </where>
     </select>

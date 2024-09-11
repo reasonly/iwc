@@ -1,7 +1,6 @@
 package com.iworkcloud.mapper;
 
 import com.iworkcloud.pojo.Meeting;
-import com.iworkcloud.pojo.meetingAttendance;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,8 +18,9 @@ public interface MeetingMapper extends BaseMapper<Meeting> {
     List<Meeting> findByMeetingNum(int meetingNum);
     List<Meeting> findByAttendanceUser(int userId);
     List<Meeting> findByMeeting(Meeting meeting);
-    boolean addAttendanceUser(Integer projectId, List<Integer> userIdList);
+    boolean addAttendanceUser(Integer meetingId, List<Integer> userIdList);
     Integer findNum(int id);
+    List<Integer> finduserId(int id);
     List<Meeting> findByMeetingId(int Id);
     Meeting updateState(Meeting meeting);
     void delete(int meetingId);
