@@ -5,13 +5,11 @@ import com.iworkcloud.pojo.Results;
 import com.iworkcloud.pojo.User;
 import com.iworkcloud.service.ProjectService;
 import com.iworkcloud.util.JwtUtils;
-import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import javax.persistence.Tuple;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
@@ -29,7 +27,7 @@ public class ProjectController {
     @GetMapping("/list")
     public Results projectListPage(HttpServletRequest Request) {
         System.out.println("projectList");
-        //
+        //身份验证
         int id = 0;
         String authority ="";
         try{
@@ -45,6 +43,7 @@ public class ProjectController {
         System.out.println("authority:"+authority);
 
         List<Project> projectList=null;
+        //管理员和用户返回不同列表
         if("管理员".equals(authority)){
             projectList= projectService.projectList();
 
@@ -61,7 +60,7 @@ public class ProjectController {
     }
     /**
      * 编辑项目
-     * @param request
+     * @param request projectId,name,description,state
      * @return
      */
     @PutMapping("/edit")
@@ -72,6 +71,12 @@ public class ProjectController {
         }
         return Results.Error("编辑失败");
     }
+
+    /**
+     * 删除项目
+     * @param request projectId
+     * @return
+     */
     @DeleteMapping("/delete")
     public Results delete(@RequestBody Map<String, Object> request) {
         Integer projectId = (Integer) request.get("projectId");
@@ -83,12 +88,13 @@ public class ProjectController {
     }
     /**
      * 添加项目
-     * @param request
+     * @param request projectId,name,description,state
      * @return
      */
     @PutMapping("/add")
     public Results add(@RequestBody Map<String, Object> request, HttpServletRequest Request) {
         Project project =getProject(request);
+        //身份验证
         int id = 0;
         String authority ="";
         try{
@@ -103,7 +109,7 @@ public class ProjectController {
         }
 
         project.setUserId(id);
-
+        //项目
         System.out.println("add"+project);
         if(projectService.insert(project)){
         return Results.Success("项目添加成功");

@@ -27,6 +27,11 @@ public class FinanceController {
     @Autowired
     private FinanceService financeService;
 
+    /**
+     * 获取财务信息列表
+     * @param Request token
+     * @return
+     */
     @GetMapping("/list")
     public Results financeList(HttpServletRequest Request){
         int id;
@@ -51,7 +56,7 @@ public class FinanceController {
 
     /**
      * 搜索财务信息
-     * @param Request (token)，request()
+     * @param Request token， financeType, amount, financeDescription, projectId
      * @return
      */
     @PostMapping("/search")
@@ -71,6 +76,7 @@ public class FinanceController {
         }
         List<Finance> financeList = null;
         try {
+            //封装查询条件
             Finance finance = new Finance();
             finance.setFinanceType((String) request.get("financeType"));
             finance.setAmount((Double) request.get("amount"));
@@ -170,11 +176,11 @@ public class FinanceController {
                     financeService.updateProjectTotal(projectId);
                 }
 
-                //添加操作记录
+                //格式化时间
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String datetime =LocalDateTime.now().format(formatter);
                 Timestamp financeManageTime = Timestamp.valueOf(datetime);
-
+                //添加操作记录
                 FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "删除财务信息:'"+finance.getFinanceDescription()+"'");
                 financeService.addFinanceManage(financeManage);
                 return Results.Success("删除成功");
@@ -220,13 +226,13 @@ public class FinanceController {
             }
 
             Integer financeId = finance.getProjectId();
-
+            //格式化时间
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             String datetime =LocalDateTime.now().format(formatter);
             Timestamp financeManageTime = Timestamp.valueOf(datetime);
-
+            //生成操作记录
             FinanceManage financeManage = new FinanceManage(null, financeId, id, financeManageTime, "修改财务信息");
-
+            //添加操作记录
             financeService.addFinanceManage(financeManage);
             return Results.Success("添加财务操作成功");
         }
