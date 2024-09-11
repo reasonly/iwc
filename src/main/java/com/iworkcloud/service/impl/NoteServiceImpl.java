@@ -29,8 +29,4 @@ public class NoteServiceImpl extends BaseServiceImpl<Note> implements NoteServic
     public List<Note> noteList(Note note){
         return noteMapper.findByListEntity(note);
     }
-
-
-
-
 }
