@@ -23,6 +23,13 @@
         values (#{meetingNum},#{meetingName},#{startTime},#{endTime},#{meetingState},#{userId})
     </insert>
 
+    <insert id="addAttendanceUser">
+        insert into t_meeting_attendance (meeting_id, user_id) values
+        <foreach collection="userIdList" index="index" item="userid" open="(" close=")" separator=") , (">
+            #{meetingId},#{userid}
+        </foreach>
+    </insert>
+
     <update id="update" parameterMap="Meeting">
         update
         t_meeting
@@ -67,30 +74,37 @@
         from t_meeting
     </select>
 
-    <select id="findByEntity" parameterMap="Meeting" resultMap="BaseResultMap">
+    <select id="finduserId" resultType="Integer" >
+        select
+            user_id
+        from t_meeting_attendance where meeting_id = #{meetingId}
+    </select>
+
+    <select id="findNum" parameterType="Integer" resultType="Integer" >
+        select
+        meeting_num
+        from t_meeting
+        where meeting_id = #{meetingId}
+    </select>
+
+    <select id="findByMeeting" parameterMap="Meeting" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
         from t_meeting
         <where>
             <if test="meetingId!=null and meetingId!=''">
-                meeting_id = #{meetingId},
+            and    meeting_id = #{meetingId}
             </if>
             <if test="meetingNum!=null and meetingNum!=''">
-                meeting_num = #{meetingNum},
+            and    meeting_num = #{meetingNum}
             </if>
             <if test="meetingName!=null and meetingName!=''">
-                meeting_name = #{meetingName},
-            </if>
-            <if test="startTime!=null">
-                start_time = #{startTime},
-            </if>
-            <if test="endTime!=null">
-                end_time = #{endTime},
+            and    meeting_name like concat('%',#{meetingName},'%')
             </if>
             <if test="meetingState!=null and meetingState!=''">
-                meeting_state = #{meetingState},
+            and    meeting_state = #{meetingState}
             </if>
             <if test="userId!=null and userId!=''">
-                user_id = #{userId},
+            and    user_id = #{userId}
             </if>
         </where>
     </select>
@@ -105,5 +119,10 @@
     <select id="findByMeetingId" parameterType="Integer" resultMap="BaseResultMap">
         select <include refid="Base_Column_List" />
         from t_meeting where meeting_id = #{meetingId}
+    </select>
+
+    <select id="findByMeetingNum" parameterType="Integer" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from t_meeting where meeting_num = #{meetingNum}
     </select>
 </mapper>

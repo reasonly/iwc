@@ -18,4 +18,6 @@ public interface MeetingService extends BaseService<Meeting>{
     List<Meeting> meetingList();
 
     List<Meeting> meetingListByUserId(Integer id);
+
+    List<Meeting> findByMeetingNum(int meetingNum);
 }

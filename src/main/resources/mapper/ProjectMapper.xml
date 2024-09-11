@@ -88,20 +88,6 @@
     </where>
     </select>
 
-<!--&lt;!&ndash;    通过关键字查询项目信息&ndash;&gt;-->
-<!--    <select id="findByProjectWords" parameterMap="Project" resultType="com.iworkcloud.pojo.entity.Project">-->
-<!--        select <include refid="Base_Column_List" />-->
-<!--        from t_project-->
-<!--        <where>-->
-<!--            <if test="projectName != null and projectName != ''">-->
-<!--                and project_name like concat('%',#{projectName},'%')-->
-<!--            </if>-->
-<!--            <if test="projectContent != null and projectContent != ''">-->
-<!--                and project_content like concat('%',#{projectContent},'%')-->
-<!--            </if>-->
-<!--        </where>-->
-
-<!--    </select>-->
 <!--    通过用户id查询项目信息-->
     <select id="findByUserId" parameterType="integer" resultMap="BaseResultMap">
             select t_project.project_id, t_project.project_name, t_project.project_content, t_project.project_state, t_project.user_id, t_project.project_total
