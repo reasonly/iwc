@@ -36,8 +36,8 @@ public class LoginController {
                 Map<String, Object> claims = new HashMap<>();
 
                 claims.put("id", user.getUserId());
-                claims.put("name", user.getUserName());
-                if(user.getUserAuthority().equals("user"))
+
+                if(user.getUserAuthority().equals("员工"))
                 {
                     claims.put("authority","user" );
                 }else{

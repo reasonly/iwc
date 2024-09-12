@@ -99,6 +99,7 @@ public class AttendanceController {
         atd.setAttendanceId((Integer) request.get("attendanceId"));
         atd.setUserId((Integer) request.get("userId"));
         atd.setAttendanceState((String) request.get("attendanceState"));
+
         if(request.get("date")!=null){
             atd.setDate(Date.valueOf(request.get("date").toString()));
         }

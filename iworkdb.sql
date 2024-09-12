@@ -48,9 +48,9 @@ CREATE TABLE `t_attendance` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_attendance` VALUES ('00000001', '00000001', '已签到', '2024-09-08 08:30:15', '2024-09-04', '否');
-INSERT INTO `t_attendance` VALUES ('00000002', '00000002', '未签到', null, '2024-09-04', '否');
-INSERT INTO `t_attendance` VALUES ('00000003', '00000003', '请假', null, '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000001', '00000004', '已签到', '2024-09-08 08:30:15', '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000002', '00000005', '未签到', null, '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000003', '00000006', '请假', null, '2024-09-04', '否');
 
 -- ----------------------------
 -- Table structure for `t_project`
@@ -67,9 +67,9 @@ CREATE TABLE `t_project` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中','200000.00', '00000004');
-INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始','0.00', '00000005');
-INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束','0.00', '00000006');
+INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中','200000.00', '00000001');
+INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始','0.00', '00000002');
+INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束','0.00', '00000003');
 
 -- ----------------------------
 -- Table structure for `t_finance`
@@ -105,9 +105,9 @@ CREATE TABLE `t_finance_manage` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000005', '2024-09-03 10:30:15', '核实流水');
-INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000004', '2023-12-15 14:15:00', '登记奖金');
-INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000006', '2024-09-03 10:30:15', '该员工仍需补贴');
+INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000001', '2024-09-03 10:30:15', '核实流水');
+INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000002', '2023-12-15 14:15:00', '登记奖金');
+INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000003', '2024-09-03 10:30:15', '该员工仍需补贴');
 -- ----------------------------
 -- Table structure for `t_leave`
 -- ----------------------------
@@ -123,9 +123,9 @@ CREATE TABLE `t_leave` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_leave` VALUES ('00000001', '2024-03-09', '2024-03-11', '病假', '已批准', '00000003');
-INSERT INTO `t_leave` VALUES ('00000002', '2024-06-15', '2024-06-17', '外出旅游', '未批准', '00000002');
-INSERT INTO `t_leave` VALUES ('00000003', '2024-09-06', '2024-09-11', '年假', '未审批', '00000001');
+INSERT INTO `t_leave` VALUES ('00000001', '2024-03-09', '2024-03-11', '病假', '已批准', '00000004');
+INSERT INTO `t_leave` VALUES ('00000002', '2024-06-15', '2024-06-17', '外出旅游', '未批准', '00000005');
+INSERT INTO `t_leave` VALUES ('00000003', '2024-09-06', '2024-09-11', '年假', '未审批', '00000006');
 
 -- ----------------------------
 -- Table structure for `t_leave_approval`
@@ -140,9 +140,9 @@ CREATE TABLE `t_leave_approval` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_leave_approval` VALUES ('00000001', '00000001', '00000006');
-INSERT INTO `t_leave_approval` VALUES ('00000002', '00000002', '00000005');
-INSERT INTO `t_leave_approval` VALUES ('00000003', '00000003', '00000004');
+INSERT INTO `t_leave_approval` VALUES ('00000001', '00000001', '00000001');
+INSERT INTO `t_leave_approval` VALUES ('00000002', '00000002', '00000002');
+INSERT INTO `t_leave_approval` VALUES ('00000003', '00000003', '00000003');
 
 -- ----------------------------
 -- Table structure for `t_meeting`
@@ -161,9 +161,9 @@ CREATE TABLE `t_meeting` (
   UNIQUE KEY (`meeting_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_meeting` VALUES ('00000001', '001', '未来趋势与创新策略研讨会', '2024-06-05 08:30:00', '2024-06-05 11:30:00', '已结束', '00000005');
-INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '已结束', '00000004');
-INSERT INTO `t_meeting` VALUES ('00000003', '003', '可持续发展与企业社会责任峰会', '2024-10-15 13:00:00', '2024-10-15 15:00:54', '未开始', '00000006');
+INSERT INTO `t_meeting` VALUES ('00000001', '001', '未来趋势与创新策略研讨会', '2024-06-05 08:30:00', '2024-06-05 11:30:00', '已结束', '00000001');
+INSERT INTO `t_meeting` VALUES ('00000002', '002', '健康与安全合作会议', '2024-09-04 15:30:00', '2024-09-04 17:00:00', '已结束', '00000002');
+INSERT INTO `t_meeting` VALUES ('00000003', '003', '可持续发展与企业社会责任峰会', '2024-10-15 13:00:00', '2024-10-15 15:00:54', '未开始', '00000003');
 -- ----------------------------
 -- Table structure for `t_meeting_attendance`
 -- ----------------------------
@@ -177,12 +177,12 @@ CREATE TABLE `t_meeting_attendance` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_meeting_attendance` VALUES ('00000001', '00000001', '00000001');
-INSERT INTO `t_meeting_attendance` VALUES ('00000002', '00000001', '00000002');
-INSERT INTO `t_meeting_attendance` VALUES ('00000003', '00000001', '00000003');
-INSERT INTO `t_meeting_attendance` VALUES ('00000004', '00000002', '00000003');
-INSERT INTO `t_meeting_attendance` VALUES ('00000005', '00000003', '00000002');
-INSERT INTO `t_meeting_attendance` VALUES ('00000006', '00000003', '00000001');
+INSERT INTO `t_meeting_attendance` VALUES ('00000001', '00000001', '00000004');
+INSERT INTO `t_meeting_attendance` VALUES ('00000002', '00000001', '00000005');
+INSERT INTO `t_meeting_attendance` VALUES ('00000003', '00000001', '00000006');
+INSERT INTO `t_meeting_attendance` VALUES ('00000004', '00000002', '00000006');
+INSERT INTO `t_meeting_attendance` VALUES ('00000005', '00000003', '00000005');
+INSERT INTO `t_meeting_attendance` VALUES ('00000006', '00000003', '00000004');
 -- ----------------------------
 -- Table structure for `t_note`
 -- ----------------------------
@@ -198,9 +198,9 @@ CREATE TABLE `t_note` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_note` VALUES ('00000001', '会议提醒', '记得带上资料', '2024-09-13 13:02:00', '2024-09-15 08:30:00', '00000001');
-INSERT INTO `t_note` VALUES ('00000002', '会议提醒', '提前半个小时到', '2024-09-20 11:03:32', '2024-09-24 11:03:39', '00000002');
-INSERT INTO `t_note` VALUES ('00000003', '提交提醒', '资料提交时间', '2024-09-26 11:04:33', '2024-10-23 11:04:39', '00000003');
+INSERT INTO `t_note` VALUES ('00000001', '会议提醒', '记得带上资料', '2024-09-13 13:02:00', '2024-09-15 08:30:00', '00000004');
+INSERT INTO `t_note` VALUES ('00000002', '会议提醒', '提前半个小时到', '2024-09-20 11:03:32', '2024-09-24 11:03:39', '00000005');
+INSERT INTO `t_note` VALUES ('00000003', '提交提醒', '资料提交时间', '2024-09-26 11:04:33', '2024-10-23 11:04:39', '00000006');
 INSERT INTO `t_note` VALUES ('00000004', '面试', '面试应聘者', '2024-09-12 11:05:32', '2024-10-21 11:05:38', '00000004');
 
 -- ----------------------------
@@ -216,8 +216,8 @@ CREATE TABLE `t_project_attendance` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_project_attendance` VALUES ('00000001', '00000001', '00000002');
-INSERT INTO `t_project_attendance` VALUES ('00000002', '00000001', '00000003');
-INSERT INTO `t_project_attendance` VALUES ('00000003', '00000002', '00000001');
-INSERT INTO `t_project_attendance` VALUES ('00000004', '00000003', '00000003');
+INSERT INTO `t_project_attendance` VALUES ('00000001', '00000001', '00000004');
+INSERT INTO `t_project_attendance` VALUES ('00000002', '00000001', '00000005');
+INSERT INTO `t_project_attendance` VALUES ('00000003', '00000002', '00000006');
+INSERT INTO `t_project_attendance` VALUES ('00000004', '00000003', '00000004');
 
