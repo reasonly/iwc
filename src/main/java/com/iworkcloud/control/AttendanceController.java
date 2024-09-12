@@ -96,6 +96,7 @@ public class AttendanceController {
         }
 
         Attendance atd = new Attendance();
+
         atd.setAttendanceId((Integer) request.get("attendanceId"));
         atd.setUserId((Integer) request.get("userId"));
         atd.setAttendanceState((String) request.get("attendanceState"));

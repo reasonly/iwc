@@ -171,7 +171,11 @@ public class UserController {
 
             return Results.Error("token过期，请重新登录！");
         }
-        Integer userId=(Integer) request.get("id");
+        Integer userId=null;
+        if(request.get("id")!=null){
+            userId= Integer.valueOf((String) request.get("id"));
+        }
+//        Integer userId= Integer.parseInt((String) request.get("id"));
         String userName=(String) request.get("name");
         String userAccount=(String) request.get("account");
         String userEmail = (String) request.get("email");

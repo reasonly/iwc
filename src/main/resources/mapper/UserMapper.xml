@@ -78,7 +78,7 @@
 		*
 		from t_user
 		<where>
-		<if test="userId!=null and userId!=''">
+		<if test="userId!=null and userId!='' or userId==0">
 			and user_id = #{userId}
 		</if>
 		<if test="userName!=null and userName!=''">
