@@ -51,6 +51,7 @@ CREATE TABLE `t_attendance` (
 INSERT INTO `t_attendance` VALUES ('00000001', '00000004', '已签到', '2024-09-08 08:30:15', '2024-09-04', '否');
 INSERT INTO `t_attendance` VALUES ('00000002', '00000005', '未签到', null, '2024-09-04', '否');
 INSERT INTO `t_attendance` VALUES ('00000003', '00000006', '请假', null, '2024-09-04', '否');
+INSERT INTO `t_attendance` VALUES ('00000004', '00000004', '未签到', null, '2024-09-13', '否');
 
 -- ----------------------------
 -- Table structure for `t_project`
@@ -123,9 +124,11 @@ CREATE TABLE `t_leave` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_leave` VALUES ('00000001', '2024-03-09', '2024-03-11', '病假', '已批准', '00000004');
+INSERT INTO `t_leave` VALUES ('00000001', '2024-03-09', '2024-03-11', '病假', '已批准', '00000006');
 INSERT INTO `t_leave` VALUES ('00000002', '2024-06-15', '2024-06-17', '外出旅游', '未批准', '00000005');
-INSERT INTO `t_leave` VALUES ('00000003', '2024-09-06', '2024-09-11', '年假', '未审批', '00000006');
+INSERT INTO `t_leave` VALUES ('00000003', '2024-09-06', '2024-09-11', '年假', '未审批', '00000004');
+INSERT INTO `t_leave` VALUES ('00000004', '2024-09-13', '2024-09-12', '年假', '未审批', '00000004');
+
 
 -- ----------------------------
 -- Table structure for `t_leave_approval`
