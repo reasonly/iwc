@@ -71,6 +71,7 @@ CREATE TABLE `t_project` (
 INSERT INTO `t_project` VALUES ('00000001', '品牌重塑与增长营销活动', '分析目标市场趋势、竞争对手策略及目标客群偏好，制定差异化营销策略。', '进行中','200000.00', '00000001');
 INSERT INTO `t_project` VALUES ('00000002', '企业智能财务管理系统升级', '与企业财务部门紧密合作，收集并整理现有系统的不足、用户痛点及新需求，自动化报表生成、预算控制、成本分析等。', '未开始','0.00', '00000002');
 INSERT INTO `t_project` VALUES ('00000003', '全方位客户服务体验升级计划', '通过客户反馈、服务记录、满意度调查等方式，全面评估当前客户服务流程、效率及客户满意度水平，识别痛点与不足。', '已结束','0.00', '00000003');
+INSERT INTO `t_project` VALUES ('00000004', '企业目标服务体验升级计划', '通过企业财务反馈、服务记录、满意度调查等方式，全面评估当前企业服务流程、效率及企业满意度水平，识别痛点与不足。', '未开始','0.00', '00000002');
 
 -- ----------------------------
 -- Table structure for `t_finance`
@@ -89,9 +90,11 @@ CREATE TABLE `t_finance` (
   FOREIGN KEY (`project_id`) REFERENCES `t_project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_finance` VALUES ('00000001', '项目流水', '200000.00', '品牌重塑与增长营销活动启动成本', '2024-09-03 10:30:15', null, '00000001');
+INSERT INTO `t_finance` VALUES ('00000001', '项目流水', '-200000.00', '品牌重塑与增长营销活动启动成本', '2024-09-03 10:30:15', null, '00000001');
 INSERT INTO `t_finance` VALUES ('00000002', '绩效奖金', '10000.00', '年度优秀员工', '2023-12-20 14:15:00', '00000001', null);
 INSERT INTO `t_finance` VALUES ('00000003', '补贴', '2000.00', '住房补贴', '2023-06-15 15:14:00', '00000003', null);
+INSERT INTO `t_finance` VALUES ('00000004', '项目流水', '-150000.00', '品牌重塑与增长营销活动再次启动成本', '2024-09-04 11:31:11', null, '00000001');
+INSERT INTO `t_finance` VALUES ('00000005', '项目流水', '100000.00', '品牌重塑与增长营销活动运营收益', '2024-09-07 17:30:17', null, '00000001');
 -- ----------------------------
 -- Table structure for `t_finance_manage`
 -- ----------------------------
@@ -106,9 +109,12 @@ CREATE TABLE `t_finance_manage` (
   FOREIGN KEY (`user_id`) REFERENCES `t_user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000001', '2024-09-03 10:30:15', '核实流水');
-INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000002', '2023-12-15 14:15:00', '登记奖金');
-INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000003', '2024-09-03 10:30:15', '该员工仍需补贴');
+INSERT INTO `t_finance_manage` VALUES ('00000001', '00000001', '00000001', '2024-09-03 10:30:15', '添加记录品牌重塑与增长营销活动启动成本');
+INSERT INTO `t_finance_manage` VALUES ('00000002', '00000002', '00000002', '2023-12-20 14:15:00', '添加记录登记奖金');
+INSERT INTO `t_finance_manage` VALUES ('00000003', '00000003', '00000003', '2023-06-15 15:14:00', '添加记录员工补贴');
+INSERT INTO `t_finance_manage` VALUES ('00000004', '00000004', '00000001', '2024-09-04 11:31:11', '添加记录品牌重塑与增长营销活动再次启动成本');
+INSERT INTO `t_finance_manage` VALUES ('00000005', '00000005', '00000001', '2024-09-07 17:30:17', '添加记录品牌重塑与增长营销活动运营收益');
+
 -- ----------------------------
 -- Table structure for `t_leave`
 -- ----------------------------
